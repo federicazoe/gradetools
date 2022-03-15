@@ -17,12 +17,9 @@ Imports:
     stringr,
     readr (>= 2.1.2),
     dplyr,
-    here,
-    tibble,
     rstudioapi,
     ghclass,
     fs,
-    data.table,
     utils,
     svDialogs,
     rmarkdown
