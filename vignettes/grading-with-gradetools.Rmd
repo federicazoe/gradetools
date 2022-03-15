@@ -26,7 +26,7 @@ The goal of this vignette is to introduce users to the gradetools package using 
 
 ## Obtaining the example directory
 
-For this example we will use the example directory called example-directory-week09-regression in the [quizzes-collected-week09-regression](https://GitHub.com/gradetools-test-course/quizzes-collected-week09-regression) repository in our gradetools-test-course organization on GitHub. To follow along on your computer you can pull the repo from GitHub or use the "Download ZIP" option in the drop down list from the "Code" button on GitHub.
+For this example we will use the example directory called example-directory-week09-regression in the [quizzes-collected-week09-regression](https://github.com/gradetools-test-course/quizzes-collected-week09-regression/tree/main/example-directory-week09-regression) repository in our gradetools-test-course organization on GitHub. To follow along on your computer you can pull the repo from GitHub or use the "Download ZIP" option in the drop down list from the "Code" button on GitHub.
 
 <iframe src="https://drive.google.com/file/d/1Lxhpo5LvJUurNRUBKzxgYBjnZWMJ8cYw/preview" width="640" height="480" allow="autoplay"></iframe>
 
