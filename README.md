@@ -24,10 +24,10 @@ The package has only been tested with RStudio GUI.
 
 Throughout the vignettes we provide example grading scenarios that you can test the functions. There are currently four vignettes available. 
 
-1. [How to grade with gradetools](https://mdogucu.github.io/gradetools/docs/articles/grading-with-gradetools.html): For beginner users we recommend starting with this vignette.
-2. [How to regrade assignments with gradetools](https://mdogucu.github.io/gradetools/docs/articles/regrading-with-gradetools.html)
-3. [Extended gradetools Capability: Team Grading](https://mdogucu.github.io/gradetools/docs/articles/extended-capability-teams.html) This vignette is only relevant for grading assignments that are team-based.
-4. [Extended gradetools Capability: Assignments on GitHub](https://mdogucu.github.io/gradetools/docs/articles/extended-capability-github.html) This vignette is only relevant for assignments that are on GitHub.
+1. [How to grade with gradetools](https://mdogucu.github.io/gradetools/articles/grading-with-gradetools.html): For beginner users we recommend starting with this vignette.
+2. [How to regrade assignments with gradetools](https://mdogucu.github.io/gradetools/articles/regrading-with-gradetools.html)
+3. [Extended gradetools Capability: Team Grading](https://mdogucu.github.io/gradetools/articles/extended-capability-teams.html) This vignette is only relevant for grading assignments that are team-based.
+4. [Extended gradetools Capability: Assignments on GitHub](https://mdogucu.github.io/gradetools/articles/extended-capability-github.html) This vignette is only relevant for assignments that are on GitHub.
 
 
 ## Installation
