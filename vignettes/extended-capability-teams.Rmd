@@ -1,0 +1,68 @@
+---
+title: "3 - Extended gradetools Capability: Team Grading"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{3 - Extended gradetools Capability: Team Grading}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(gradetools)
+```
+
+We define team grading to be when the grade of an assignment is assigned to multiple students.
+
+This vignette displays gradetools's extended capability of handling team grading. As this is an extended capability we assume the user knows the basics of gradetools. If not, please refer to the vignette "how-to-grade-with-gradetools".
+
+This vignette will walk the user through what needs to be done differently when team grading versus regular grading. An additional column needs to be present in the roster specifying which team the student belongs to and `assist_team_grading()` will be used to grade the student.
+
+## Obtaining the example directory
+
+For this example we will use the example directory called example-team-grading-directory-week09-regression in the [team-grading-week09-regression](https://github.com/gradetools-test-course/team-grading-week09-regression) repository in our gradetools-test-course on Github. 
+
+We will be using everything in the example-team-grading-directory-week09-regression folder. This folder contains the class-roster.csv, quiz-09a-lin-reg-rubric.csv, and a folder named quizzes which contains the students' quizzes.
+
+## Preparing to grade  
+For our purposes we will assume the rubric has already been created. Please refer to the "how-to-grade-with-gradetools" vignette for rubric creation.
+
+Note that now we only have two quizzes since Catalina and Mine worked together on quiz 2 and will share the grade for that assignment. 
+
+### The roster  
+The roster is also different from that in the example-directory-week09-regression. Team grading requires an additional column to be present in the roster, "team_identified". This identified would be something shared among students in the same team.
+
+<iframe src="https://drive.google.com/file/d/10tWlwQdwvBut7WMwlN8pFP_Ly2A5fQUw/preview" width="640" height="480" allow="autoplay"></iframe>
+
+
+## Grading with `assist_team_grading()`
+To do team grading in gradetools we will use `assist_team_grading()`.
+
+```{r}
+assist_team_grading(
+  rubric_path = "quiz-09-lin-reg-rubric.csv", 
+  roster_path = "class-roster.csv", 
+  temp_grade_sheet_path = "quiz-09-lin-reg-temporary-grade-sheet.csv", 
+  final_grade_sheet_path = "quiz-09-lin-reg-final-grade-sheet.csv", 
+  example_team_identifier = "team1",
+  example_assignment_path = "quizzes/quiz-09a-lin-reg-team1.Rmd", 
+  example_feedback_path = "quizzes/feedback-quiz-09a-lin-reg-team1.html", 
+)
+```
+
+This exact function call assumes that example-team-grading-directory-week09-regression is the working directory.
+
+We will skip the process of grading because that is shown in the "how-to-grade-with-gradetools" vignette.
+
+## Final notes  
+The assist grading function handles teams as individual students in the temporary grade sheet. The final grade sheet will have a row per student but the temporary grade sheet will have one row per team. This internal difference does not change the process of grading but may have been confusing to a user who wanted to look through their temporary grade sheet.
+

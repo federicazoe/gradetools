@@ -1,0 +1,123 @@
+#'
+#' @param rubric_path string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.
+#' @param roster_path string; file path to the class roster csv containing a column named student_identifier. If team_grading is set to TRUE then the class roster also needs to contain a column named team_identifier
+#' @param temp_grade_sheet_path string; assist-grading() functions save a file which includes information for gradetools's internal use. This is that path for that file. Must be a .csv
+#' @param final_grade_sheet_path string; path to save final grade sheet to. Must be a .csv
+#' @param example_assignment_path string; file path to one of the assignments to be graded. This file path structure will be used to determine where the other assignments to be graded are located. The student identifier has to be present somewhere in the file path
+#' @param example_feedback_path string; file path to one of the assignment feedback files that will be generated as the user grades. This file path structure will be used to determine where the other feedback files will be stored. The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. The extension of the feedback file must be one of the following: "Rmd", "docx", "html", "pdf"
+#' @param example_student_identifier string; a student identifier (e.g. name, id, id number, github user name) that is used to identify the student on the roster. This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the Github user name if the user wishes to push issues or feedback to Github later
+#' @param example_team_identifier string; Used instead of example_student_identifier when grading team assignments. A team identifier (e.g. "team1", "team2", etc.) that is used to identify what team the student on the roster is in. This needs to be present somewhere in the example_assignment_path. 
+#' @param missing_assignment_grade numeric; The grade to assign a student with no assignment submission
+#' @param students_to_grade vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster
+#' @param teams_to_grade vector of strings; team_identifiers corresponding to teams to grade, or "all" to specify all assignments should be graded. Team grading is when the grade of an assignment is share among multiple students. All teams_to_grade must be team_identifiers present in the roster
+#' @param questions_to_grade vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric
+#' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
+#' @param issue_every_question logical, whether the possibility to create issues should be given at every question or only at the end of the assignment
+#' 
+#' @name null_assist_grading
+NULL
+
+
+#' @rdname null_assist_grading 
+#' @title Assisted grading
+#' @export
+assist_grading <- function(
+    rubric_path,
+    roster_path,
+    temp_grade_sheet_path,
+    final_grade_sheet_path,
+    example_assignment_path,
+    example_feedback_path,
+    example_student_identifier,
+    missing_assignment_grade = NA
+) {
+  
+  core_assist_grading(
+    rubric_path = rubric_path,
+    roster_path = roster_path,
+    temp_grade_sheet_path = temp_grade_sheet_path,
+    final_grade_sheet_path = final_grade_sheet_path,
+    example_assignment_path = example_assignment_path,
+    example_feedback_path = example_feedback_path,
+    example_student_identifier = example_student_identifier,
+    missing_assignment_grade = missing_assignment_grade,
+    students_to_grade = "all",
+    questions_to_grade = "all",
+    team_grading = FALSE,
+    github_issues = FALSE,
+    issue_every_question = FALSE
+  )
+  
+}
+
+#' @rdname null_assist_grading
+#' @title Advanced assisted grading
+#' @export
+assist_advanced_grading <- function(
+  rubric_path,
+  roster_path,
+  temp_grade_sheet_path,
+  final_grade_sheet_path,
+  example_assignment_path,
+  example_feedback_path,
+  example_student_identifier,
+  missing_assignment_grade = NA,
+  students_to_grade = "all",
+  questions_to_grade = "all",
+  github_issues = FALSE,
+  issue_every_question = FALSE
+) {
+  
+  core_assist_grading(
+    rubric_path = rubric_path,
+    roster_path = roster_path,
+    temp_grade_sheet_path = temp_grade_sheet_path,
+    final_grade_sheet_path = final_grade_sheet_path,
+    example_assignment_path = example_assignment_path,
+    example_feedback_path = example_feedback_path,
+    example_student_identifier = example_student_identifier,
+    missing_assignment_grade = missing_assignment_grade,
+    students_to_grade = students_to_grade,
+    questions_to_grade = questions_to_grade,
+    team_grading = FALSE,
+    github_issues = github_issues,
+    issue_every_question = issue_every_question
+  )
+  
+}
+
+
+#' @rdname null_assist_grading
+#' @title team assisted grading
+#' @export
+assist_team_grading <- function(
+  rubric_path,
+  roster_path,
+  temp_grade_sheet_path,
+  final_grade_sheet_path,
+  example_assignment_path,
+  example_feedback_path,
+  example_team_identifier,
+  missing_assignment_grade = NA,
+  teams_to_grade = "all",
+  questions_to_grade = "all",
+  github_issues = FALSE,
+  issue_every_question = FALSE
+) {
+  
+  core_assist_grading(
+    rubric_path = rubric_path,
+    roster_path = roster_path,
+    temp_grade_sheet_path = temp_grade_sheet_path,
+    final_grade_sheet_path = final_grade_sheet_path,
+    example_assignment_path = example_assignment_path,
+    example_feedback_path = example_feedback_path,
+    example_student_identifier = example_team_identifier,
+    missing_assignment_grade = missing_assignment_grade,
+    students_to_grade = teams_to_grade,
+    questions_to_grade = questions_to_grade,
+    team_grading = TRUE,
+    github_issues = github_issues,
+    issue_every_question = issue_every_question
+  )
+}

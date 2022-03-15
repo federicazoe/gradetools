@@ -1,0 +1,59 @@
+---
+title: "2 - How to regrade assignments with gradetools"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{2 - How to regrade assignments with gradetools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(gradetools)
+```
+
+The objective of this vignette is to demonstrate how to regrade all or certain questions from assignments previously graded with gradetools. 
+
+The temporary grade sheet stores grading progress, so if it has been saved after using an assist grading function the user can resume grading or regrade at any point.
+
+For this example we will use the example directory called example-directory-week09-regression in the [quizzes-collected-week09-regression](https://github.com/gradetools-test-course/quizzes-collected-week09-regression) repository in our gradetools-test-course on GitHub.
+
+For our purposed we will consider the situation where we were in the process of grading and realized we assigned the wrong rubric item to a student.
+
+<iframe src="https://drive.google.com/file/d/1_3nX5wKkTHW9mLM5UOqrjAhnCkkgvccR/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Specifically, we provided the prompt code "404" which says the answer is missing and deducts all points, but we can see that the user did provide an answer. 
+
+## Regrading with `assist_regrading()`  
+There can be many reasons a user may want to regrade an assignment, so `assist_regrading()` allows for the specification of which students and questions to regrade. In this case we want to regrade Question 1.a for Federica Zoe. 
+
+```{r}
+assist_regrading(
+  rubric_path = "quiz-09-lin-reg-rubric.csv", 
+  temp_grade_sheet_path = "quiz-09-lin-reg-temporary-grade-sheet.csv", 
+  final_grade_sheet_path = "quiz-09-lin-reg-final-grade-sheet.csv", 
+  students_to_regrade = "federicazoe", 
+  questions_to_regrade = "Question 1.a"
+)
+```
+
+This exact function call assumes that example-directory-week09-regression is the working directory.
+
+If the assignment had been a team assignment then the user would have specified `students_to_regrade` as `NULL` and instead would have provided `teams_to_regrade`.  
+
+Once the function call is made everything will look and function as it did with the assist grading function, except the user will only be prompted to grade the `questions_to_regrade` for the `students_to_regrade`. One additional note is that when regrading, the user is always asked to provide the general feedback, even if it had previously been provided.
+
+<iframe src="https://drive.google.com/file/d/1zaaWqgI3FpbRPpD0CguvvjheXg1odNwx/preview" width="640" height="480" allow="autoplay"></iframe>
+
+
+If a user were to initiate regrading then stop grading before all `questions_to_regrade` have been regraded, the old grading progress will be retained for those questions that did not get regraded.
+
+## Final notes  
+Changing the rubric is not considered regrading. The temporary grade sheet saves grading progress by saving the assigned prompt codes for each question for each student. At any point a user can edit the rubric and then re run one of the `assist_grading()` functions and all associated grades and feedback will get updated. Rewriting feedback and prompt messages for clarity, or changing points associated with a question or rubric item is considered updating and is completely fine. On the other hand, the **prompt codes cannot be changed** since they are how gradetools stores grading progress.

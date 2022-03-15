@@ -1,0 +1,163 @@
+---
+title: "4 - Extended gradetools Capability: Assignments on GitHub"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{4 - Extended gradetools Capability: Assignments on GitHub}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(gradetools)
+```
+
+For this vignette we assume that you have already familiarized yourself with the basic functionalities of gradetools (see the vignette "how-to-grade-with-gradetools") and we illustrate additional gradetools's functionalities specific to classes that are managed using GitHub organizations.
+
+
+These extended functionalities involve:
+
+- **feedback**: pushing to students' (or teams') repos their personalized feedback files.
+- **GitHub issues**:
+  1. taking note of what issues the grader would like to create in a student's (or team's) repo;
+  2. creating the requested GitHub issues in students' (or teams') repos and assigning them to the student (or to team members).
+
+
+If you would like to see an introduction on how to structure your class on GitHub you can look at the vignette of the [ghclass package](https://rundel.github.io/ghclass/articles/ghclass.html).
+
+## Cloning assignments from GitHub with ghclass 
+
+Before using gradetools functionalities, the user needs to clone from GitHub all the repos where students have pushed their assignments. This can be done easily and quickly using the function [`local_repo_clone()`](https://rundel.github.io/ghclass/reference/local_repo.ht) from the ghclass package. 
+
+The code below shows how to clone from the GitHub organization _gradetools-test-course_ all the repos whose name contains _week09-regression-_. The repos are pulled into a local folder _week09-regression_ that we have created in the folder _students-repos_ in our current working directory.
+
+```{r}
+class_github_name <- "gradetools-test-course"
+repo_template_name <- "week09-regression-"
+repos_local_path <- "students-repos/week09-regression"
+
+ghclass::local_repo_clone(
+  repo = ghclass::org_repos(class_github_name, repo_template_name),
+  local_path = repos_local_path
+)
+```
+
+A message will be shown to confirm which repos have been cloned (bottom-left screenshot) and the cloned repos will appear in the path specified (bottom-right screenshot).
+
+<iframe src="https://drive.google.com/file/d/17Zrtmm52XY744G3qcU7jl7ovSg0YINl_/preview" width="640" height="480" allow="autoplay"></iframe>
+
+<br>
+
+<iframe src="https://drive.google.com/file/d/1TwoCliVoY2dYSS0BX1ifP24pH00soIl1/preview" width="640" height="480" allow="autoplay"></iframe>
+
+
+## Pushing feedback files to GitHub with push_to_github()
+
+After grading with `assist_grading()` or `assist_advanced_grading()` - and after re-grading with `assist_regrading()` - the function `push_to_github()` can be called to push all feedback files that have been written while grading and that have not been pushed yet to GitHub.
+
+Here is what a call to `push_to_github()` could look like:
+
+```{r}
+push_to_github (
+  temp_grade_sheet_path =  "quiz-09-lin-reg-temporary-grade-sheet.csv",
+  class_github_name = "gradetools-test-course",
+  example_github_repo = "week09-regression-federicazoe",
+  example_identifier = "federicazoe",
+  push_feedback = TRUE
+)
+```
+
+Here is a description of the specified inputs:
+- `temp_grade_sheet_path` needs to be the same path specified when grading where the temporary grade sheet for this assignment has been stored. This is needed so that all students identifiers can be retrieved (note that they need to equal their GitHub usernames) and to keep track of which feedback files are pushed;
+- `class_github_name` is the name of the GitHub organization corresponding to this class;
+- `example_github_repo` is an example of a name of a student (or a team's) repo for this assignment;
+- `example_identifier`
+- `push_feedback = TRUE` asks the function to push the feedback files (the same function could be used to only create issues, see below).
+
+Running this function will push each feedback file to the respective repo, if the repo is found:
+
+<iframe src="https://drive.google.com/file/d/1LsVfXT4ttKE4kv3MGuDadKWIJZ-SEX8E/preview" width="640" height="480" allow="autoplay"></iframe>
+
+
+## Creating GitHub issues  
+
+While we are grading, gradetools can give us the option to take note of some GitHub issues that we would like to create into students' or teams' repos. To be given this option, we need to grade using `assist_advanced_grading()` with the input `github_issues` set to TRUE. 
+
+### Take note of desired GitHub issues with assist_advanced_grading()
+
+By default, for each student (or team) gradetools will ask us only once if we want to take note of some issues - when we are done grading that student (or team):
+
+```{r}
+assist_advanced_grading(
+  rubric_path = "../example-directory/github-grading/week-09-regression-rubric.csv",
+  roster_path = "../example-directory/github-grading/roster.csv",
+  temp_grade_sheet_path  = "quiz-09-lin-reg-temporary-grade-sheet.csv",
+  final_grade_sheet_path = "quiz-09-lin-reg-final-grade-sheet.csv",
+  example_assignment_path = "../example-directory/github-grading/students-repos/week09-regression/week09-regression-federicazoe/quiz-09a-lin-reg-federicazoe.Rmd",
+  example_feedback_path = "../example-directory/github-grading/students-repos/week09-regression/week09-regression-federicazoe/feedback.Rmd",
+  example_student_identifier = "federicazoe",
+  github_issues = TRUE
+)
+```
+
+After grading all assignment parts  and optionally specifying a general feedback for a student, we are then asked if we would like to take note of an issue and we type "000" if we want to:
+
+<iframe src="https://drive.google.com/file/d/1Q__ErERJTDeuUbpUBlUVgWc5tM2owc2a/preview" width="640" height="480" allow="autoplay"></iframe>
+
+We will then be prompted to specify a title and a body for the issue:
+
+<iframe src="https://drive.google.com/file/d/1F-HHXdOU-Quan1Is-LAd6CFs9fRSVajI/preview" width="640" height="480" allow="autoplay"></iframe>
+
+<br>
+
+<iframe src="https://drive.google.com/file/d/1JABjaCbTYqJSGA2EXxtIEOsCOQu3bsCS/preview" width="640" height="480" allow="autoplay"></iframe>
+
+We can cancel taking note of an issue at any time, and we can take note of as many issues as we want:
+
+<iframe src="https://drive.google.com/file/d/1JABjaCbTYqJSGA2EXxtIEOsCOQu3bsCS/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Finally, by setting the optional parameter `issue_every_question` to TRUE, we would be asked whether we want to take note of a new issue at the end of _each part_ of each student's (or team's) assignment. This would be recommended only for assignments with few parts:
+
+<iframe src="https://drive.google.com/file/d/1Act6Ej8q2SLhiLIdDOjf4QHJNm_ypP6U/preview" width="640" height="480" allow="autoplay"></iframe>
+
+
+### Create desired GitHub issues with push_to_github()
+
+After grading with `githb_issues = TRUE` using `assist_grading()` or `assist_advanced_grading()` - and after re-grading with `assist_regrading()` - the function `push_to_github()` can be called to push all feedback files that have been written while grading and that have not been pushed yet to GitHub.
+
+Here is what a call to `push_to_github()` could look like:
+
+```{r}
+push_to_github (
+  temp_grade_sheet_path =  "quiz-09-lin-reg-temporary-grade-sheet.csv",
+  class_github_name = "gradetools-test-course",
+  example_github_repo = "week09-regression-federicazoe",
+  example_identifier = "federicazoe",
+  push_issues = TRUE
+)
+```
+
+Running the above code will look into the temporary grade sheet and push all GitHub issues that the grader has taken note of and have not been pushed yet:
+
+<iframe src="https://drive.google.com/file/d/12OByuPY7WDtKOCl-Fzg_BD3pFO2107mn/preview" width="640" height="480" allow="autoplay"></iframe>
+
+If we look on GitHub, we will see that the desired issues have been created and assigned to the correct students:
+
+<iframe src="https://drive.google.com/file/d/1hOiMucoP_oCT-zniMxlWz6ZvSWn717jX/preview" width="640" height="480" allow="autoplay"></iframe>
+
+<br>
+
+<iframe src="https://drive.google.com/file/d/1JESDQyFz12F7fh-_dWZnsOsEcYqbqGEE/preview" width="640" height="480" allow="autoplay"></iframe>
+
+## Credits
+
+The extended functionalities for assignments managed using GitHub were possible thanks to the functions in the [ghclass](https://rundel.github.io/ghclass/index.html) package.

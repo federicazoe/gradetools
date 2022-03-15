@@ -1,0 +1,240 @@
+---
+title: "1 - How to grade with gradetools"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{1 - How to grade with gradetools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+resource_files:
+  - images/example-repo.png
+  - images/example-directory-quizzes-folder.png
+  - images/class-roster.png
+  - images/rubric-blank.png
+  - images/rubric-filled.png
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(gradetools)
+```
+
+
+The goal of this vignette is to introduce users to the gradetools package using a practice example. 
+
+## Obtaining the example directory
+
+For this example we will use the example directory called example-directory-week09-regression in the [quizzes-collected-week09-regression](https://GitHub.com/gradetools-test-course/quizzes-collected-week09-regression) repository in our gradetools-test-course organization on GitHub. To follow along on your computer you can pull the repo from GitHub or use the "Download ZIP" option in the drop down list from the "Code" button on GitHub.
+
+<iframe src="https://drive.google.com/file/d/1Lxhpo5LvJUurNRUBKzxgYBjnZWMJ8cYw/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Everything that we will be using here is in the example-directory-week09-regression folder. This folder contains the class-roster.csv, quiz-09a-lin-reg-rubric.csv, and a folder named quizzes (shown below) which contains students' quizzes as well as a template copy of the quiz.
+
+<iframe src="https://drive.google.com/file/d/1nYy3tvzgRJuhdBHkU0RTLGZYhEs3491H/preview" width="640" height="480" allow="autoplay"></iframe>
+
+## Preparing to grade with gradetools  
+
+The necessary materials for grading are the class roster, an assignment rubric and the assignments to be graded. 
+
+### The roster
+
+The only requirement for the class roster is that it contains a column named "student_identifier". This student_identifier must be the only thing unique to the student in a student's assignment path (e.g. a student_identifier could be catalinamedina and the path to the assignment could be "hw1-catalinamedina.R" or "homework/catalinamedina/hw1.Rmd"). Typically the student identifier would be a student's name, school id, school id number, or GitHub username.
+
+All columns present in the class roster will be present in the final grade sheet prepared by gradetools.
+
+The class roster we will use for this example has GitHub usernames as the student_identifier and an extra column called Name.
+
+<iframe src="https://drive.google.com/file/d/1n_n6DkGu51vBwi610l4Am7MDQnI_mXzy/preview" width="640" height="480" allow="autoplay"></iframe>
+
+### The rubric  
+
+The rubric for an assignment graded with gradetools has specific requirements. The function `create_rubric_template()` creates a rubric template for the grader to fill in. 
+
+This function requires the user to specify (1) the path where they want to write the rubric template and (2) whether the rubric will list possible errors along with the points to be removed for each error (negative_grading = TRUE) or expected components of a correct answer along with the points to be added for each component (negative_grading = FALSE). 
+
+```{r}
+create_rubric_template(
+  rubric_path = "quiz-09-lin-reg-rubric.csv",
+  negative_grading = TRUE
+)
+```
+
+After the above call a .csv file will be created which will only contain headers. 
+
+<iframe src="https://drive.google.com/file/d/1YaON28y3U9guSsJiGgLdvfPpQOGKT7Ry/preview" width="640" height="480" allow="autoplay"></iframe>
+
+The user will then fill this rubric according to the specifications described in the documentation of `create_rubric_template()`. The filled out rubric is provided in the example directory.
+
+<iframe src="https://drive.google.com/file/d/1tMheSNOEgPmqma9nmRvBARfV1JPSYFdp/preview" width="640" height="480" allow="autoplay"></iframe>
+
+From the screenshot above, notice that the rubric includes three types of entries in the column "name": specific parts of the assignment (Question 1.a through Question 3.b), "all_questions" and "general_feedback".
+
+- Names of specific assignment parts can be freely specified (e.g. "Question 1.a" could have been named "Regression equation"). They correspond to a part of the assignment that the grader wants to assess and they don't need to be a question with a special demarcation in the assignment. For example, if we are grading a research proposal, a specific part's name of a rubric entry could be "Abstract". Specific parts need to be given "total_points" which is the total score available for that part and "points_to_remove" which are the points to be removed from the score assigned for that part (or "points_to_add", when negative_grading = FALSE, in which case they will be added to the score instead of removed).
+
+- If the grader includes entries with the name "all_questions", the corresponding rubric items will be available to all parts of the assignment except for the general feedback. This is useful for rubric items like "correct" or "missing", that are not specific to a part of the assignment. Points specified for "all_questions" items are considered in _percentage_ to the total points of a part (so "points_to_remove" = 100 means that the score assigned for that part will be of 0).
+
+- If the grader includes entries with the name "general_feedback" these will be available after having graded all other assignment's parts and can only be used to provide feedback but won't affect the grade.
+
+Once the user has began grading, question names and prompt codes cannot be changed. However, in any moment, the grader can modify the prompt messages that they want to see while grading as well as the total points for a specific part and the feedback and the points that should be associated to a rubric item. 
+
+To see another example of a valid rubric one can run `create_rubric_template()` with additional arguments:
+
+```{r}
+create_rubric_template(
+  rubric_path = "quiz-09-lin-reg-rubric.csv",
+  negative_grading = TRUE, 
+  create_example_rubric = TRUE,
+  example_rubric_path = "example-rubric.csv"
+)
+```
+
+This would write an example filled-in rubric as well as the rubric template at the specified paths.
+
+### Other `assist_grading()` arguments  
+
+The gradetools `assist_grading()` function helps the user by opening assignments to be graded, prompting the user to grade, storing the grading information, and generating a final grade sheet. Its necessary arguments are:
+  
+  - `rubric_path`
+  - `roster_path`
+  - `temp_grade_sheet_path`
+  - `final_grade_sheet_path`
+  - `example_student_identifier`
+  - `example_assignment_path`
+  - `example_feedback_path`
+
+From the previous sections in this vignette, we already know our rubric and roster paths. Now we need to specify where to save the temporary grade sheet and the final grade sheet. The temporary grade sheet is a file used internally by gradetools which stores all grading progress. Keeping this file allows the user to interrupt and then resume grading, regrade, change rubric items, add assignments to be graded, and many more functionalities. 
+
+The `example_student_identifier` corresponds to any of the identifiers present in the `student_identifier` column of the roster.
+
+The `example_assignment_path` is the path where the assignment(s) associated with the example_student_identifier are located.
+
+The `example_feedback_path` is the path where the grader wishes to save the feedback file associated with the `example_student_identifier`.
+
+The practice example below will clarify all the arguments that we have introduced here. Further details for the arguments can be found in the `assist_grading()` documentation. 
+
+## Grading with `assist_grading()` 
+
+We are now ready to begin grading with gradetools. This package should be used in Rstudio since it opens files. To begin gradin,g the user would call the `assist_grading()` function.
+
+```{r}
+assist_grading(
+  rubric_path = "quiz-09-lin-reg-rubric.csv", 
+  roster_path = "class-roster.csv", 
+  temp_grade_sheet_path = "quiz-09-lin-reg-temporary-grade-sheet.csv", 
+  final_grade_sheet_path = "quiz-09-lin-reg-final-grade-sheet.csv", 
+  example_student_identifier = "federicazoe",
+  example_assignment_path = "quizzes/quiz-09a-lin-reg-federicazoe.Rmd", 
+  example_feedback_path = "quizzes/feedback-quiz-09a-lin-reg-federicazoe.html"
+)
+```
+
+The above function call assumes that example-directory-week09-regression is the working directory.
+
+When a user begins grading an assignment for the first time, a message will be displayed informing the user that a temporary grade sheet is begin created, which must not be deleted.
+
+Next, the user will be informed which student they are going to begin grading and if there is any previous grading progress. All assignments associated with this student in this grading session will then be opened for the grader to view while grading. The grader will be prompted in the console to grade the first ungraded question for this student. 
+
+When an assignment is opened the cursor moves out of the console to the new assignment. To bring the cursor back you can type "Ctrl + 2" or click in the console.
+
+### Grading Federica's quiz  
+
+All assignments associated with Federica are opened and the user is prompted to grade the first question in the console.
+
+<iframe src="https://drive.google.com/file/d/1sDDJ5DGJKjlXOfb2v1nlX0YIY8QzS4kB/preview" width="640" height="480" allow="autoplay"></iframe>
+
+The first student, Federica Zoe, is an amazing student and made no errors so they should receive a perfect score on their quiz. We will enter the prompt code "0" which, as specified in the rubric for this assignment, is a prompt code that is available to all questions (column name is set to "all_questions") and marks that the question is correct. Once a prompt code is typed the user presses enter to submit it. 
+
+Proceeding in this fashion, we give Federica full points and complete grading her assignment, including assigning the general feedback _Great job on the quiz!_ associated with the prompt code 0 of the rubric item named "general_feedback".
+
+Upon completion of grading the assignment's final score will be printed and the user will be prompted to grade the next student in the roster.
+<iframe src="https://drive.google.com/file/d/1saZn5tS846n6jwq6x0jVByx9F0uvd9yQ/preview" width="640" height="480" allow="autoplay"></iframe>
+
+### Grading Catalina's quiz  
+
+The next student, Catalina Medina, is also relatively easy to grade because they made very few mistakes.  
+
+The first question was a simple question to grade, even without any tools to aid the process. Question 1.b is instead one which better represents why gradetools can be helpful. Interpretation is very important in statistics, but not necessarily easy to grade. gradetools helps by allowing to add and save new rubric items as the user grades, and writing the grader's feedback to a file for the student to view.
+
+Catalina answered question 1.a correctly but the interpretation she provided in question 1.b is not fully correct. She did not mention that the change is associated with a difference in x of one unit. To convey this we want to add a new rubric item. A new rubric item is added by entering "r" instead of a prompt code.
+
+<iframe src="https://drive.google.com/file/d/1T9-2OZCKl7BKCzCBAUbzmmNp7-QNY6Ds/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Follow the prompts to provide the following information:
+
+  - prompt code: "1c"
+  - prompt message: "Didn't mention difference in x"
+  - feedback: "This is the expected change in the response for a difference in the explanatory value of one unit."
+  - points to remove: "1"
+  
+Once the new rubric item has been added, the grader will be able to apply it to the current student for this question.
+
+<iframe src="https://drive.google.com/file/d/1mLd1ky4QgbG_QlU_4yqncfYE35QI5PgK/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Continue grading this student. For the general feedback, we will provide a personalized single-use general feedback. To do so enter "p" for the general feedback rubric item, and a box will pop up for user input.
+
+<iframe src="https://drive.google.com/file/d/1mLd1ky4QgbG_QlU_4yqncfYE35QI5PgK/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Write the message "We want to use figures to clearly convey information. Plotting with the default axes or producing unused plots is not good practice.".
+
+
+### Grading Mine's quiz  
+
+The last student, Mine Docugu, is a struggling student with many errors on their quiz. By grading this student we will see the situation where we will want to assign multiple rubric items for a single question.
+
+Mine's questions 1.a and 1.b are completely incorrect, proceed to grade those two questions. Her plot for question 2 has multiple errors, so we want to assign multiple rubric items to mark each error. Assign items "1d" and "1a" by using two dashes to separate the prompt codes
+
+<iframe src="https://drive.google.com/file/d/14St8RLYqArLw-vkug_9_x0J6oB4GJVa6/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Question 3 is another example of this. Note the rubric items do not need to be entered in order.
+
+<iframe src="https://drive.google.com/file/d/1Uj2ew3fttg5NpNN8rCDfeTdT3v3XDmiZ/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Question 3.a was left blank so we take away all points for this question by entering the all questions prompt code "404".
+
+Question 3.b is missing the slope value and the interpretation is not in context. Both of these are mistakes other students might make so we will create two additional rubric items and then assign them to Mine.
+
+<iframe src="https://drive.google.com/file/d/13VbgCL3HXxFXYRZE8x61PP6M1FbCb3zn/preview" width="640" height="480" allow="autoplay"></iframe>
+
+<br>
+
+<iframe src="https://drive.google.com/file/d/16uH6h_TU6HeyNlEMgzCa5iN2GBuPKSrM/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Now you can finish grading Mine's assignment.
+
+### The final grade sheet 
+
+Once all students have been graded a message will appear telling the grader about the final grade sheet.
+
+<iframe src="https://drive.google.com/file/d/1YyTwMQwExVgZbGCAEiyWbmy4O7kYyq-s/preview" width="640" height="480" allow="autoplay"></iframe>
+
+The final grade sheet will contain all of the columns present in the roster, plus two additional columns. One of these columns will be the final grade for each student and one will be the grade decomposition, the number of points a student earned for each question. 
+
+If the grader decides they want to change any points associated with a rubric item, they can update the column "points_to_remove" or "points_to_add" corresponding to a certain prompt code for an assignment part in the assignment's rubric and then rerun `assist_grading()` with the `rubric_path` specified as the path to the updated rubric. 
+
+Students that were not completely graded will get a NA score in the grade sheet.
+
+### Feedback files  
+
+gradetools creates a feedback file for each student as the user grades. This file will contain all feedback messages associated with rubric items applied to their assignment. The feedback will be knitted to the specified file type after grading has ended. If the grader decides they want a different type of feedback file (e.g. a word document instead of html) the user can rerun `assist_grading()` with the file extension of `example_feedback_path` changed to the desired one.
+
+The console will contain a message letting the user know if the feedback files were able to be knitted. If not, it will save the feedback .Rmd file.
+
+## Final notes  
+
+### Missing assignments  
+
+gradetools determines assignment paths by replacing all instances of the `example_student_identifier` in the `example_assignment_path` with each student identifier. If an assignment is not found at the file path, `assist_grading()` will consider that student's assignment to be missing. The user will never be prompted to grade students with missing assignments. `assist_grading()` has an argument called `missing_assignment_grade` which is `NA` by default. Students with missing assignments will have the their total grade for the assignment in the final grade sheet equal to the value of  `missing_assignment_grade`.
+
+### Selective grading  
+
+The function `assist_advanced_grading()` is like a wrapper of `assist_grading()` where two additional parameters allow the user to specify `students_to_grade` and `questions_to_grade`. These can be specified by a vector of question names corresponding to the names of specific parts of the assignment provided in the column "name" in the rubric. `students_to_grade` and `questions_to_grade` can also be set to "all", which is the default.  
+
+Further capabilities of `assist_advanced_grading()` relate to options available for classes that are managed through GitHub and can be found in the "extended-capability-github" vignette.
