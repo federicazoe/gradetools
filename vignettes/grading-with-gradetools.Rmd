@@ -7,12 +7,6 @@ vignette: >
   %\VignetteIndexEntry{1 - How to grade with gradetools}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-resource_files:
-  - images/example-repo.png
-  - images/example-directory-quizzes-folder.png
-  - images/class-roster.png
-  - images/rubric-blank.png
-  - images/rubric-filled.png
 ---
 
 ```{r, include = FALSE}
