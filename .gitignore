@@ -44,6 +44,3 @@ vignettes/*.pdf
 
 inst/doc
 
-# Logo sketches
-logo/sketches
-logo/make_sticker.R
