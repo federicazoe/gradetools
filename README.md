@@ -14,7 +14,7 @@ The functions in gradetools allow the grader to:
 - specify the rubric and modify it dynamically while grading;
 - save a final grade sheet with all assigned grades;
 - save a personalized feedback file for each student;
-- grade both individual and group assignments;
+- grade both individual and team-based assignments;
 - regrade specified students and questions;
 - push feedback and create GitHub issues into students' GitHub repos. 
 
@@ -36,7 +36,7 @@ You can install the development version from Github. You would also need to inst
 
 ``` r
 #install.packages
-devtools::install_github("federicazoe/gradetools")
+devtools::install_github("mdogucu/gradetools")
 ```
 
 ## Support
