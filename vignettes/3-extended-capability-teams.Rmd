@@ -1,10 +1,10 @@
 ---
-title: "3 - Extended gradetools Capability: Team Grading"
+title: "Extended gradetools Capability: Team Grading"
 output: 
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{3 - Extended gradetools Capability: Team Grading}
+  %\VignetteIndexEntry{Extended gradetools Capability: Team Grading}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

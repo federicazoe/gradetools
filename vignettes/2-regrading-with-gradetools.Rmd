@@ -1,8 +1,8 @@
 ---
-title: "2 - How to regrade assignments with gradetools"
+title: "How to regrade assignments with gradetools"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{2 - How to regrade assignments with gradetools}
+  %\VignetteIndexEntry{How to regrade assignments with gradetools}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -1,10 +1,10 @@
 ---
-title: "1 - How to grade with gradetools"
+title: "How to grade with gradetools"
 output: 
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{1 - How to grade with gradetools}
+  %\VignetteIndexEntry{How to grade with gradetools}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

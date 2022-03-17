@@ -1,10 +1,10 @@
 ---
-title: "4 - Extended gradetools Capability: Assignments on GitHub"
+title: "Extended gradetools Capability: Assignments on GitHub"
 output: 
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{4 - Extended gradetools Capability: Assignments on GitHub}
+  %\VignetteIndexEntry{Extended gradetools Capability: Assignments on GitHub}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
