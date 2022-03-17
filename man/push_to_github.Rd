@@ -2,7 +2,7 @@
 % Please edit documentation in R/push_to_github.R
 \name{push_to_github}
 \alias{push_to_github}
-\title{Push feedback and issues to github}
+\title{Push feedback and issues to GitHub}
 \usage{
 push_to_github(
   temp_grade_sheet_path,
@@ -21,14 +21,14 @@ push_to_github(
 
 \item{example_github_repo}{string; example of the name of a student's GitHub repo for this assignment (or team's repo, if team_grading = TRUE). The example_identifier must feature in the example_github_repo and must be the same as the roster identifier for the student (or for the team if team_grading = TRUE).}
 
-\item{example_identifier}{string; the github username of the student or the name of the team, if team_grading = TRUE. This needs to be present somewhere in example_github_repo.}
+\item{example_identifier}{string; the GitHub username of the student or the name of the team, if team_grading = TRUE. This needs to be present somewhere in example_github_repo.}
 
 \item{push_feedback}{logical, whether to push feedback files}
 
-\item{create_issues}{logica, whether to create issues}
+\item{create_issues}{logical, whether to create issues}
 
 \item{team_grading}{logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)}
 }
 \description{
-Push feedback and issues to github
+Push feedback and issues to GitHub
 }

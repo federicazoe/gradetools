@@ -61,7 +61,7 @@ assist_team_grading(
 
 \item{example_feedback_path}{string; file path to one of the assignment feedback files that will be generated as the user grades. This file path structure will be used to determine where the other feedback files will be stored. The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. The extension of the feedback file must be one of the following: "Rmd", "docx", "html", "pdf"}
 
-\item{example_student_identifier}{string; a student identifier (e.g. name, id, id number, github user name) that is used to identify the student on the roster. This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the Github user name if the user wishes to push issues or feedback to Github later}
+\item{example_student_identifier}{string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later}
 
 \item{missing_assignment_grade}{numeric; The grade to assign a student with no assignment submission}
 
@@ -82,5 +82,5 @@ Assisted grading
 
 Advanced assisted grading
 
-team assisted grading
+Team assisted grading
 }

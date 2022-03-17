@@ -2,7 +2,7 @@
 % Please edit documentation in R/request_github_issues.R
 \name{request_github_issues}
 \alias{request_github_issues}
-\title{Allows the user to input their requested github issues titles and bodies}
+\title{Allows the user to input their requested GitHub issues titles and bodies}
 \usage{
 request_github_issues(curr_row, last_chance = FALSE)
 }
@@ -12,5 +12,5 @@ request_github_issues(curr_row, last_chance = FALSE)
 \item{last_chance}{logical, whether it is the last chance to take note of an issue for the current student.}
 }
 \description{
-Allows the user to input their requested github issues titles and bodies
+Allows the user to input their requested GitHub issues titles and bodies
 }

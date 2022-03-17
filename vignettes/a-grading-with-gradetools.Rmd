@@ -116,7 +116,7 @@ The practice example below will clarify all the arguments that we have introduce
 
 ## Grading with `assist_grading()` 
 
-We are now ready to begin grading with gradetools. This package should be used in Rstudio since it opens files. To begin gradin,g the user would call the `assist_grading()` function.
+We are now ready to begin grading with gradetools. This package should be used in RStudio since it opens files. To begin grading, the user would call the `assist_grading()` function.
 
 ```{r}
 assist_grading(

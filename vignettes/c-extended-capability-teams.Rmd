@@ -1,10 +1,10 @@
 ---
-title: "Extended gradetools Capability: Team Grading"
+title: "Extended gradetools capability: Team Grading"
 output: 
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Extended gradetools Capability: Team Grading}
+  %\VignetteIndexEntry{Extended gradetools capability: Team Grading}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -29,7 +29,7 @@ This vignette will walk the user through what needs to be done differently when 
 
 ## Obtaining the example directory
 
-For this example we will use the example directory called example-team-grading-directory-week09-regression in the [team-grading-week09-regression](https://github.com/gradetools-test-course/team-grading-week09-regression) repository in our gradetools-test-course on Github. 
+For this example we will use the example directory called example-team-grading-directory-week09-regression in the [team-grading-week09-regression](https://github.com/gradetools-test-course/team-grading-week09-regression) repository in our gradetools-test-course on GitHub. 
 
 We will be using everything in the example-team-grading-directory-week09-regression folder. This folder contains the class-roster.csv, quiz-09a-lin-reg-rubric.csv, and a folder named quizzes which contains the students' quizzes.
 

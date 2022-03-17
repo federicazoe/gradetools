@@ -5,13 +5,8 @@
 - local Windows X install, R 4.1.2
 - GitHub Actions (windows): release 
 - Github Actions (ubuntu): release, devel, oldrel-1
-- r-hub: windows-x86_64-release, ubuntu-gcc-release, fedora-clang-devel, macos-highsierra-release
-
 - Github Actions (macOS): release
-- r-hub: windows-x86_64-devel, macos-m1-bigsur-release
-
-
-- win-builder: release, devel, oldrelease
+- r-hub: windows-x86_64-release, ubuntu-gcc-release, fedora-clang-devel, macos-highsierra-release
 
 ## R CMD check results
 

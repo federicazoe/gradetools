@@ -2,7 +2,7 @@
 % Please edit documentation in R/push_to_github.R
 \name{push_feedback_github}
 \alias{push_feedback_github}
-\title{Push feedback to github}
+\title{Push feedback to GitHub}
 \usage{
 push_feedback_github(temp_grade_sheet, class_github_name)
 }
@@ -12,5 +12,5 @@ push_feedback_github(temp_grade_sheet, class_github_name)
 \item{class_github_name}{string, GitHub name of the class. This input is needed to push feedback and issues to the correct class on GitHub.}
 }
 \description{
-Push feedback to github
+Push feedback to GitHub
 }

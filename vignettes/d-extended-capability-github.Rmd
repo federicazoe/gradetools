@@ -1,10 +1,10 @@
 ---
-title: "Extended gradetools Capability: Assignments on GitHub"
+title: "Extended gradetools capability: Assignments on GitHub"
 output: 
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Extended gradetools Capability: Assignments on GitHub}
+  %\VignetteIndexEntry{Extended gradetools capability: Assignments on GitHub}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -36,7 +36,7 @@ If you would like to see an introduction on how to structure your class on GitHu
 
 ## Cloning assignments from GitHub with ghclass 
 
-Before using gradetools functionalities, the user needs to clone from GitHub all the repos where students have pushed their assignments. This can be done easily and quickly using the function [`local_repo_clone()`](https://rundel.github.io/ghclass/reference/local_repo.ht) from the ghclass package. 
+Before using gradetools functionalities, the user needs to clone from GitHub all the repos where students have pushed their assignments. This can be done easily and quickly using the function [`local_repo_clone()`](https://rundel.github.io/ghclass/reference/local_repo.html) from the ghclass package. 
 
 The code below shows how to clone from the GitHub organization _gradetools-test-course_ all the repos whose name contains _week09-regression-_. The repos are pulled into a local folder _week09-regression_ that we have created in the folder _students-repos_ in our current working directory.
 

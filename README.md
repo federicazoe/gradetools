@@ -22,12 +22,12 @@ The package has only been tested with RStudio GUI.
 
 ## Vignettes
 
-Throughout the vignettes we provide example grading scenarios that you can test the functions. There are currently four vignettes available. 
+Throughout the vignettes we provide example grading scenarios that you can use to test the functions. There are currently four vignettes available. 
 
 1. [How to grade with gradetools](https://mdogucu.github.io/gradetools/articles/grading-with-gradetools.html): For beginner users we recommend starting with this vignette.
-2. [How to regrade assignments with gradetools](https://mdogucu.github.io/gradetools/articles/regrading-with-gradetools.html)
-3. [Extended gradetools Capability: Team Grading](https://mdogucu.github.io/gradetools/articles/extended-capability-teams.html) This vignette is only relevant for grading assignments that are team-based.
-4. [Extended gradetools Capability: Assignments on GitHub](https://mdogucu.github.io/gradetools/articles/extended-capability-github.html) This vignette is only relevant for assignments that are on GitHub.
+2. [How to regrade assignments with gradetools](https://mdogucu.github.io/gradetools/articles/regrading-with-gradetools.html): This vignette shows how to change previously assigned grades.
+3. [Extended gradetools Capability: Team Grading](https://mdogucu.github.io/gradetools/articles/extended-capability-teams.html): This vignette is only relevant for grading assignments that are team-based.
+4. [Extended gradetools Capability: Assignments on GitHub](https://mdogucu.github.io/gradetools/articles/extended-capability-github.html): This vignette is only relevant for assignments that are on GitHub.
 
 
 ## Installation
@@ -44,7 +44,7 @@ devtools::install_github("mdogucu/gradetools")
 <table>
   <tr style="text-align: left"> 
     <td> <img src="man/figures/nsf-logo.png" align="center" alt="NSF logo" width="120" /> </td>
-    <td style="text-align: left"> Part of this work is supported by NSF HDR DSC award #2123366. </td>
+    <td style="text-align: left"> <br> <br> Part of this work is supported by NSF HDR DSC award #2123366. </td>
   </tr> 
   <tr></tr>
   <tr style="text-align: left"> 

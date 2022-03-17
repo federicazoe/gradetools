@@ -1,12 +1,12 @@
 
-#' Push feedback and issues to github
+#' Push feedback and issues to GitHub
 #'
 #' @param temp_grade_sheet_path data frame, The temp_grade_sheet is a data frame containing information for gradetools internal use
 #' @param class_github_name string, GitHub name of the class. This input is only needed if github_issues is set to TRUE.
 #' @param example_github_repo string; example of the name of a student's GitHub repo for this assignment (or team's repo, if team_grading = TRUE). The example_identifier must feature in the example_github_repo and must be the same as the roster identifier for the student (or for the team if team_grading = TRUE).
-#' @param example_identifier string; the github username of the student or the name of the team, if team_grading = TRUE. This needs to be present somewhere in example_github_repo.
+#' @param example_identifier string; the GitHub username of the student or the name of the team, if team_grading = TRUE. This needs to be present somewhere in example_github_repo.
 #' @param push_feedback logical, whether to push feedback files
-#' @param create_issues logica, whether to create issues
+#' @param create_issues logical, whether to create issues
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
 #' 
 #' @export
@@ -94,7 +94,7 @@ push_to_github <- function(
 
 
   
-#' Push feedback to github
+#' Push feedback to GitHub
 #'
 #' @param temp_grade_sheet tibble created by assist_advanced_grading().
 #' @param class_github_name string, GitHub name of the class. This input is needed to push feedback and issues to the correct class on GitHub.
@@ -148,7 +148,7 @@ push_feedback_github <- function(
   
 
 
-#' Push issues to github
+#' Push issues to GitHub
 #' 
 #' @param temp_grade_sheet tibble created by assist_advanced_grading().
 #' @param class_github_name string, GitHub name of the class. This input is needed to push feedback and issues to the correct class on GitHub.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/push_to_github.R
 \name{create_issues_github}
 \alias{create_issues_github}
-\title{Push issues to github}
+\title{Push issues to GitHub}
 \usage{
 create_issues_github(temp_grade_sheet, class_github_name, team_grading = FALSE)
 }
@@ -14,5 +14,5 @@ create_issues_github(temp_grade_sheet, class_github_name, team_grading = FALSE)
 \item{team_grading}{logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)}
 }
 \description{
-Push issues to github
+Push issues to GitHub
 }

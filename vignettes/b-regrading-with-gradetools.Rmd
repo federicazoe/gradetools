@@ -25,7 +25,7 @@ The temporary grade sheet stores grading progress, so if it has been saved after
 
 For this example we will use the example directory called example-directory-week09-regression in the [quizzes-collected-week09-regression](https://github.com/gradetools-test-course/quizzes-collected-week09-regression) repository in our gradetools-test-course on GitHub.
 
-For our purposed we will consider the situation where we were in the process of grading and realized we assigned the wrong rubric item to a student.
+For our purpose we will consider the situation where we were in the process of grading and realized we assigned the wrong rubric item to a student.
 
 <iframe src="https://drive.google.com/file/d/1_3nX5wKkTHW9mLM5UOqrjAhnCkkgvccR/preview" width="640" height="480" allow="autoplay"></iframe>
 
