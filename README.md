@@ -6,7 +6,7 @@ gradetools supports grading assessments for which automated feedback is not poss
 gradetools aims to do two major things:
 
 1. Automate the grading workflow not the feedback. 
-2. Minimize switching between different interfaces (gradebook, student's work, GitHub etc.)
+2. Minimize switching between different interfaces (grade book, student's work, GitHub etc.)
 
 The functions in gradetools allow the grader to:
 
@@ -32,7 +32,7 @@ Throughout the vignettes we provide example grading scenarios that you can use t
 
 ## Installation
 
-You can install the development version from Github. You would also need to install the devtools package if you do not have it installed already.
+You can install the development version from GitHub. You would also need to install the devtools package if you do not have it installed already.
 
 ``` r
 #install.packages

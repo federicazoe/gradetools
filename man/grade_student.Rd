@@ -29,7 +29,7 @@ grade_student(
 
 \item{rubric_path}{string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.}
 
-\item{github_issues}{Boolean; indicates if grader wants to be able to create Github issues}
+\item{github_issues}{Boolean; indicates if grader wants to be able to create GitHub issues}
 
 \item{issue_every_question}{logical, whether the possibility to create issues should be given at every question or only at the end of the assignment}
 

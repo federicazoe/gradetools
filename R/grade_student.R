@@ -6,7 +6,7 @@
 #' @param rubric_prompts list of prompts; One prompt for each question plus one for overall feedback. This is produced by create_rubric_prompts
 #' @param rubric_list list whose format corresponds to rubric_list, which is used by most functions in this package. This is produced by import_rubric
 #' @param rubric_path string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.
-#' @param github_issues Boolean; indicates if grader wants to be able to create Github issues
+#' @param github_issues Boolean; indicates if grader wants to be able to create GitHub issues
 #' @param issue_every_question logical, whether the possibility to create issues should be given at every question or only at the end of the assignment
 #' @param questions_to_grade vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric
 #' 
