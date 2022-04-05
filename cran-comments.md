@@ -6,8 +6,8 @@
 - GitHub Actions (windows): release 
 - Github Actions (ubuntu): release, devel, oldrel-1
 - Github Actions (macOS): release
-- r-hub: windows-x86_64-release, ubuntu-gcc-release, fedora-clang-devel, macos-highsierra-release
+- r-hub: windows-x86_64-release, ubuntu-gcc-release, fedora-clang-devel, macos-highsierra-release-cran
 
 ## R CMD check results
 
-There were no ERRORS, no WARNINGS, no MESSAGES
+0 errors | 0 warnings | 0 notes
