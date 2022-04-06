@@ -26,7 +26,7 @@ Suggests:
     knitr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://federicazoe.github.io/gradetools/, https://github.com/federicazoe/gradetools/
+URL: https://federicazoe.github.io/gradetools/,
+    https://github.com/federicazoe/gradetools/
 BugReports: https://github.com/federicazoe/gradetools/issues/
 VignetteBuilder: knitr
-
