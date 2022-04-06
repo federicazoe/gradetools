@@ -52,7 +52,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/federicazoe/gradetools/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -67,14 +74,14 @@
       <img src="" class="logo" alt=""><h1>Extended gradetools capability: Team Grading</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/federicazoe/gradetools/blob/HEAD/vignettes/c-extended-capability-teams.Rmd" class="external-link"><code>vignettes/c-extended-capability-teams.Rmd</code></a></small>
       <div class="d-none name"><code>c-extended-capability-teams.Rmd</code></div>
     </div>
 
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gradetools</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://federicazoe.github.io/gradetools/" class="external-link">gradetools</a></span><span class="op">)</span></code></pre></div>
 <p>We define team grading to be when the grade of an assignment is
 assigned to multiple students.</p>
 <p>This vignette displays gradetools’s extended capability of handling
@@ -91,7 +98,7 @@ to grade the student.</p>
 </h2>
 <p>For this example we will use the example directory called
 example-team-grading-directory-week09-regression in the <a href="https://github.com/gradetools-test-course/team-grading-week09-regression" class="external-link">team-grading-week09-regression</a>
-repository in our gradetools-test-course on Github.</p>
+repository in our gradetools-test-course on GitHub.</p>
 <p>We will be using everything in the
 example-team-grading-directory-week09-regression folder. This folder
 contains the class-roster.csv, quiz-09a-lin-reg-rubric.csv, and a folder

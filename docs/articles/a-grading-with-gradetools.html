@@ -52,7 +52,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/federicazoe/gradetools/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -67,14 +74,14 @@
       <img src="" class="logo" alt=""><h1>How to grade with gradetools</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/federicazoe/gradetools/blob/HEAD/vignettes/a-grading-with-gradetools.Rmd" class="external-link"><code>vignettes/a-grading-with-gradetools.Rmd</code></a></small>
       <div class="d-none name"><code>a-grading-with-gradetools.Rmd</code></div>
     </div>
 
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gradetools</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://federicazoe.github.io/gradetools/" class="external-link">gradetools</a></span><span class="op">)</span></code></pre></div>
 <p>The goal of this vignette is to introduce users to the gradetools
 package using a practice example.</p>
 <div class="section level2">
@@ -232,7 +239,7 @@ the <code><a href="../reference/null_assist_grading.html">assist_grading()</a></
 <h2 id="grading-with-assist_grading">Grading with <code>assist_grading()</code><a class="anchor" aria-label="anchor" href="#grading-with-assist_grading"></a>
 </h2>
 <p>We are now ready to begin grading with gradetools. This package
-should be used in Rstudio since it opens files. To begin gradin,g the
+should be used in RStudio since it opens files. To begin grading, the
 user would call the <code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/null_assist_grading.html">assist_grading</a></span><span class="op">(</span>

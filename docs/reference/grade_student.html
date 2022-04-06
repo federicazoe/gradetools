@@ -33,7 +33,13 @@
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/federicazoe/gradetools/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div>
 
     
   </div>
@@ -41,7 +47,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Leads grader through grading a student</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/federicazoe/gradetools/blob/HEAD/R/grade_student.R" class="external-link"><code>R/grade_student.R</code></a></small>
       <div class="d-none name"><code>grade_student.Rd</code></div>
     </div>
 
@@ -79,7 +85,7 @@
 <dt>rubric_path</dt>
 <dd><p>string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.</p></dd>
 <dt>github_issues</dt>
-<dd><p>Boolean; indicates if grader wants to be able to create Github issues</p></dd>
+<dd><p>Boolean; indicates if grader wants to be able to create GitHub issues</p></dd>
 <dt>issue_every_question</dt>
 <dd><p>logical, whether the possibility to create issues should be given at every question or only at the end of the assignment</p></dd>
 <dt>questions_to_grade</dt>
