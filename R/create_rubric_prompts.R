@@ -59,12 +59,13 @@ create_rubric_prompts <- function(rubric_list) {
     
     rubric_prompts[q] <- paste(
       q_name,
+      "Enter one or more of the following options, use -- to separate multiple items",
       stringr::str_c(q_prompts_code_and_messages, collapse = "\n"),
       stringr::str_c(all_questions_prompts, collapse = "\n"),
-      "Type one or more of the above options.",
-      "Use -- to separate different options.",
-      "If you wish to add a rubric item, enter 'r'",
-      "To stop grading, enter 222.",
+      "\nOr enter",
+      "r: Create a new rubric item",
+      "c: Add a comment to the feedback file",
+      "222: Stop grading",
       sep = "\n"
     )
     
@@ -78,22 +79,23 @@ create_rubric_prompts <- function(rubric_list) {
     )
     
     general_feedback <- paste(
-      "General feedback.",
-      "If you wish to use a prespecified feedback, type one or more of the options below",
-      "Use -- to separate different options.",
+      "General feedback",
+      "Enter one or more of the following options, use -- to separate multiple items",
       stringr::str_c(general_feedback_prompts_code_and_messages, collapse = "\n"),
-      "p: single-use general feedback",
-      "\nIf you wish to add a new pre-specified general feedback, enter 'r'", 
-      "If you do not wish to provide general feedback press [enter].",
+      "p: Provide a single-use general feedback",
+      "\nOr enter",
+      "r: Create a new pre-specified general feedback",
+      "[enter]: Decline to provide general feedback",
       sep = "\n"
     )
     
   } else {
     general_feedback <- paste(
       "General feedback.",
-      "Type 'p' if you wish to write a single-use general feedback for this assignment",
-      "\nIf you wish to add a new pre-specified general feedback, enter 'r'", 
-      "If you do not wish to provide general feedback press [enter].",
+      "Enter one of the following options",
+      "p: Provide a single-use general feedback",
+      "r: Create a new pre-specified general feedback",
+      "[enter]: Decline to provide general feedback",
       sep = "\n"
     )
     
