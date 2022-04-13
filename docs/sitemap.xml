@@ -4,9 +4,6 @@
     <loc>https://federicazoe.github.io/gradetools/404.html</loc>
   </url>
   <url>
-    <loc>https://federicazoe.github.io/gradetools/LICENSE.html</loc>
-  </url>
-  <url>
     <loc>https://federicazoe.github.io/gradetools/articles/1-grading-with-gradetools.html</loc>
   </url>
   <url>
@@ -58,10 +55,19 @@
     <loc>https://federicazoe.github.io/gradetools/index.html</loc>
   </url>
   <url>
+    <loc>https://federicazoe.github.io/gradetools/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://federicazoe.github.io/gradetools/news/index.html</loc>
+  </url>
+  <url>
     <loc>https://federicazoe.github.io/gradetools/reference/add_rubric_item.html</loc>
   </url>
   <url>
     <loc>https://federicazoe.github.io/gradetools/reference/assign_grade_write_feedback.html</loc>
+  </url>
+  <url>
+    <loc>https://federicazoe.github.io/gradetools/reference/assist_grading_functions.html</loc>
   </url>
   <url>
     <loc>https://federicazoe.github.io/gradetools/reference/assist_regrading.html</loc>

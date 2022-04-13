@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,6 +46,9 @@
     <a class="dropdown-item" href="../articles/c-extended-capability-teams.html">Extended gradetools capability: Team Grading</a>
     <a class="dropdown-item" href="../articles/d-extended-capability-github.html">Extended gradetools capability: Assignments on GitHub</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -82,41 +85,25 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://federicazoe.github.io/gradetools/">gradetools</a></span><span class="op">)</span></code></pre></div>
-<p>For this vignette we assume that you have already familiarized
-yourself with the basic functionalities of gradetools (see the vignette
-“how-to-grade-with-gradetools”) and we illustrate additional
-gradetools’s functionalities specific to classes that are managed using
-GitHub organizations.</p>
+<p>For this vignette we assume that you have already familiarized yourself with the basic functionalities of gradetools (see the vignette “how-to-grade-with-gradetools”) and we illustrate additional gradetools’s functionalities specific to classes that are managed using GitHub organizations.</p>
 <p>These extended functionalities involve:</p>
 <ul>
 <li>
-<strong>feedback</strong>: pushing to students’ (or teams’) repos
-their personalized feedback files.</li>
+<strong>feedback</strong>: pushing to students’ (or teams’) repos their personalized feedback files.</li>
 <li>
 <strong>GitHub issues</strong>:
 <ol style="list-style-type: decimal">
-<li>taking note of what issues the grader would like to create in a
-student’s (or team’s) repo;</li>
-<li>creating the requested GitHub issues in students’ (or teams’) repos
-and assigning them to the student (or to team members).</li>
+<li>taking note of what issues the grader would like to create in a student’s (or team’s) repo;</li>
+<li>creating the requested GitHub issues in students’ (or teams’) repos and assigning them to the student (or to team members).</li>
 </ol>
 </li>
 </ul>
-<p>If you would like to see an introduction on how to structure your
-class on GitHub you can look at the vignette of the <a href="https://rundel.github.io/ghclass/articles/ghclass.html" class="external-link">ghclass
-package</a>.</p>
+<p>If you would like to see an introduction on how to structure your class on GitHub you can look at the vignette of the <a href="https://rundel.github.io/ghclass/articles/ghclass.html" class="external-link">ghclass package</a>.</p>
 <div class="section level2">
 <h2 id="cloning-assignments-from-github-with-ghclass">Cloning assignments from GitHub with ghclass<a class="anchor" aria-label="anchor" href="#cloning-assignments-from-github-with-ghclass"></a>
 </h2>
-<p>Before using gradetools functionalities, the user needs to clone from
-GitHub all the repos where students have pushed their assignments. This
-can be done easily and quickly using the function <a href="https://rundel.github.io/ghclass/reference/local_repo.html" class="external-link"><code>local_repo_clone()</code></a>
-from the ghclass package.</p>
-<p>The code below shows how to clone from the GitHub organization
-<em>gradetools-test-course</em> all the repos whose name contains
-<em>week09-regression-</em>. The repos are pulled into a local folder
-<em>week09-regression</em> that we have created in the folder
-<em>students-repos</em> in our current working directory.</p>
+<p>Before using gradetools functionalities, the user needs to clone from GitHub all the repos where students have pushed their assignments. This can be done easily and quickly using the function <a href="https://rundel.github.io/ghclass/reference/local_repo.html" class="external-link"><code>local_repo_clone()</code></a> from the ghclass package.</p>
+<p>The code below shows how to clone from the GitHub organization <em>gradetools-test-course</em> all the repos whose name contains <em>week09-regression-</em>. The repos are pulled into a local folder <em>week09-regression</em> that we have created in the folder <em>students-repos</em> in our current working directory.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">class_github_name</span> <span class="op">&lt;-</span> <span class="st">"gradetools-test-course"</span>
 <span class="va">repo_template_name</span> <span class="op">&lt;-</span> <span class="st">"week09-regression-"</span>
@@ -126,9 +113,7 @@ from the ghclass package.</p>
   repo <span class="op">=</span> <span class="fu">ghclass</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ghclass/man/org_details.html" class="external-link">org_repos</a></span><span class="op">(</span><span class="va">class_github_name</span>, <span class="va">repo_template_name</span><span class="op">)</span>,
   local_path <span class="op">=</span> <span class="va">repos_local_path</span>
 <span class="op">)</span></code></pre></div>
-<p>A message will be shown to confirm which repos have been cloned
-(bottom-left screenshot) and the cloned repos will appear in the path
-specified (bottom-right screenshot).</p>
+<p>A message will be shown to confirm which repos have been cloned (bottom-left screenshot) and the cloned repos will appear in the path specified (bottom-right screenshot).</p>
 <iframe src="https://drive.google.com/file/d/17Zrtmm52XY744G3qcU7jl7ovSg0YINl_/preview" width="640" height="480" allow="autoplay">
 </iframe>
 <p><br></p>
@@ -138,14 +123,8 @@ specified (bottom-right screenshot).</p>
 <div class="section level2">
 <h2 id="pushing-feedback-files-to-github-with-push_to_github">Pushing feedback files to GitHub with push_to_github()<a class="anchor" aria-label="anchor" href="#pushing-feedback-files-to-github-with-push_to_github"></a>
 </h2>
-<p>After grading with <code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> or
-<code><a href="../reference/null_assist_grading.html">assist_advanced_grading()</a></code> - and after re-grading with
-<code><a href="../reference/assist_regrading.html">assist_regrading()</a></code> - the function
-<code><a href="../reference/push_to_github.html">push_to_github()</a></code> can be called to push all feedback files
-that have been written while grading and that have not been pushed yet
-to GitHub.</p>
-<p>Here is what a call to <code><a href="../reference/push_to_github.html">push_to_github()</a></code> could look
-like:</p>
+<p>After grading with <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> or <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> - and after re-grading with <code><a href="../reference/assist_regrading.html">assist_regrading()</a></code> - the function <code><a href="../reference/push_to_github.html">push_to_github()</a></code> can be called to push all feedback files that have been written while grading and that have not been pushed yet to GitHub.</p>
+<p>Here is what a call to <code><a href="../reference/push_to_github.html">push_to_github()</a></code> could look like:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/push_to_github.html">push_to_github</a></span> <span class="op">(</span>
   temp_grade_sheet_path <span class="op">=</span>  <span class="st">"quiz-09-lin-reg-temporary-grade-sheet.csv"</span>,
@@ -154,40 +133,21 @@ like:</p>
   example_identifier <span class="op">=</span> <span class="st">"federicazoe"</span>,
   push_feedback <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
-<p>Here is a description of the specified inputs: -
-<code>temp_grade_sheet_path</code> needs to be the same path specified
-when grading where the temporary grade sheet for this assignment has
-been stored. This is needed so that all students identifiers can be
-retrieved (note that they need to equal their GitHub usernames) and to
-keep track of which feedback files are pushed; -
-<code>class_github_name</code> is the name of the GitHub organization
-corresponding to this class; - <code>example_github_repo</code> is an
-example of a name of a student (or a team’s) repo for this assignment; -
-<code>example_identifier</code> - <code>push_feedback = TRUE</code> asks
-the function to push the feedback files (the same function could be used
-to only create issues, see below).</p>
-<p>Running this function will push each feedback file to the respective
-repo, if the repo is found:</p>
+<p>Here is a description of the specified inputs: - <code>temp_grade_sheet_path</code> needs to be the same path specified when grading where the temporary grade sheet for this assignment has been stored. This is needed so that all students identifiers can be retrieved (note that they need to equal their GitHub usernames) and to keep track of which feedback files are pushed; - <code>class_github_name</code> is the name of the GitHub organization corresponding to this class; - <code>example_github_repo</code> is an example of a name of a student (or a team’s) repo for this assignment; - <code>example_identifier</code> - <code>push_feedback = TRUE</code> asks the function to push the feedback files (the same function could be used to only create issues, see below).</p>
+<p>Running this function will push each feedback file to the respective repo, if the repo is found:</p>
 <iframe src="https://drive.google.com/file/d/1LsVfXT4ttKE4kv3MGuDadKWIJZ-SEX8E/preview" width="640" height="480" allow="autoplay">
 </iframe>
 </div>
 <div class="section level2">
 <h2 id="creating-github-issues">Creating GitHub issues<a class="anchor" aria-label="anchor" href="#creating-github-issues"></a>
 </h2>
-<p>While we are grading, gradetools can give us the option to take note
-of some GitHub issues that we would like to create into students’ or
-teams’ repos. To be given this option, we need to grade using
-<code><a href="../reference/null_assist_grading.html">assist_advanced_grading()</a></code> with the input
-<code>github_issues</code> set to TRUE.</p>
+<p>While we are grading, gradetools can give us the option to take note of some GitHub issues that we would like to create into students’ or teams’ repos. To be given this option, we need to grade using <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> with the input <code>github_issues</code> set to TRUE.</p>
 <div class="section level3">
-<h3 id="take-note-of-desired-github-issues-with-assist_advanced_grading">Take note of desired GitHub issues with
-assist_advanced_grading()<a class="anchor" aria-label="anchor" href="#take-note-of-desired-github-issues-with-assist_advanced_grading"></a>
+<h3 id="take-note-of-desired-github-issues-with-assist_advanced_grading">Take note of desired GitHub issues with assist_advanced_grading()<a class="anchor" aria-label="anchor" href="#take-note-of-desired-github-issues-with-assist_advanced_grading"></a>
 </h3>
-<p>By default, for each student (or team) gradetools will ask us only
-once if we want to take note of some issues - when we are done grading
-that student (or team):</p>
+<p>By default, for each student (or team) gradetools will ask us only once if we want to take note of some issues - when we are done grading that student (or team):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/null_assist_grading.html">assist_advanced_grading</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/assist_grading_functions.html">assist_advanced_grading</a></span><span class="op">(</span>
   rubric_path <span class="op">=</span> <span class="st">"../example-directory/github-grading/week-09-regression-rubric.csv"</span>,
   roster_path <span class="op">=</span> <span class="st">"../example-directory/github-grading/roster.csv"</span>,
   temp_grade_sheet_path  <span class="op">=</span> <span class="st">"quiz-09-lin-reg-temporary-grade-sheet.csv"</span>,
@@ -197,41 +157,27 @@ that student (or team):</p>
   example_student_identifier <span class="op">=</span> <span class="st">"federicazoe"</span>,
   github_issues <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
-<p>After grading all assignment parts and optionally specifying a
-general feedback for a student, we are then asked if we would like to
-take note of an issue and we type “000” if we want to:</p>
+<p>After grading all assignment parts and optionally specifying a general feedback for a student, we are then asked if we would like to take note of an issue and we type “000” if we want to:</p>
 <iframe src="https://drive.google.com/file/d/1Q__ErERJTDeuUbpUBlUVgWc5tM2owc2a/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>We will then be prompted to specify a title and a body for the
-issue:</p>
+<p>We will then be prompted to specify a title and a body for the issue:</p>
 <iframe src="https://drive.google.com/file/d/1F-HHXdOU-Quan1Is-LAd6CFs9fRSVajI/preview" width="640" height="480" allow="autoplay">
 </iframe>
 <p><br></p>
 <iframe src="https://drive.google.com/file/d/1JABjaCbTYqJSGA2EXxtIEOsCOQu3bsCS/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>We can cancel taking note of an issue at any time, and we can take
-note of as many issues as we want:</p>
+<p>We can cancel taking note of an issue at any time, and we can take note of as many issues as we want:</p>
 <iframe src="https://drive.google.com/file/d/1JABjaCbTYqJSGA2EXxtIEOsCOQu3bsCS/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>Finally, by setting the optional parameter
-<code>issue_every_question</code> to TRUE, we would be asked whether we
-want to take note of a new issue at the end of <em>each part</em> of
-each student’s (or team’s) assignment. This would be recommended only
-for assignments with few parts:</p>
+<p>Finally, by setting the optional parameter <code>issue_every_question</code> to TRUE, we would be asked whether we want to take note of a new issue at the end of <em>each part</em> of each student’s (or team’s) assignment. This would be recommended only for assignments with few parts:</p>
 <iframe src="https://drive.google.com/file/d/1Act6Ej8q2SLhiLIdDOjf4QHJNm_ypP6U/preview" width="640" height="480" allow="autoplay">
 </iframe>
 </div>
 <div class="section level3">
 <h3 id="create-desired-github-issues-with-push_to_github">Create desired GitHub issues with push_to_github()<a class="anchor" aria-label="anchor" href="#create-desired-github-issues-with-push_to_github"></a>
 </h3>
-<p>After grading with <code>githb_issues = TRUE</code> using
-<code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> or <code><a href="../reference/null_assist_grading.html">assist_advanced_grading()</a></code>
-- and after re-grading with <code><a href="../reference/assist_regrading.html">assist_regrading()</a></code> - the
-function <code><a href="../reference/push_to_github.html">push_to_github()</a></code> can be called to push all
-feedback files that have been written while grading and that have not
-been pushed yet to GitHub.</p>
-<p>Here is what a call to <code><a href="../reference/push_to_github.html">push_to_github()</a></code> could look
-like:</p>
+<p>After grading with <code>githb_issues = TRUE</code> using <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> or <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> - and after re-grading with <code><a href="../reference/assist_regrading.html">assist_regrading()</a></code> - the function <code><a href="../reference/push_to_github.html">push_to_github()</a></code> can be called to push all feedback files that have been written while grading and that have not been pushed yet to GitHub.</p>
+<p>Here is what a call to <code><a href="../reference/push_to_github.html">push_to_github()</a></code> could look like:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/push_to_github.html">push_to_github</a></span> <span class="op">(</span>
   temp_grade_sheet_path <span class="op">=</span>  <span class="st">"quiz-09-lin-reg-temporary-grade-sheet.csv"</span>,
@@ -240,13 +186,10 @@ like:</p>
   example_identifier <span class="op">=</span> <span class="st">"federicazoe"</span>,
   push_issues <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
-<p>Running the above code will look into the temporary grade sheet and
-push all GitHub issues that the grader has taken note of and have not
-been pushed yet:</p>
+<p>Running the above code will look into the temporary grade sheet and push all GitHub issues that the grader has taken note of and have not been pushed yet:</p>
 <iframe src="https://drive.google.com/file/d/12OByuPY7WDtKOCl-Fzg_BD3pFO2107mn/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>If we look on GitHub, we will see that the desired issues have been
-created and assigned to the correct students:</p>
+<p>If we look on GitHub, we will see that the desired issues have been created and assigned to the correct students:</p>
 <iframe src="https://drive.google.com/file/d/1hOiMucoP_oCT-zniMxlWz6ZvSWn717jX/preview" width="640" height="480" allow="autoplay">
 </iframe>
 <p><br></p>
@@ -257,9 +200,7 @@ created and assigned to the correct students:</p>
 <div class="section level2">
 <h2 id="credits">Credits<a class="anchor" aria-label="anchor" href="#credits"></a>
 </h2>
-<p>The extended functionalities for assignments managed using GitHub
-were possible thanks to the functions in the <a href="https://rundel.github.io/ghclass/index.html" class="external-link">ghclass</a>
-package.</p>
+<p>The extended functionalities for assignments managed using GitHub were possible thanks to the functions in the <a href="https://rundel.github.io/ghclass/index.html" class="external-link">ghclass</a> package.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -274,8 +215,7 @@ package.</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

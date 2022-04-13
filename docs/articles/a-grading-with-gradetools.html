@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,6 +46,9 @@
     <a class="dropdown-item" href="../articles/c-extended-capability-teams.html">Extended gradetools capability: Team Grading</a>
     <a class="dropdown-item" href="../articles/d-extended-capability-github.html">Extended gradetools capability: Assignments on GitHub</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -82,112 +85,54 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://federicazoe.github.io/gradetools/">gradetools</a></span><span class="op">)</span></code></pre></div>
-<p>The goal of this vignette is to introduce users to the gradetools
-package using a practice example.</p>
+<p>The goal of this vignette is to introduce users to the gradetools package using a practice example.</p>
 <div class="section level2">
 <h2 id="obtaining-the-example-directory">Obtaining the example directory<a class="anchor" aria-label="anchor" href="#obtaining-the-example-directory"></a>
 </h2>
-<p>For this example we will use the example directory called
-example-directory-week09-regression in the <a href="https://github.com/gradetools-test-course/quizzes-collected-week09-regression/tree/main/example-directory-week09-regression" class="external-link">quizzes-collected-week09-regression</a>
-repository in our gradetools-test-course organization on GitHub. To
-follow along on your computer you can pull the repo from GitHub or use
-the “Download ZIP” option in the drop down list from the “Code” button
-on GitHub.</p>
+<p>For this example we will use the example directory called example-directory-week09-regression in the <a href="https://github.com/gradetools-test-course/quizzes-collected-week09-regression/tree/main/example-directory-week09-regression" class="external-link">quizzes-collected-week09-regression</a> repository in our gradetools-test-course organization on GitHub. To follow along on your computer you can pull the repo from GitHub or use the “Download ZIP” option in the drop down list from the “Code” button on GitHub.</p>
 <iframe src="https://drive.google.com/file/d/1Lxhpo5LvJUurNRUBKzxgYBjnZWMJ8cYw/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>Everything that we will be using here is in the
-example-directory-week09-regression folder. This folder contains the
-class-roster.csv, quiz-09a-lin-reg-rubric.csv, and a folder named
-quizzes (shown below) which contains students’ quizzes as well as a
-template copy of the quiz.</p>
+<p>Everything that we will be using here is in the example-directory-week09-regression folder. This folder contains the class-roster.csv, quiz-09a-lin-reg-rubric.csv, and a folder named quizzes (shown below) which contains students’ quizzes as well as a template copy of the quiz.</p>
 <iframe src="https://drive.google.com/file/d/134pDOPLzyCqbyKImFP9pnVOkNJyeDqxI/preview" width="640" height="480" allow="autoplay">
 </iframe>
 </div>
 <div class="section level2">
 <h2 id="preparing-to-grade-with-gradetools">Preparing to grade with gradetools<a class="anchor" aria-label="anchor" href="#preparing-to-grade-with-gradetools"></a>
 </h2>
-<p>The necessary materials for grading are the class roster, an
-assignment rubric and the assignments to be graded.</p>
+<p>The necessary materials for grading are the class roster, an assignment rubric and the assignments to be graded.</p>
 <div class="section level3">
 <h3 id="the-roster">The roster<a class="anchor" aria-label="anchor" href="#the-roster"></a>
 </h3>
-<p>The only requirement for the class roster is that it contains a
-column named “student_identifier”. This student_identifier must be the
-only thing unique to the student in a student’s assignment path (e.g. a
-student_identifier could be catalinamedina and the path to the
-assignment could be “hw1-catalinamedina.R” or
-“homework/catalinamedina/hw1.Rmd”). Typically the student identifier
-would be a student’s name, school id, school id number, or GitHub
-username.</p>
-<p>All columns present in the class roster will be present in the final
-grade sheet prepared by gradetools.</p>
-<p>The class roster we will use for this example has GitHub usernames as
-the student_identifier and an extra column called Name.</p>
+<p>The only requirement for the class roster is that it contains a column named “student_identifier”. This student_identifier must be the only thing unique to the student in a student’s assignment path (e.g. a student_identifier could be catalinamedina and the path to the assignment could be “hw1-catalinamedina.R” or “homework/catalinamedina/hw1.Rmd”). Typically the student identifier would be a student’s name, school id, school id number, or GitHub username.</p>
+<p>All columns present in the class roster will be present in the final grade sheet prepared by gradetools.</p>
+<p>The class roster we will use for this example has GitHub usernames as the student_identifier and an extra column called Name.</p>
 <iframe src="https://drive.google.com/file/d/1n_n6DkGu51vBwi610l4Am7MDQnI_mXzy/preview" width="640" height="480" allow="autoplay">
 </iframe>
 </div>
 <div class="section level3">
 <h3 id="the-rubric">The rubric<a class="anchor" aria-label="anchor" href="#the-rubric"></a>
 </h3>
-<p>The rubric for an assignment graded with gradetools has specific
-requirements. The function <code><a href="../reference/create_rubric_template.html">create_rubric_template()</a></code> creates
-a rubric template for the grader to fill in.</p>
-<p>This function requires the user to specify (1) the path where they
-want to write the rubric template and (2) whether the rubric will list
-possible errors along with the points to be removed for each error
-(negative_grading = TRUE) or expected components of a correct answer
-along with the points to be added for each component (negative_grading =
-FALSE).</p>
+<p>The rubric for an assignment graded with gradetools has specific requirements. The function <code><a href="../reference/create_rubric_template.html">create_rubric_template()</a></code> creates a rubric template for the grader to fill in.</p>
+<p>This function requires the user to specify (1) the path where they want to write the rubric template and (2) whether the rubric will list possible errors along with the points to be removed for each error (negative_grading = TRUE) or expected components of a correct answer along with the points to be added for each component (negative_grading = FALSE).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/create_rubric_template.html">create_rubric_template</a></span><span class="op">(</span>
   rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>,
   negative_grading <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
-<p>After the above call a .csv file will be created which will only
-contain headers.</p>
+<p>After the above call a .csv file will be created which will only contain headers.</p>
 <iframe src="https://drive.google.com/file/d/1YaON28y3U9guSsJiGgLdvfPpQOGKT7Ry/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>The user will then fill this rubric according to the specifications
-described in the documentation of <code><a href="../reference/create_rubric_template.html">create_rubric_template()</a></code>.
-The filled out rubric is provided in the example directory.</p>
+<p>The user will then fill this rubric according to the specifications described in the documentation of <code><a href="../reference/create_rubric_template.html">create_rubric_template()</a></code>. The filled out rubric is provided in the example directory.</p>
 <iframe src="https://drive.google.com/file/d/1tMheSNOEgPmqma9nmRvBARfV1JPSYFdp/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>From the screenshot above, notice that the rubric includes three
-types of entries in the column “name”: specific parts of the assignment
-(Question 1.a through Question 3.b), “all_questions” and
-“general_feedback”.</p>
+<p>From the screenshot above, notice that the rubric includes three types of entries in the column “name”: specific parts of the assignment (Question 1.a through Question 3.b), “all_questions” and “general_feedback”.</p>
 <ul>
-<li><p>Names of specific assignment parts can be freely specified
-(e.g. “Question 1.a” could have been named “Regression equation”). They
-correspond to a part of the assignment that the grader wants to assess
-and they don’t need to be a question with a special demarcation in the
-assignment. For example, if we are grading a research proposal, a
-specific part’s name of a rubric entry could be “Abstract”. Specific
-parts need to be given “total_points” which is the total score available
-for that part and “points_to_remove” which are the points to be removed
-from the score assigned for that part (or “points_to_add”, when
-negative_grading = FALSE, in which case they will be added to the score
-instead of removed).</p></li>
-<li><p>If the grader includes entries with the name “all_questions”, the
-corresponding rubric items will be available to all parts of the
-assignment except for the general feedback. This is useful for rubric
-items like “correct” or “missing”, that are not specific to a part of
-the assignment. Points specified for “all_questions” items are
-considered in <em>percentage</em> to the total points of a part (so
-“points_to_remove” = 100 means that the score assigned for that part
-will be of 0).</p></li>
-<li><p>If the grader includes entries with the name “general_feedback”
-these will be available after having graded all other assignment’s parts
-and can only be used to provide feedback but won’t affect the
-grade.</p></li>
+<li><p>Names of specific assignment parts can be freely specified (e.g. “Question 1.a” could have been named “Regression equation”). They correspond to a part of the assignment that the grader wants to assess and they don’t need to be a question with a special demarcation in the assignment. For example, if we are grading a research proposal, a specific part’s name of a rubric entry could be “Abstract”. Specific parts need to be given “total_points” which is the total score available for that part and “points_to_remove” which are the points to be removed from the score assigned for that part (or “points_to_add”, when negative_grading = FALSE, in which case they will be added to the score instead of removed).</p></li>
+<li><p>If the grader includes entries with the name “all_questions”, the corresponding rubric items will be available to all parts of the assignment except for the general feedback. This is useful for rubric items like “correct” or “missing”, that are not specific to a part of the assignment. Points specified for “all_questions” items are considered in <em>percentage</em> to the total points of a part (so “points_to_remove” = 100 means that the score assigned for that part will be of 0).</p></li>
+<li><p>If the grader includes entries with the name “general_feedback” these will be available after having graded all other assignment’s parts and can only be used to provide feedback but won’t affect the grade.</p></li>
 </ul>
-<p>Once the user has began grading, question names and prompt codes
-cannot be changed. However, in any moment, the grader can modify the
-prompt messages that they want to see while grading as well as the total
-points for a specific part and the feedback and the points that should
-be associated to a rubric item.</p>
-<p>To see another example of a valid rubric one can run
-<code><a href="../reference/create_rubric_template.html">create_rubric_template()</a></code> with additional arguments:</p>
+<p>Once the user has began grading, question names and prompt codes cannot be changed. However, in any moment, the grader can modify the prompt messages that they want to see while grading as well as the total points for a specific part and the feedback and the points that should be associated to a rubric item.</p>
+<p>To see another example of a valid rubric one can run <code><a href="../reference/create_rubric_template.html">create_rubric_template()</a></code> with additional arguments:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/create_rubric_template.html">create_rubric_template</a></span><span class="op">(</span>
   rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>,
@@ -195,16 +140,12 @@ be associated to a rubric item.</p>
   create_example_rubric <span class="op">=</span> <span class="cn">TRUE</span>,
   example_rubric_path <span class="op">=</span> <span class="st">"example-rubric.csv"</span>
 <span class="op">)</span></code></pre></div>
-<p>This would write an example filled-in rubric as well as the rubric
-template at the specified paths.</p>
+<p>This would write an example filled-in rubric as well as the rubric template at the specified paths.</p>
 </div>
 <div class="section level3">
 <h3 id="other-assist_grading-arguments">Other <code>assist_grading()</code> arguments<a class="anchor" aria-label="anchor" href="#other-assist_grading-arguments"></a>
 </h3>
-<p>The gradetools <code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> function helps the user
-by opening assignments to be graded, prompting the user to grade,
-storing the grading information, and generating a final grade sheet. Its
-necessary arguments are:</p>
+<p>The gradetools <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> function helps the user by opening assignments to be graded, prompting the user to grade, storing the grading information, and generating a final grade sheet. Its necessary arguments are:</p>
 <ul>
 <li><code>rubric_path</code></li>
 <li><code>roster_path</code></li>
@@ -214,35 +155,19 @@ necessary arguments are:</p>
 <li><code>example_assignment_path</code></li>
 <li><code>example_feedback_path</code></li>
 </ul>
-<p>From the previous sections in this vignette, we already know our
-rubric and roster paths. Now we need to specify where to save the
-temporary grade sheet and the final grade sheet. The temporary grade
-sheet is a file used internally by gradetools which stores all grading
-progress. Keeping this file allows the user to interrupt and then resume
-grading, regrade, change rubric items, add assignments to be graded, and
-many more functionalities.</p>
-<p>The <code>example_student_identifier</code> corresponds to any of the
-identifiers present in the <code>student_identifier</code> column of the
-roster.</p>
-<p>The <code>example_assignment_path</code> is the path where the
-assignment(s) associated with the example_student_identifier are
-located.</p>
-<p>The <code>example_feedback_path</code> is the path where the grader
-wishes to save the feedback file associated with the
-<code>example_student_identifier</code>.</p>
-<p>The practice example below will clarify all the arguments that we
-have introduced here. Further details for the arguments can be found in
-the <code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> documentation.</p>
+<p>From the previous sections in this vignette, we already know our rubric and roster paths. Now we need to specify where to save the temporary grade sheet and the final grade sheet. The temporary grade sheet is a file used internally by gradetools which stores all grading progress. Keeping this file allows the user to interrupt and then resume grading, regrade, change rubric items, add assignments to be graded, and many more functionalities.</p>
+<p>The <code>example_student_identifier</code> corresponds to any of the identifiers present in the <code>student_identifier</code> column of the roster.</p>
+<p>The <code>example_assignment_path</code> is the path where the assignment(s) associated with the example_student_identifier are located.</p>
+<p>The <code>example_feedback_path</code> is the path where the grader wishes to save the feedback file associated with the <code>example_student_identifier</code>.</p>
+<p>The practice example below will clarify all the arguments that we have introduced here. Further details for the arguments can be found in the <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> documentation.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="grading-with-assist_grading">Grading with <code>assist_grading()</code><a class="anchor" aria-label="anchor" href="#grading-with-assist_grading"></a>
 </h2>
-<p>We are now ready to begin grading with gradetools. This package
-should be used in RStudio since it opens files. To begin grading, the
-user would call the <code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> function.</p>
+<p>We are now ready to begin grading with gradetools. This package should be used in RStudio since it opens files. To begin grading, the user would call the <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/null_assist_grading.html">assist_grading</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/assist_grading_functions.html">assist_grading</a></span><span class="op">(</span>
   rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>, 
   roster_path <span class="op">=</span> <span class="st">"class-roster.csv"</span>, 
   temp_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-temporary-grade-sheet.csv"</span>, 
@@ -251,104 +176,55 @@ user would call the <code><a href="../reference/null_assist_grading.html">assist
   example_assignment_path <span class="op">=</span> <span class="st">"quizzes/quiz-09a-lin-reg-federicazoe.Rmd"</span>, 
   example_feedback_path <span class="op">=</span> <span class="st">"quizzes/feedback-quiz-09a-lin-reg-federicazoe.html"</span>
 <span class="op">)</span></code></pre></div>
-<p>The above function call assumes that
-example-directory-week09-regression is the working directory.</p>
-<p>When a user begins grading an assignment for the first time, a
-message will be displayed informing the user that a temporary grade
-sheet is begin created, which must not be deleted.</p>
-<p>Next, the user will be informed which student they are going to begin
-grading and if there is any previous grading progress. All assignments
-associated with this student in this grading session will then be opened
-for the grader to view while grading. The grader will be prompted in the
-console to grade the first ungraded question for this student.</p>
-<p>When an assignment is opened the cursor moves out of the console to
-the new assignment. To bring the cursor back you can type “Ctrl + 2” or
-click in the console.</p>
+<p>The above function call assumes that example-directory-week09-regression is the working directory.</p>
+<p>When a user begins grading an assignment for the first time, a message will be displayed informing the user that a temporary grade sheet is begin created, which must not be deleted.</p>
+<p>Next, the user will be informed which student they are going to begin grading and if there is any previous grading progress. All assignments associated with this student in this grading session will then be opened for the grader to view while grading. The grader will be prompted in the console to grade the first ungraded question for this student.</p>
+<p>When an assignment is opened the cursor moves out of the console to the new assignment. To bring the cursor back you can type “Ctrl + 2” or click in the console.</p>
 <div class="section level3">
 <h3 id="grading-federicas-quiz">Grading Federica’s quiz<a class="anchor" aria-label="anchor" href="#grading-federicas-quiz"></a>
 </h3>
-<p>All assignments associated with Federica are opened and the user is
-prompted to grade the first question in the console.</p>
+<p>All assignments associated with Federica are opened and the user is prompted to grade the first question in the console.</p>
 <iframe src="https://drive.google.com/file/d/1sDDJ5DGJKjlXOfb2v1nlX0YIY8QzS4kB/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>The first student, Federica Zoe, is an amazing student and made no
-errors so they should receive a perfect score on their quiz. We will
-enter the prompt code “0” which, as specified in the rubric for this
-assignment, is a prompt code that is available to all questions (column
-name is set to “all_questions”) and marks that the question is correct.
-Once a prompt code is typed the user presses enter to submit it.</p>
-<p>Proceeding in this fashion, we give Federica full points and complete
-grading her assignment, including assigning the general feedback
-<em>Great job on the quiz!</em> associated with the prompt code 0 of the
-rubric item named “general_feedback”.</p>
-<p>Upon completion of grading the assignment’s final score will be
-printed and the user will be prompted to grade the next student in the
-roster.
-<iframe src="https://drive.google.com/file/d/1saZn5tS846n6jwq6x0jVByx9F0uvd9yQ/preview" width="640" height="480" allow="autoplay"></iframe></p>
+<p>The first student, Federica Zoe, is an amazing student and made no errors so they should receive a perfect score on their quiz. We will enter the prompt code “0” which, as specified in the rubric for this assignment, is a prompt code that is available to all questions (column name is set to “all_questions”) and marks that the question is correct. Once a prompt code is typed the user presses enter to submit it.</p>
+<p>Proceeding in this fashion, we give Federica full points and complete grading her assignment, including assigning the general feedback <em>Great job on the quiz!</em> associated with the prompt code 0 of the rubric item named “general_feedback”.</p>
+<p>Upon completion of grading the assignment’s final score will be printed and the user will be prompted to grade the next student in the roster. <iframe src="https://drive.google.com/file/d/1saZn5tS846n6jwq6x0jVByx9F0uvd9yQ/preview" width="640" height="480" allow="autoplay"></iframe></p>
 </div>
 <div class="section level3">
 <h3 id="grading-catalinas-quiz">Grading Catalina’s quiz<a class="anchor" aria-label="anchor" href="#grading-catalinas-quiz"></a>
 </h3>
-<p>The next student, Catalina Medina, is also relatively easy to grade
-because they made very few mistakes.</p>
-<p>The first question was a simple question to grade, even without any
-tools to aid the process. Question 1.b is instead one which better
-represents why gradetools can be helpful. Interpretation is very
-important in statistics, but not necessarily easy to grade. gradetools
-helps by allowing to add and save new rubric items as the user grades,
-and writing the grader’s feedback to a file for the student to view.</p>
-<p>Catalina answered question 1.a correctly but the interpretation she
-provided in question 1.b is not fully correct. She did not mention that
-the change is associated with a difference in x of one unit. To convey
-this we want to add a new rubric item. A new rubric item is added by
-entering “r” instead of a prompt code.</p>
+<p>The next student, Catalina Medina, is also relatively easy to grade because they made very few mistakes.</p>
+<p>The first question was a simple question to grade, even without any tools to aid the process. Question 1.b is instead one which better represents why gradetools can be helpful. Interpretation is very important in statistics, but not necessarily easy to grade. gradetools helps by allowing to add and save new rubric items as the user grades, and writing the grader’s feedback to a file for the student to view.</p>
+<p>Catalina answered question 1.a correctly but the interpretation she provided in question 1.b is not fully correct. She did not mention that the change is associated with a difference in x of one unit. To convey this we want to add a new rubric item. A new rubric item is added by entering “r” instead of a prompt code.</p>
 <iframe src="https://drive.google.com/file/d/1T9-2OZCKl7BKCzCBAUbzmmNp7-QNY6Ds/preview" width="640" height="480" allow="autoplay">
 </iframe>
 <p>Follow the prompts to provide the following information:</p>
 <ul>
 <li>prompt code: “1c”</li>
 <li>prompt message: “Didn’t mention difference in x”</li>
-<li>feedback: “This is the expected change in the response for a
-difference in the explanatory value of one unit.”</li>
+<li>feedback: “This is the expected change in the response for a difference in the explanatory value of one unit.”</li>
 <li>points to remove: “1”</li>
 </ul>
-<p>Once the new rubric item has been added, the grader will be able to
-apply it to the current student for this question.</p>
+<p>Once the new rubric item has been added, the grader will be able to apply it to the current student for this question.</p>
 <iframe src="https://drive.google.com/file/d/1mLd1ky4QgbG_QlU_4yqncfYE35QI5PgK/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>Continue grading this student. For the general feedback, we will
-provide a personalized single-use general feedback. To do so enter “p”
-for the general feedback rubric item, and a box will pop up for user
-input.</p>
+<p>Continue grading this student. For the general feedback, we will provide a personalized single-use general feedback. To do so enter “p” for the general feedback rubric item, and a box will pop up for user input.</p>
 <iframe src="https://drive.google.com/file/d/1mLd1ky4QgbG_QlU_4yqncfYE35QI5PgK/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>Write the message “We want to use figures to clearly convey
-information. Plotting with the default axes or producing unused plots is
-not good practice.”.</p>
+<p>Write the message “We want to use figures to clearly convey information. Plotting with the default axes or producing unused plots is not good practice.”.</p>
 </div>
 <div class="section level3">
 <h3 id="grading-mines-quiz">Grading Mine’s quiz<a class="anchor" aria-label="anchor" href="#grading-mines-quiz"></a>
 </h3>
-<p>The last student, Mine Docugu, is a struggling student with many
-errors on their quiz. By grading this student we will see the situation
-where we will want to assign multiple rubric items for a single
-question.</p>
-<p>Mine’s questions 1.a and 1.b are completely incorrect, proceed to
-grade those two questions. Her plot for question 2 has multiple errors,
-so we want to assign multiple rubric items to mark each error. Assign
-items “1d” and “1a” by using two dashes to separate the prompt codes</p>
+<p>The last student, Mine Docugu, is a struggling student with many errors on their quiz. By grading this student we will see the situation where we will want to assign multiple rubric items for a single question.</p>
+<p>Mine’s questions 1.a and 1.b are completely incorrect, proceed to grade those two questions. Her plot for question 2 has multiple errors, so we want to assign multiple rubric items to mark each error. Assign items “1d” and “1a” by using two dashes to separate the prompt codes</p>
 <iframe src="https://drive.google.com/file/d/14St8RLYqArLw-vkug_9_x0J6oB4GJVa6/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>Question 3 is another example of this. Note the rubric items do not
-need to be entered in order.</p>
+<p>Question 3 is another example of this. Note the rubric items do not need to be entered in order.</p>
 <iframe src="https://drive.google.com/file/d/1Uj2ew3fttg5NpNN8rCDfeTdT3v3XDmiZ/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>Question 3.a was left blank so we take away all points for this
-question by entering the all questions prompt code “404”.</p>
-<p>Question 3.b is missing the slope value and the interpretation is not
-in context. Both of these are mistakes other students might make so we
-will create two additional rubric items and then assign them to
-Mine.</p>
+<p>Question 3.a was left blank so we take away all points for this question by entering the all questions prompt code “404”.</p>
+<p>Question 3.b is missing the slope value and the interpretation is not in context. Both of these are mistakes other students might make so we will create two additional rubric items and then assign them to Mine.</p>
 <iframe src="https://drive.google.com/file/d/13VbgCL3HXxFXYRZE8x61PP6M1FbCb3zn/preview" width="640" height="480" allow="autoplay">
 </iframe>
 <p><br></p>
@@ -359,37 +235,18 @@ Mine.</p>
 <div class="section level3">
 <h3 id="the-final-grade-sheet">The final grade sheet<a class="anchor" aria-label="anchor" href="#the-final-grade-sheet"></a>
 </h3>
-<p>Once all students have been graded a message will appear telling the
-grader about the final grade sheet.</p>
+<p>Once all students have been graded a message will appear telling the grader about the final grade sheet.</p>
 <iframe src="https://drive.google.com/file/d/1YyTwMQwExVgZbGCAEiyWbmy4O7kYyq-s/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>The final grade sheet will contain all of the columns present in the
-roster, plus two additional columns. One of these columns will be the
-final grade for each student and one will be the grade decomposition,
-the number of points a student earned for each question.</p>
-<p>If the grader decides they want to change any points associated with
-a rubric item, they can update the column “points_to_remove” or
-“points_to_add” corresponding to a certain prompt code for an assignment
-part in the assignment’s rubric and then rerun
-<code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> with the <code>rubric_path</code>
-specified as the path to the updated rubric.</p>
-<p>Students that were not completely graded will get a NA score in the
-grade sheet.</p>
+<p>The final grade sheet will contain all of the columns present in the roster, plus two additional columns. One of these columns will be the final grade for each student and one will be the grade decomposition, the number of points a student earned for each question.</p>
+<p>If the grader decides they want to change any points associated with a rubric item, they can update the column “points_to_remove” or “points_to_add” corresponding to a certain prompt code for an assignment part in the assignment’s rubric and then rerun <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> with the <code>rubric_path</code> specified as the path to the updated rubric.</p>
+<p>Students that were not completely graded will get a NA score in the grade sheet.</p>
 </div>
 <div class="section level3">
 <h3 id="feedback-files">Feedback files<a class="anchor" aria-label="anchor" href="#feedback-files"></a>
 </h3>
-<p>gradetools creates a feedback file for each student as the user
-grades. This file will contain all feedback messages associated with
-rubric items applied to their assignment. The feedback will be knitted
-to the specified file type after grading has ended. If the grader
-decides they want a different type of feedback file (e.g. a word
-document instead of html) the user can rerun
-<code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> with the file extension of
-<code>example_feedback_path</code> changed to the desired one.</p>
-<p>The console will contain a message letting the user know if the
-feedback files were able to be knitted. If not, it will save the
-feedback .Rmd file.</p>
+<p>gradetools creates a feedback file for each student as the user grades. This file will contain all feedback messages associated with rubric items applied to their assignment. The feedback will be knitted to the specified file type after grading has ended. If the grader decides they want a different type of feedback file (e.g. a word document instead of html) the user can rerun <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> with the file extension of <code>example_feedback_path</code> changed to the desired one.</p>
+<p>The console will contain a message letting the user know if the feedback files were able to be knitted. If not, it will save the feedback .Rmd file.</p>
 </div>
 </div>
 <div class="section level2">
@@ -398,32 +255,13 @@ feedback .Rmd file.</p>
 <div class="section level3">
 <h3 id="missing-assignments">Missing assignments<a class="anchor" aria-label="anchor" href="#missing-assignments"></a>
 </h3>
-<p>gradetools determines assignment paths by replacing all instances of
-the <code>example_student_identifier</code> in the
-<code>example_assignment_path</code> with each student identifier. If an
-assignment is not found at the file path, <code><a href="../reference/null_assist_grading.html">assist_grading()</a></code>
-will consider that student’s assignment to be missing. The user will
-never be prompted to grade students with missing assignments.
-<code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> has an argument called
-<code>missing_assignment_grade</code> which is <code>NA</code> by
-default. Students with missing assignments will have the their total
-grade for the assignment in the final grade sheet equal to the value of
-<code>missing_assignment_grade</code>.</p>
+<p>gradetools determines assignment paths by replacing all instances of the <code>example_student_identifier</code> in the <code>example_assignment_path</code> with each student identifier. If an assignment is not found at the file path, <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> will consider that student’s assignment to be missing. The user will never be prompted to grade students with missing assignments. <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> has an argument called <code>missing_assignment_grade</code> which is <code>NA</code> by default. Students with missing assignments will have the their total grade for the assignment in the final grade sheet equal to the value of <code>missing_assignment_grade</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="selective-grading">Selective grading<a class="anchor" aria-label="anchor" href="#selective-grading"></a>
 </h3>
-<p>The function <code><a href="../reference/null_assist_grading.html">assist_advanced_grading()</a></code> is like a wrapper
-of <code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> where two additional parameters allow
-the user to specify <code>students_to_grade</code> and
-<code>questions_to_grade</code>. These can be specified by a vector of
-question names corresponding to the names of specific parts of the
-assignment provided in the column “name” in the rubric.
-<code>students_to_grade</code> and <code>questions_to_grade</code> can
-also be set to “all”, which is the default.</p>
-<p>Further capabilities of <code><a href="../reference/null_assist_grading.html">assist_advanced_grading()</a></code> relate
-to options available for classes that are managed through GitHub and can
-be found in the “extended-capability-github” vignette.</p>
+<p>The function <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> is like a wrapper of <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> where two additional parameters allow the user to specify <code>students_to_grade</code> and <code>questions_to_grade</code>. These can be specified by a vector of question names corresponding to the names of specific parts of the assignment provided in the column “name” in the rubric. <code>students_to_grade</code> and <code>questions_to_grade</code> can also be set to “all”, which is the default.</p>
+<p>Further capabilities of <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> relate to options available for classes that are managed through GitHub and can be found in the “extended-capability-github” vignette.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -439,8 +277,7 @@ be found in the “extended-capability-github” vignette.</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>
