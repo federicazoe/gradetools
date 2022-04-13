@@ -8,8 +8,8 @@
 #' @param example_feedback_path string; file path to one of the assignment feedback files that will be generated as the user grades. This file path structure will be used to determine where the other feedback files will be stored. The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. The extension of the feedback file must be one of the following: "Rmd", "docx", "html", "pdf"
 #' @param example_student_identifier string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later
 #' @param missing_assignment_grade numeric; The grade to assign a student with no assignment submission
-#' @param students_to_grade vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster
 #' @param questions_to_grade vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric
+#' @param students_to_grade vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
 #' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
 #' @param issue_every_question logical, whether the possibility to create issues should be given at every question or only at the end of the assignment
@@ -31,8 +31,8 @@ core_assist_grading <- function(
     example_feedback_path,
     example_student_identifier,
     missing_assignment_grade = NA,
-    students_to_grade = "all",
     questions_to_grade = "all",
+    students_to_grade = "all",
     team_grading = FALSE,
     github_issues = FALSE,
     issue_every_question = FALSE

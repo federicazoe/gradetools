@@ -13,8 +13,8 @@ core_assist_grading(
   example_feedback_path,
   example_student_identifier,
   missing_assignment_grade = NA,
-  students_to_grade = "all",
   questions_to_grade = "all",
+  students_to_grade = "all",
   team_grading = FALSE,
   github_issues = FALSE,
   issue_every_question = FALSE
@@ -37,9 +37,9 @@ core_assist_grading(
 
 \item{missing_assignment_grade}{numeric; The grade to assign a student with no assignment submission}
 
-\item{students_to_grade}{vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster}
-
 \item{questions_to_grade}{vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric}
+
+\item{students_to_grade}{vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster}
 
 \item{team_grading}{logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)}
 

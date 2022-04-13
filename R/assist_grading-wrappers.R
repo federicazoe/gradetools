@@ -8,14 +8,14 @@
 #' @param example_student_identifier string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later
 #' @param example_team_identifier string; Used instead of example_student_identifier when grading team assignments. A team identifier (e.g. "team1", "team2", etc.) that is used to identify what team the student on the roster is in. This needs to be present somewhere in the example_assignment_path. 
 #' @param missing_assignment_grade numeric; The grade to assign a student with no assignment submission
+#' @param questions_to_grade vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric
 #' @param students_to_grade vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster
 #' @param teams_to_grade vector of strings; team_identifiers corresponding to teams to grade, or "all" to specify all assignments should be graded. Team grading is when the grade of an assignment is share among multiple students. All teams_to_grade must be team_identifiers present in the roster
-#' @param questions_to_grade vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric
 #' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
 #' @param issue_every_question logical, whether the possibility to create issues should be given at every question or only at the end of the assignment
 #' 
 #' @name assist_grading_functions
-#' @description Functions to assist with grading and providing personalized feedback to students. \code{assist_grading()} requires minimal user input, while \code{assist_team_grading()} and \code{assist_advanced_grading()} offer more user control and allow for team grading and grading assignments from GitHub.
+#' @description Functions to assist with grading and providing personalized feedback to students. \code{assist_grading()} requires minimal user input, while \code{assist_team_grading()} and \code{assist_advanced_grading()} offer more user control and allow for team grading and grading assignments from GitHub
 NULL
 
 
@@ -42,8 +42,8 @@ assist_grading <- function(
     example_feedback_path = example_feedback_path,
     example_student_identifier = example_student_identifier,
     missing_assignment_grade = missing_assignment_grade,
-    students_to_grade = "all",
     questions_to_grade = "all",
+    students_to_grade = "all",
     team_grading = FALSE,
     github_issues = FALSE,
     issue_every_question = FALSE
@@ -63,8 +63,8 @@ assist_advanced_grading <- function(
   example_feedback_path,
   example_student_identifier,
   missing_assignment_grade = NA,
-  students_to_grade = "all",
   questions_to_grade = "all",
+  students_to_grade = "all",
   github_issues = FALSE,
   issue_every_question = FALSE
 ) {
@@ -78,8 +78,8 @@ assist_advanced_grading <- function(
     example_feedback_path = example_feedback_path,
     example_student_identifier = example_student_identifier,
     missing_assignment_grade = missing_assignment_grade,
-    students_to_grade = students_to_grade,
     questions_to_grade = questions_to_grade,
+    students_to_grade = students_to_grade,
     team_grading = FALSE,
     github_issues = github_issues,
     issue_every_question = issue_every_question
@@ -100,8 +100,8 @@ assist_team_grading <- function(
   example_feedback_path,
   example_team_identifier,
   missing_assignment_grade = NA,
-  teams_to_grade = "all",
   questions_to_grade = "all",
+  teams_to_grade = "all",
   github_issues = FALSE,
   issue_every_question = FALSE
 ) {
@@ -115,8 +115,8 @@ assist_team_grading <- function(
     example_feedback_path = example_feedback_path,
     example_student_identifier = example_team_identifier,
     missing_assignment_grade = missing_assignment_grade,
-    students_to_grade = teams_to_grade,
     questions_to_grade = questions_to_grade,
+    students_to_grade = teams_to_grade,
     team_grading = TRUE,
     github_issues = github_issues,
     issue_every_question = issue_every_question

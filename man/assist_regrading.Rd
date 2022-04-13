@@ -8,9 +8,9 @@ assist_regrading(
   rubric_path,
   temp_grade_sheet_path,
   final_grade_sheet_path,
+  questions_to_regrade,
   students_to_regrade,
   teams_to_regrade = NULL,
-  questions_to_regrade,
   missing_assignment_grade = NA,
   github_issues = FALSE,
   issue_every_question = FALSE
@@ -23,11 +23,11 @@ assist_regrading(
 
 \item{final_grade_sheet_path}{string; path to save final grade sheet to. Must be a .csv}
 
+\item{questions_to_regrade}{vector of strings; vector of assignment question 'names' to regrade. This can be specified as "all" to apply to all questions. questions_to_grade must exactly match ones present in the rubric}
+
 \item{students_to_regrade}{vector of strings; vector of student identifiers to regrade. This can be specified as "all" to apply to all student's in the rubric. students_to_grade must be student_identifiers present in the roster. This should not be provided if the assignment involved team grading}
 
 \item{teams_to_regrade}{vector of strings; This argument is for team grading (i.e. if one assignment is connected with multiple students). team_identifiers corresponding to teams to grade, or "all" to specify all assignments should be graded. All teams_to_regrade must be team_identifiers present in the roster}
-
-\item{questions_to_regrade}{vector of strings; vector of assignment question 'names' to regrade. This can be specified as "all" to apply to all questions. questions_to_grade must exactly match ones present in the rubric}
 
 \item{missing_assignment_grade}{numeric; The grade to assign a student with no assignment submission}
 

@@ -27,8 +27,8 @@ assist_advanced_grading(
   example_feedback_path,
   example_student_identifier,
   missing_assignment_grade = NA,
-  students_to_grade = "all",
   questions_to_grade = "all",
+  students_to_grade = "all",
   github_issues = FALSE,
   issue_every_question = FALSE
 )
@@ -42,8 +42,8 @@ assist_team_grading(
   example_feedback_path,
   example_team_identifier,
   missing_assignment_grade = NA,
-  teams_to_grade = "all",
   questions_to_grade = "all",
+  teams_to_grade = "all",
   github_issues = FALSE,
   issue_every_question = FALSE
 )
@@ -65,9 +65,9 @@ assist_team_grading(
 
 \item{missing_assignment_grade}{numeric; The grade to assign a student with no assignment submission}
 
-\item{students_to_grade}{vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster}
-
 \item{questions_to_grade}{vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric}
+
+\item{students_to_grade}{vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster}
 
 \item{github_issues}{logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)}
 
@@ -78,5 +78,5 @@ assist_team_grading(
 \item{teams_to_grade}{vector of strings; team_identifiers corresponding to teams to grade, or "all" to specify all assignments should be graded. Team grading is when the grade of an assignment is share among multiple students. All teams_to_grade must be team_identifiers present in the roster}
 }
 \description{
-Functions to assist with grading and providing personalized feedback to students. \code{assist_grading()} requires minimal user input, while \code{assist_team_grading()} and \code{assist_advanced_grading()} offer more user control and allow for team grading and grading assignments from GitHub.
+Functions to assist with grading and providing personalized feedback to students. \code{assist_grading()} requires minimal user input, while \code{assist_team_grading()} and \code{assist_advanced_grading()} offer more user control and allow for team grading and grading assignments from GitHub
 }
