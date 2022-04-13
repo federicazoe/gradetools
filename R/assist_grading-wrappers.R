@@ -51,42 +51,6 @@ assist_grading <- function(
   
 }
 
-#' @rdname assist_grading_functions
-#' @title Advanced assisted grading
-#' @export
-assist_advanced_grading <- function(
-  rubric_path,
-  roster_path,
-  temp_grade_sheet_path,
-  final_grade_sheet_path,
-  example_assignment_path,
-  example_feedback_path,
-  example_student_identifier,
-  missing_assignment_grade = NA,
-  questions_to_grade = "all",
-  students_to_grade = "all",
-  github_issues = FALSE,
-  issue_every_question = FALSE
-) {
-  
-  core_assist_grading(
-    rubric_path = rubric_path,
-    roster_path = roster_path,
-    temp_grade_sheet_path = temp_grade_sheet_path,
-    final_grade_sheet_path = final_grade_sheet_path,
-    example_assignment_path = example_assignment_path,
-    example_feedback_path = example_feedback_path,
-    example_student_identifier = example_student_identifier,
-    missing_assignment_grade = missing_assignment_grade,
-    questions_to_grade = questions_to_grade,
-    students_to_grade = students_to_grade,
-    team_grading = FALSE,
-    github_issues = github_issues,
-    issue_every_question = issue_every_question
-  )
-  
-}
-
 
 #' @rdname assist_grading_functions
 #' @title Team assisted grading
@@ -121,4 +85,41 @@ assist_team_grading <- function(
     github_issues = github_issues,
     issue_every_question = issue_every_question
   )
+}
+
+
+#' @rdname assist_grading_functions
+#' @title Advanced assisted grading
+#' @export
+assist_advanced_grading <- function(
+  rubric_path,
+  roster_path,
+  temp_grade_sheet_path,
+  final_grade_sheet_path,
+  example_assignment_path,
+  example_feedback_path,
+  example_student_identifier,
+  missing_assignment_grade = NA,
+  questions_to_grade = "all",
+  students_to_grade = "all",
+  github_issues = FALSE,
+  issue_every_question = FALSE
+) {
+  
+  core_assist_grading(
+    rubric_path = rubric_path,
+    roster_path = roster_path,
+    temp_grade_sheet_path = temp_grade_sheet_path,
+    final_grade_sheet_path = final_grade_sheet_path,
+    example_assignment_path = example_assignment_path,
+    example_feedback_path = example_feedback_path,
+    example_student_identifier = example_student_identifier,
+    missing_assignment_grade = missing_assignment_grade,
+    questions_to_grade = questions_to_grade,
+    students_to_grade = students_to_grade,
+    team_grading = FALSE,
+    github_issues = github_issues,
+    issue_every_question = issue_every_question
+  )
+  
 }
