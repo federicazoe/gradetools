@@ -14,11 +14,12 @@
 #' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
 #' @param issue_every_question logical, whether the possibility to create issues should be given at every question or only at the end of the assignment
 #' 
-#' @name null_assist_grading
+#' @name assist_grading_functions
+#' @description Functions to assist with grading and providing personalized feedback to students. \code{assist_grading()} requires minimal user input, while \code{assist_team_grading()} and \code{assist_advanced_grading()} offer more user control and allow for team grading and grading assignments from GitHub.
 NULL
 
 
-#' @rdname null_assist_grading 
+#' @rdname assist_grading_functions 
 #' @title Assisted grading
 #' @export
 assist_grading <- function(
@@ -50,7 +51,7 @@ assist_grading <- function(
   
 }
 
-#' @rdname null_assist_grading
+#' @rdname assist_grading_functions
 #' @title Advanced assisted grading
 #' @export
 assist_advanced_grading <- function(
@@ -87,7 +88,7 @@ assist_advanced_grading <- function(
 }
 
 
-#' @rdname null_assist_grading
+#' @rdname assist_grading_functions
 #' @title Team assisted grading
 #' @export
 assist_team_grading <- function(
