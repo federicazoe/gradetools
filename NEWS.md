@@ -4,3 +4,4 @@
 
 - Moved `questions_to_grade` argument before `students_to_grade` in `assist_team_grading()`, and `assist_advanced_grading()`.
 - Moved `questions_to_regrade` argument before `students_to_regrade` in `assist_grading()`
+- Added ability to comment in the student feedback on a question before grading the question
