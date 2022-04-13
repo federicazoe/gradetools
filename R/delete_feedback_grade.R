@@ -55,17 +55,47 @@ delete_feedback_grade <- function(
       mutate(last_time_graded = NA)
     
     if (issue_titles %in% colnames(changed_grade_sheet)) {
-      issues_cols_to_delete <- c("issue_titles", 
-                                 "issue_bodies", 
-                                 "issue_pushed")
+      issues_cols_to_delete <- c("issue_titles", "issue_bodies", "issue_pushed")
       changed_grade_sheet <- changed_grade_sheet %>% 
-        mutate(issue_titles = NA,
-               issue_bodies = NA,
-               issue_pushed = NA)
+        mutate(issue_titles = NA, issue_bodies = NA, issue_pushed = NA)
     }
     
   } else {
     for (i in 1:length(student_ids)) {
+      if (!is.na(changed_grade_sheet$comments)) {
+        # Extract comments
+        comments <- unlist(str_split(
+          changed_grade_sheet$comments[i], 
+          pattern = " // "
+        ))
+        
+        comment_qs <- unlist(str_split(
+          changed_grade_sheet$comment_qs[i], 
+          pattern = " // "
+        ))
+        
+        not_q_comment_position <- which(!(comment_qs %in% questions_to_delete))
+        
+        if (length(which(!(comment_qs %in% questions_to_delete))) == 0) {
+          changed_grade_sheet$comments[i] <- NA
+          
+          changed_grade_sheet$comment_qs[i] <- NA
+          
+        } else {
+        changed_grade_sheet$comments[i] <- str_c(
+          comments[not_q_comment_position], 
+          collapse = " // "
+        )
+        
+        changed_grade_sheet$comment_qs[i] <- str_c(
+          comment_qs[not_q_comment_position], 
+          collapse = " // "
+        )
+        }
+        
+      }
+      
+      # Extract saved grading progress
       fdbk_codes <- unlist(str_split(
         changed_grade_sheet$feedback_codes[i], 
         pattern = "&&&"

@@ -120,14 +120,18 @@ create_temp_grade_sheet <- function(
       "grading_status", 
       "feedback_codes", 
       "graded_qs",
-      "last_time_graded"
+      "last_time_graded",
+      "comments",
+      "comment_qs"
     )
     
-    github_cols_to_transfer <- c("issue_titles", 
-                                 "issue_bodies", 
-                                 "issue_pushed",
-                                 "feedback_pushed",
-                                 "github_repo")
+    github_cols_to_transfer <- c(
+      "issue_titles", 
+      "issue_bodies", 
+      "issue_pushed",
+      "feedback_pushed",
+      "github_repo"
+    )
     
     for (github_col in github_cols_to_transfer) {
       # Transfer github column over from old to new grade sheet
@@ -158,7 +162,9 @@ create_temp_grade_sheet <- function(
       mutate(grading_status = "ungraded") %>% 
       mutate(feedback_codes = NA) %>% 
       mutate(graded_qs = NA) %>% 
-      mutate(last_time_graded = as.POSIXlt(NA)) 
+      mutate(last_time_graded = as.POSIXlt(NA)) %>% 
+      mutate(comments = NA) %>% 
+      mutate(comment_qs = NA)
 
     if (github_issues) {
       temp_grade_sheet <- temp_grade_sheet %>% 

@@ -91,6 +91,27 @@ assign_grade_write_feedback <- function(
     # Start feedback message for this question
     q_fbk <- paste("\n##", q)
     
+    # Write question comment if present
+    if (!is.na(temp_grade_sheet_row$comments)) {
+      comments <- unlist(str_split(
+        temp_grade_sheet_row$comments, 
+        pattern = " // "
+      ))
+      
+      comment_qs <- unlist(str_split(
+        temp_grade_sheet_row$comment_qs, 
+        pattern = " // "
+      ))
+      
+      if (q %in% comment_qs) {
+        q_fbk <- paste0(
+          q_fbk, "\n", 
+          stringr::str_c(comments[which(comment_qs == q)], collapse = "\n"), "\n"
+        )
+      }
+      
+    }
+    
     for (fbk_code in q_feedback_code){
       
       if (fbk_code %in% q_prompt_code) {
@@ -197,6 +218,7 @@ assign_grade_write_feedback <- function(
   if(temp_grade_sheet_row$grading_status != "ungraded") {
     unlink(temp_grade_sheet_row$feedback_path_Rmd)
     unlink(temp_grade_sheet_row$feedback_path_to_be_knitted)
+    
   }
   
   fs::file_create(temp_grade_sheet_row$feedback_path_Rmd)

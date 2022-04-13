@@ -95,7 +95,7 @@ grade_student <- function(
             single_use_question_fbk <-  dlg_input(
               paste(
                 "Type single-use general feedback and press [enter].",
-                "To undo writing a general feedback, press [cancel].",
+                "To cancel writing a general feedback, press [cancel].",
                 sep = "\n"
               )
             )$res
@@ -155,6 +155,36 @@ grade_student <- function(
         
         q <- q - 1
 
+      } else if (question_fbk == "c" | question_fbk == "'c'") { 
+        question_comment <- dlg_input(
+          paste(
+            "Type the question comment for the student and press [enter].",
+            "To cancel writing a comment, press [cancel].",
+            sep = "\n"
+          )
+        )$res
+        
+        if (length(question_comment) > 0 ) {
+          if (is.na(curr_row$comments)) {
+            curr_row$comments <- question_comment
+              
+            curr_row$comment_qs <- curr_q
+            
+          } else {
+            curr_row$comments <- paste0(
+              curr_row$comments,
+              " // ", 
+              question_comment
+            )
+              
+            curr_row$comment_qs <- paste0(curr_row$comment_qs," // ", curr_q)
+            
+          }
+          
+        }
+        
+        q <- q - 1
+        
       } else {
         q_fbk_separated <- unlist(str_split(question_fbk, pattern = "---"))
             
@@ -200,7 +230,7 @@ grade_student <- function(
       }
       
       grade_info <- assign_grade_write_feedback(
-        curr_row, 
+        temp_grade_sheet_row = curr_row, 
         rubric_list = rubric_list,
         rubric_prompts = rubric_prompts
       )

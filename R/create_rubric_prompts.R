@@ -62,7 +62,7 @@ create_rubric_prompts <- function(rubric_list) {
       "Enter one or more of the following options, use -- to separate multiple items",
       stringr::str_c(q_prompts_code_and_messages, collapse = "\n"),
       stringr::str_c(all_questions_prompts, collapse = "\n"),
-      "\nOr enter",
+      "\nOr enter one of the following",
       "r: Create a new rubric item",
       "c: Add a comment to the feedback file",
       "222: Stop grading",
@@ -83,7 +83,7 @@ create_rubric_prompts <- function(rubric_list) {
       "Enter one or more of the following options, use -- to separate multiple items",
       stringr::str_c(general_feedback_prompts_code_and_messages, collapse = "\n"),
       "p: Provide a single-use general feedback",
-      "\nOr enter",
+      "\nOr enter one of the following",
       "r: Create a new pre-specified general feedback",
       "[enter]: Decline to provide general feedback",
       sep = "\n"

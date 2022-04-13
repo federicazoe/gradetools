@@ -58,14 +58,16 @@ core_assist_grading <- function(
   
   # Check that feedback, temporary and final grade sheets paths 
   # include correct directories
-  paths_to_write_to <- c(example_feedback_path, 
-                         temp_grade_sheet_path,
-                         final_grade_sheet_path)
+  paths_to_write_to <- c(
+    example_feedback_path,
+    temp_grade_sheet_path,
+    final_grade_sheet_path
+  )
+  
   for (p in paths_to_write_to) {
     if (str_detect(p, "/")) {
       if (!dir.exists(path_dir(p))) {
-       stop(paste("This directory seems to be incorrect:",
-                  p))
+       stop(paste("This directory seems to be incorrect:", p))
          
       }
     }
@@ -230,7 +232,7 @@ core_assist_grading <- function(
           doc_id <- NULL
           
           for(j in 1:length(assignment_path)) {
-            navigateToFile(assignment_path[j])
+            navigateToFile(assignment_path[j], moveCursor = FALSE)
             # Need short pause so documentId grabs the correct document
             Sys.sleep(1)
             doc_id[j] <- documentId()
