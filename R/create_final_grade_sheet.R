@@ -67,7 +67,9 @@ create_final_grade_sheet <- function(
       feedback_codes,
       graded_qs,
       last_time_graded,
-      grade_student
+      grade_student,
+      comments,
+      comment_qs
     ))
   
   if (team_grading) {
