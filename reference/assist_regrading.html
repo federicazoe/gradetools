@@ -30,6 +30,9 @@
     <a class="dropdown-item" href="../articles/d-extended-capability-github.html">Extended gradetools capability: Assignments on GitHub</a>
   </div>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -61,9 +64,9 @@
   <span class="va">rubric_path</span>,
   <span class="va">temp_grade_sheet_path</span>,
   <span class="va">final_grade_sheet_path</span>,
+  <span class="va">questions_to_regrade</span>,
   <span class="va">students_to_regrade</span>,
   teams_to_regrade <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">questions_to_regrade</span>,
   missing_assignment_grade <span class="op">=</span> <span class="cn">NA</span>,
   github_issues <span class="op">=</span> <span class="cn">FALSE</span>,
   issue_every_question <span class="op">=</span> <span class="cn">FALSE</span>
@@ -78,12 +81,12 @@
 <dd><p>string; path to temporary grade sheet produced by assign_grade_write_feedback</p></dd>
 <dt>final_grade_sheet_path</dt>
 <dd><p>string; path to save final grade sheet to. Must be a .csv</p></dd>
+<dt>questions_to_regrade</dt>
+<dd><p>vector of strings; vector of assignment question 'names' to regrade. This can be specified as "all" to apply to all questions. questions_to_grade must exactly match ones present in the rubric</p></dd>
 <dt>students_to_regrade</dt>
 <dd><p>vector of strings; vector of student identifiers to regrade. This can be specified as "all" to apply to all student's in the rubric. students_to_grade must be student_identifiers present in the roster. This should not be provided if the assignment involved team grading</p></dd>
 <dt>teams_to_regrade</dt>
 <dd><p>vector of strings; This argument is for team grading (i.e. if one assignment is connected with multiple students). team_identifiers corresponding to teams to grade, or "all" to specify all assignments should be graded. All teams_to_regrade must be team_identifiers present in the roster</p></dd>
-<dt>questions_to_regrade</dt>
-<dd><p>vector of strings; vector of assignment question 'names' to regrade. This can be specified as "all" to apply to all questions. questions_to_grade must exactly match ones present in the rubric</p></dd>
 <dt>missing_assignment_grade</dt>
 <dd><p>numeric; The grade to assign a student with no assignment submission</p></dd>
 <dt>github_issues</dt>

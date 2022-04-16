@@ -30,6 +30,9 @@
     <a class="dropdown-item" href="../articles/d-extended-capability-github.html">Extended gradetools capability: Assignments on GitHub</a>
   </div>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -66,8 +69,8 @@
   <span class="va">example_feedback_path</span>,
   <span class="va">example_student_identifier</span>,
   missing_assignment_grade <span class="op">=</span> <span class="cn">NA</span>,
-  students_to_grade <span class="op">=</span> <span class="st">"all"</span>,
   questions_to_grade <span class="op">=</span> <span class="st">"all"</span>,
+  students_to_grade <span class="op">=</span> <span class="st">"all"</span>,
   team_grading <span class="op">=</span> <span class="cn">FALSE</span>,
   github_issues <span class="op">=</span> <span class="cn">FALSE</span>,
   issue_every_question <span class="op">=</span> <span class="cn">FALSE</span>
@@ -92,10 +95,10 @@
 <dd><p>string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later</p></dd>
 <dt>missing_assignment_grade</dt>
 <dd><p>numeric; The grade to assign a student with no assignment submission</p></dd>
-<dt>students_to_grade</dt>
-<dd><p>vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster</p></dd>
 <dt>questions_to_grade</dt>
 <dd><p>vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric</p></dd>
+<dt>students_to_grade</dt>
+<dd><p>vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster</p></dd>
 <dt>team_grading</dt>
 <dd><p>logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)</p></dd>
 <dt>github_issues</dt>

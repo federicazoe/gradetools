@@ -47,6 +47,9 @@
     <a class="dropdown-item" href="../articles/d-extended-capability-github.html">Extended gradetools capability: Assignments on GitHub</a>
   </div>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -119,7 +122,7 @@
 <div class="section level2">
 <h2 id="pushing-feedback-files-to-github-with-push_to_github">Pushing feedback files to GitHub with push_to_github()<a class="anchor" aria-label="anchor" href="#pushing-feedback-files-to-github-with-push_to_github"></a>
 </h2>
-<p>After grading with <code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> or <code><a href="../reference/null_assist_grading.html">assist_advanced_grading()</a></code> - and after re-grading with <code><a href="../reference/assist_regrading.html">assist_regrading()</a></code> - the function <code><a href="../reference/push_to_github.html">push_to_github()</a></code> can be called to push all feedback files that have been written while grading and that have not been pushed yet to GitHub.</p>
+<p>After grading with <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> or <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> - and after re-grading with <code><a href="../reference/assist_regrading.html">assist_regrading()</a></code> - the function <code><a href="../reference/push_to_github.html">push_to_github()</a></code> can be called to push all feedback files that have been written while grading and that have not been pushed yet to GitHub.</p>
 <p>Here is what a call to <code><a href="../reference/push_to_github.html">push_to_github()</a></code> could look like:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/push_to_github.html">push_to_github</a></span> <span class="op">(</span>
@@ -137,22 +140,27 @@
 <div class="section level2">
 <h2 id="creating-github-issues">Creating GitHub issues<a class="anchor" aria-label="anchor" href="#creating-github-issues"></a>
 </h2>
-<p>While we are grading, gradetools can give us the option to take note of some GitHub issues that we would like to create into students’ or teams’ repos. To be given this option, we need to grade using <code><a href="../reference/null_assist_grading.html">assist_advanced_grading()</a></code> with the input <code>github_issues</code> set to TRUE.</p>
+<p>While we are grading, gradetools can give us the option to take note of some GitHub issues that we would like to create into students’ or teams’ repos. To be given this option, we need to grade using <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> with the input <code>github_issues</code> set to TRUE.</p>
 <div class="section level3">
 <h3 id="take-note-of-desired-github-issues-with-assist_advanced_grading">Take note of desired GitHub issues with assist_advanced_grading()<a class="anchor" aria-label="anchor" href="#take-note-of-desired-github-issues-with-assist_advanced_grading"></a>
 </h3>
-<p>By default, for each student (or team) gradetools will ask us only once if we want to take note of some issues - when we are done grading that student (or team):</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/null_assist_grading.html">assist_advanced_grading</a></span><span class="op">(</span>
-  rubric_path <span class="op">=</span> <span class="st">"../example-directory/github-grading/week-09-regression-rubric.csv"</span>,
-  roster_path <span class="op">=</span> <span class="st">"../example-directory/github-grading/roster.csv"</span>,
+<p>For the function call below we assume the working directory is a directory with 4 cloned repos from GitHub:</p>
+<pre><code><span class="op">-</span> <span class="va">quizzes</span><span class="op">-</span><span class="va">collected</span><span class="op">-</span><span class="va">week09</span><span class="op">-</span><span class="va">regression</span>
+<span class="op">-</span> <span class="va">week09</span><span class="op">-</span><span class="va">regression</span><span class="op">-</span><span class="va">federicazoe</span>
+<span class="op">-</span> <span class="va">week09</span><span class="op">-</span><span class="va">regression</span><span class="op">-</span><span class="va">CatalinaMedina</span>
+<span class="op">-</span> <span class="va">week09</span><span class="op">-</span><span class="va">regression</span><span class="op">-</span><span class="va">mdogucu</span></code></pre>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/assist_grading_functions.html">assist_advanced_grading</a></span><span class="op">(</span>
+  rubric_path <span class="op">=</span> <span class="st">"quizzes-collected-week09-regression/example-directory-week09-regression/quiz-09-lin-reg-rubric.csv"</span>,
+  roster_path <span class="op">=</span> <span class="st">"quizzes-collected-week09-regression/example-directory-week09-regression/class-roster.csv"</span>,
   temp_grade_sheet_path  <span class="op">=</span> <span class="st">"quiz-09-lin-reg-temporary-grade-sheet.csv"</span>,
   final_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-final-grade-sheet.csv"</span>,
-  example_assignment_path <span class="op">=</span> <span class="st">"../example-directory/github-grading/students-repos/week09-regression/week09-regression-federicazoe/quiz-09a-lin-reg-federicazoe.Rmd"</span>,
-  example_feedback_path <span class="op">=</span> <span class="st">"../example-directory/github-grading/students-repos/week09-regression/week09-regression-federicazoe/feedback.Rmd"</span>,
-  example_student_identifier <span class="op">=</span> <span class="st">"federicazoe"</span>,
+  example_assignment_path <span class="op">=</span> <span class="st">"week09-regression-CatalinaMedina/quiz-09a-lin-reg-CatalinaMedina.Rmd"</span>,
+  example_feedback_path <span class="op">=</span> <span class="st">"week09-regression-CatalinaMedina/quiz-09a-lin-reg-CatalinaMedina-feedback.html"</span>,
+  example_student_identifier <span class="op">=</span> <span class="st">"CatalinaMedina"</span>,
   github_issues <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
+<p>By default, for each student (or team) gradetools will ask us only once if we want to take note of some issues - when we are done grading that student (or team):</p>
 <p>After grading all assignment parts and optionally specifying a general feedback for a student, we are then asked if we would like to take note of an issue and we type “000” if we want to:</p>
 <iframe src="https://drive.google.com/file/d/1Q__ErERJTDeuUbpUBlUVgWc5tM2owc2a/preview" width="640" height="480" allow="autoplay">
 </iframe>
@@ -172,9 +180,9 @@
 <div class="section level3">
 <h3 id="create-desired-github-issues-with-push_to_github">Create desired GitHub issues with push_to_github()<a class="anchor" aria-label="anchor" href="#create-desired-github-issues-with-push_to_github"></a>
 </h3>
-<p>After grading with <code>githb_issues = TRUE</code> using <code><a href="../reference/null_assist_grading.html">assist_grading()</a></code> or <code><a href="../reference/null_assist_grading.html">assist_advanced_grading()</a></code> - and after re-grading with <code><a href="../reference/assist_regrading.html">assist_regrading()</a></code> - the function <code><a href="../reference/push_to_github.html">push_to_github()</a></code> can be called to push all feedback files that have been written while grading and that have not been pushed yet to GitHub.</p>
+<p>After grading with <code>githb_issues = TRUE</code> using <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> or <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> - and after re-grading with <code><a href="../reference/assist_regrading.html">assist_regrading()</a></code> - the function <code><a href="../reference/push_to_github.html">push_to_github()</a></code> can be called to push all feedback files that have been written while grading and that have not been pushed yet to GitHub.</p>
 <p>Here is what a call to <code><a href="../reference/push_to_github.html">push_to_github()</a></code> could look like:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/push_to_github.html">push_to_github</a></span> <span class="op">(</span>
   temp_grade_sheet_path <span class="op">=</span>  <span class="st">"quiz-09-lin-reg-temporary-grade-sheet.csv"</span>,
   class_github_name <span class="op">=</span> <span class="st">"gradetools-test-course"</span>,

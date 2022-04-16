@@ -47,6 +47,9 @@
     <a class="dropdown-item" href="../articles/d-extended-capability-github.html">Extended gradetools capability: Assignments on GitHub</a>
   </div>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -83,7 +86,7 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://federicazoe.github.io/gradetools/">gradetools</a></span><span class="op">)</span></code></pre></div>
 <p>We define team grading to be when the grade of an assignment is assigned to multiple students.</p>
 <p>This vignette displays gradetools’s extended capability of handling team grading. As this is an extended capability we assume the user knows the basics of gradetools. If not, please refer to the vignette “how-to-grade-with-gradetools”.</p>
-<p>This vignette will walk the user through what needs to be done differently when team grading versus regular grading. An additional column needs to be present in the roster specifying which team the student belongs to and <code><a href="../reference/null_assist_grading.html">assist_team_grading()</a></code> will be used to grade the student.</p>
+<p>This vignette will walk the user through what needs to be done differently when team grading versus regular grading. An additional column needs to be present in the roster specifying which team the student belongs to and <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code> will be used to grade the student.</p>
 <div class="section level2">
 <h2 id="obtaining-the-example-directory">Obtaining the example directory<a class="anchor" aria-label="anchor" href="#obtaining-the-example-directory"></a>
 </h2>
@@ -106,9 +109,9 @@
 <div class="section level2">
 <h2 id="grading-with-assist_team_grading">Grading with <code>assist_team_grading()</code><a class="anchor" aria-label="anchor" href="#grading-with-assist_team_grading"></a>
 </h2>
-<p>To do team grading in gradetools we will use <code><a href="../reference/null_assist_grading.html">assist_team_grading()</a></code>.</p>
+<p>To do team grading in gradetools we will use <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/null_assist_grading.html">assist_team_grading</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/assist_grading_functions.html">assist_team_grading</a></span><span class="op">(</span>
   rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>, 
   roster_path <span class="op">=</span> <span class="st">"class-roster.csv"</span>, 
   temp_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-temporary-grade-sheet.csv"</span>, 
