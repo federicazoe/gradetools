@@ -209,7 +209,7 @@
 <iframe src="https://drive.google.com/file/d/1mLd1ky4QgbG_QlU_4yqncfYE35QI5PgK/preview" width="640" height="480" allow="autoplay">
 </iframe>
 <p>Continue grading this student. For the general feedback, we will provide a personalized single-use general feedback. To do so enter “p” for the general feedback rubric item, and a box will pop up for user input.</p>
-<iframe src="https://drive.google.com/file/d/1mLd1ky4QgbG_QlU_4yqncfYE35QI5PgK/preview" width="640" height="480" allow="autoplay">
+<iframe src="https://drive.google.com/file/d/1SQaR18ZTITZC4gwfTvdpGsm6CtuQHSKz/preview" width="640" height="480" allow="autoplay">
 </iframe>
 <p>Write the message “We want to use figures to clearly convey information. Plotting with the default axes or producing unused plots is not good practice.”.</p>
 </div>
@@ -223,7 +223,11 @@
 <p>Question 3 is another example of this. Note the rubric items do not need to be entered in order.</p>
 <iframe src="https://drive.google.com/file/d/1Uj2ew3fttg5NpNN8rCDfeTdT3v3XDmiZ/preview" width="640" height="480" allow="autoplay">
 </iframe>
-<p>Question 3.a was left blank so we take away all points for this question by entering the all questions prompt code “404”.</p>
+<p>Sometimes a grader may want to leave a comment for a student about a specific question. In this case the prompt code “c” would be used. Question 3.a was left blank, so maybe we want to leave a comment reminding students to double check their work. Enter “c” for this question and provide the reminder in the text box.</p>
+<iframe src="https://drive.google.com/file/d/1dDIQvMLvwb-uKfN4ynr7fxvX-CfKssp1/preview" width="640" height="480" allow="autoplay">
+</iframe>
+<p>We also want to take away all points for this question by entering the all questions prompt code “404”.</p>
+<p>Note both adding a new rubric item and leaving a comment need to be done before grading the question.</p>
 <p>Question 3.b is missing the slope value and the interpretation is not in context. Both of these are mistakes other students might make so we will create two additional rubric items and then assign them to Mine.</p>
 <iframe src="https://drive.google.com/file/d/13VbgCL3HXxFXYRZE8x61PP6M1FbCb3zn/preview" width="640" height="480" allow="autoplay">
 </iframe>
@@ -236,7 +240,7 @@
 <h3 id="the-final-grade-sheet">The final grade sheet<a class="anchor" aria-label="anchor" href="#the-final-grade-sheet"></a>
 </h3>
 <p>Once all students have been graded a message will appear telling the grader about the final grade sheet.</p>
-<iframe src="https://drive.google.com/file/d/1YyTwMQwExVgZbGCAEiyWbmy4O7kYyq-s/preview" width="640" height="480" allow="autoplay">
+<iframe src="https://drive.google.com/file/d/1jIDCYmv6g_OuHKgeEQk-rMCMlJcawlt2/preview" width="640" height="480" allow="autoplay">
 </iframe>
 <p>The final grade sheet will contain all of the columns present in the roster, plus two additional columns. One of these columns will be the final grade for each student and one will be the grade decomposition, the number of points a student earned for each question.</p>
 <p>If the grader decides they want to change any points associated with a rubric item, they can update the column “points_to_remove” or “points_to_add” corresponding to a certain prompt code for an assignment part in the assignment’s rubric and then rerun <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> with the <code>rubric_path</code> specified as the path to the updated rubric.</p>
