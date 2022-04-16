@@ -80,7 +80,8 @@ create_rubric_prompts <- function(rubric_list) {
     
     general_feedback <- paste(
       "General feedback",
-      "Enter one or more of the following options, use -- to separate multiple items",
+      "Enter one or more of the following options,", 
+      "use -- to separate multiple items",
       stringr::str_c(general_feedback_prompts_code_and_messages, collapse = "\n"),
       "p: Provide a single-use general feedback",
       "\nOr enter one of the following",
