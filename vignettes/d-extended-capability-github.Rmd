@@ -60,6 +60,7 @@ A message will be shown to confirm which repos have been cloned (bottom-left scr
 <iframe src="https://drive.google.com/file/d/1TwoCliVoY2dYSS0BX1ifP24pH00soIl1/preview" width="640" height="480" allow="autoplay"></iframe>
 
 
+
 ## Pushing feedback files to GitHub with push_to_github()
 
 After grading with `assist_grading()` or `assist_advanced_grading()` - and after re-grading with `assist_regrading()` - the function `push_to_github()` can be called to push all feedback files that have been written while grading and that have not been pushed yet to GitHub.
@@ -94,20 +95,27 @@ While we are grading, gradetools can give us the option to take note of some Git
 
 ### Take note of desired GitHub issues with assist_advanced_grading()
 
-By default, for each student (or team) gradetools will ask us only once if we want to take note of some issues - when we are done grading that student (or team):
+For the function call below we assume the working directory is a directory with 4 cloned repos from GitHub:
+
+    - quizzes-collected-week09-regression
+    - week09-regression-federicazoe
+    - week09-regression-CatalinaMedina
+    - week09-regression-mdogucu
 
 ```{r}
 assist_advanced_grading(
-  rubric_path = "../example-directory/github-grading/week-09-regression-rubric.csv",
-  roster_path = "../example-directory/github-grading/roster.csv",
+  rubric_path = "quizzes-collected-week09-regression/example-directory-week09-regression/quiz-09-lin-reg-rubric.csv",
+  roster_path = "quizzes-collected-week09-regression/example-directory-week09-regression/class-roster.csv",
   temp_grade_sheet_path  = "quiz-09-lin-reg-temporary-grade-sheet.csv",
   final_grade_sheet_path = "quiz-09-lin-reg-final-grade-sheet.csv",
-  example_assignment_path = "../example-directory/github-grading/students-repos/week09-regression/week09-regression-federicazoe/quiz-09a-lin-reg-federicazoe.Rmd",
-  example_feedback_path = "../example-directory/github-grading/students-repos/week09-regression/week09-regression-federicazoe/feedback.Rmd",
-  example_student_identifier = "federicazoe",
+  example_assignment_path = "week09-regression-CatalinaMedina/quiz-09a-lin-reg-CatalinaMedina.Rmd",
+  example_feedback_path = "week09-regression-CatalinaMedina/quiz-09a-lin-reg-CatalinaMedina-feedback.html",
+  example_student_identifier = "CatalinaMedina",
   github_issues = TRUE
 )
 ```
+
+By default, for each student (or team) gradetools will ask us only once if we want to take note of some issues - when we are done grading that student (or team):
 
 After grading all assignment parts  and optionally specifying a general feedback for a student, we are then asked if we would like to take note of an issue and we type "000" if we want to:
 
