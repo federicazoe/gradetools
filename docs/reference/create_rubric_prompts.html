@@ -60,13 +60,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_rubric_prompts</span><span class="op">(</span><span class="va">rubric_list</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_rubric_prompts</span><span class="op">(</span><span class="va">rubric_list</span>, <span class="va">github_issues</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>rubric_list</dt>
 <dd><p>list of lists. Each sub-list corresponds to a part of the assignment rubric and specifies the name of this part (e.g. "Question 1"), the total points that can be earned for this part, the rubric etc.</p></dd>
+<dt>github_issues</dt>
+<dd><p>logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

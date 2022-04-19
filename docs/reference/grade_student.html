@@ -68,7 +68,6 @@
   <span class="va">rubric_list</span>,
   <span class="va">rubric_path</span>,
   <span class="va">github_issues</span>,
-  <span class="va">issue_every_question</span>,
   <span class="va">questions_to_grade</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -89,8 +88,6 @@
 <dd><p>string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.</p></dd>
 <dt>github_issues</dt>
 <dd><p>Boolean; indicates if grader wants to be able to create GitHub issues</p></dd>
-<dt>issue_every_question</dt>
-<dd><p>logical, whether the possibility to create issues should be given at every question or only at the end of the assignment</p></dd>
 <dt>questions_to_grade</dt>
 <dd><p>vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric</p></dd>
 </dl></div>

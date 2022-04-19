@@ -4,12 +4,10 @@
 \alias{request_github_issues}
 \title{Allows the user to input their requested GitHub issues titles and bodies}
 \usage{
-request_github_issues(curr_row, last_chance = FALSE)
+request_github_issues(curr_row)
 }
 \arguments{
 \item{curr_row}{a row extracted from the temp_grade_sheet data table within assist_grading().}
-
-\item{last_chance}{logical, whether it is the last chance to take note of an issue for the current student.}
 }
 \description{
 Allows the user to input their requested GitHub issues titles and bodies

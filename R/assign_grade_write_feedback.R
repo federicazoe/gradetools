@@ -9,8 +9,7 @@
 #'   \item{grade_decomposition}{A vector that shows how each part of the assignment contributed to the overall grade (e.g. c(1, 0, 2))}
 #'   \item{grading_status}{A string indicating the grading_status for this student}
 #' }
-#' @importFrom stringr str_count 
-#' @importFrom stringr str_split
+#' @import stringr
 #' @importFrom fs file_create
 #' @importFrom readr write_file
 #'
@@ -35,7 +34,7 @@ assign_grade_write_feedback <- function(
   question_matches <- order(match(questions_graded, names(rubric_prompts)))
   
   num_questions <- sum(
-    stringr::str_count(names(rubric_list), "question_")
+    str_count(names(rubric_list), "question_")
   )
   
   if (!is.null(rubric_list[[1]]$points_to_remove)) {
@@ -83,7 +82,7 @@ assign_grade_write_feedback <- function(
     
     # Extract all codes given to this question
     # E.g. "2---77" into "2" and "77"
-    q_feedback_code <- stringr::str_split(
+    q_feedback_code <- str_split(
       feedback_code[questions_graded == q], 
       pattern = "---"
     )[[1]]
@@ -106,22 +105,19 @@ assign_grade_write_feedback <- function(
       if (q %in% comment_qs) {
         q_fbk <- paste0(
           q_fbk, "\n", 
-          stringr::str_c(comments[which(comment_qs == q)], collapse = "\n"), "\n"
+          str_c(comments[which(comment_qs == q)], collapse = "\n"), "\n"
         )
       }
       
     }
     
     for (fbk_code in q_feedback_code){
-      
       if (fbk_code %in% q_prompt_code) {
-        
         prompt_number <- which(q_prompt_code == fbk_code)
         new_fbk <- q_feedback[prompt_number]
         new_change <- q_points_to_change[prompt_number]
         
       } else if (fbk_code %in% rubric_list$all_questions$prompt_code) {
-        
         prompt_number <- which(rubric_list$all_questions$prompt_code == fbk_code)
         new_fbk <- rubric_list$all_questions$feedback[prompt_number]
         
@@ -134,7 +130,6 @@ assign_grade_write_feedback <- function(
         
         
       } else {
-        
         error_message <- paste(
           "Error: feedback code assigned for ",
           q,
@@ -172,20 +167,52 @@ assign_grade_write_feedback <- function(
   gf_provided <- any(questions_graded == "general_feedback")
   
   if (gf_provided) {
+    gf_comments <- NULL
     
-    gf_separated <- stringr::str_split(
+    if (!is.na(temp_grade_sheet_row$comments)) {
+      comments <- unlist(str_split(
+        temp_grade_sheet_row$comments, 
+        pattern = " // "
+      ))
+      
+      comment_qs <- unlist(str_split(
+        temp_grade_sheet_row$comment_qs, 
+        pattern = " // "
+      ))
+      
+      if ("general_feedback" %in% comment_qs) {
+        gf_comments <- paste0(
+          str_c(
+            comments[which(comment_qs == "general_feedback")], 
+            collapse = "\n"
+          ), 
+          "\n"
+        )
+        
+      }
+      
+    }
+    
+    gf_separated <- str_split(
       feedback_code[questions_graded == "general_feedback"], 
       pattern = "---"
     )[[1]]
+    
+    if (!is.null(gf_comments)) {
+      if (length(gf_separated) == 1 && gf_separated[1] == "NA")
+        gf_separated <- gf_comments
+      
+      else {
+        gf_separated <- c(gf_comments, gf_separated) 
+      }
+      
+    }
 
     if (gf_separated[1] != "NA") {
-      
       general_feedback <- "\n## General feedback:"
       
       for (gf in gf_separated) {
-        
         if (gf %in% rubric_list$general_feedback$prompt_code) {
-          
           prompt_number <- which(
             rubric_list$general_feedback$prompt_code == gf
           )

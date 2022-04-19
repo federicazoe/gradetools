@@ -16,8 +16,7 @@ core_assist_grading(
   questions_to_grade = "all",
   students_to_grade = "all",
   team_grading = FALSE,
-  github_issues = FALSE,
-  issue_every_question = FALSE
+  github_issues = FALSE
 )
 }
 \arguments{
@@ -44,8 +43,6 @@ core_assist_grading(
 \item{team_grading}{logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)}
 
 \item{github_issues}{logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)}
-
-\item{issue_every_question}{logical, whether the possibility to create issues should be given at every question or only at the end of the assignment}
 }
 \description{
 Core function that assists with grading, creates feedback and grade book files

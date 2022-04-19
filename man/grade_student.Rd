@@ -12,7 +12,6 @@ grade_student(
   rubric_list,
   rubric_path,
   github_issues,
-  issue_every_question,
   questions_to_grade
 )
 }
@@ -30,8 +29,6 @@ grade_student(
 \item{rubric_path}{string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.}
 
 \item{github_issues}{Boolean; indicates if grader wants to be able to create GitHub issues}
-
-\item{issue_every_question}{logical, whether the possibility to create issues should be given at every question or only at the end of the assignment}
 
 \item{questions_to_grade}{vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric}
 }

@@ -29,8 +29,7 @@ assist_team_grading(
   missing_assignment_grade = NA,
   questions_to_grade = "all",
   teams_to_grade = "all",
-  github_issues = FALSE,
-  issue_every_question = FALSE
+  github_issues = FALSE
 )
 
 assist_advanced_grading(
@@ -44,8 +43,7 @@ assist_advanced_grading(
   missing_assignment_grade = NA,
   questions_to_grade = "all",
   students_to_grade = "all",
-  github_issues = FALSE,
-  issue_every_question = FALSE
+  github_issues = FALSE
 )
 }
 \arguments{
@@ -72,8 +70,6 @@ assist_advanced_grading(
 \item{teams_to_grade}{vector of strings; team_identifiers corresponding to teams to grade, or "all" to specify all assignments should be graded. Team grading is when the grade of an assignment is share among multiple students. All teams_to_grade must be team_identifiers present in the roster}
 
 \item{github_issues}{logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)}
-
-\item{issue_every_question}{logical, whether the possibility to create issues should be given at every question or only at the end of the assignment}
 
 \item{students_to_grade}{vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster}
 }

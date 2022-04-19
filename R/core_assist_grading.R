@@ -12,7 +12,6 @@
 #' @param students_to_grade vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
 #' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
-#' @param issue_every_question logical, whether the possibility to create issues should be given at every question or only at the end of the assignment
 #' 
 #' @import readr
 #' @import dplyr
@@ -34,8 +33,7 @@ core_assist_grading <- function(
     questions_to_grade = "all",
     students_to_grade = "all",
     team_grading = FALSE,
-    github_issues = FALSE,
-    issue_every_question = FALSE
+    github_issues = FALSE
   ) {
   
   # Check example_assignment_path is valid
@@ -129,7 +127,10 @@ core_assist_grading <- function(
   
   # Import rubric and create rubric prompts
   rubric_list <- import_rubric(rubric_path)
-  rubric_prompts <- create_rubric_prompts(rubric_list)
+  rubric_prompts <- create_rubric_prompts(
+    rubric_list, 
+    github_issues = github_issues
+  )
   gf_in_rubric <- "general_feedback" %in% names(rubric_prompts)
   qs_valid <- questions_to_grade %in% names(rubric_prompts)
   original_rubric_list <- rubric_list # to keep track of addition to rubric while grading
@@ -246,7 +247,6 @@ core_assist_grading <- function(
             rubric_list = rubric_list,
             rubric_path = rubric_path,
             github_issues = github_issues,
-            issue_every_question = issue_every_question,
             questions_to_grade = questions_to_grade
           )
           
@@ -272,7 +272,10 @@ core_assist_grading <- function(
           # Recreate rubric list and prompts, in case they have been modified
           # while grading this student
           rubric_list <- import_rubric(rubric_path)
-          rubric_prompts <- create_rubric_prompts(rubric_list)
+          rubric_prompts <- create_rubric_prompts(
+            rubric_list,
+            github_issues = github_issues
+          )
           
           # To allow enough time between grading of two students,
           # so that Total grade assigned to last student can be printed and seen before

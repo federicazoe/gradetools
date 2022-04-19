@@ -12,8 +12,7 @@ assist_regrading(
   students_to_regrade,
   teams_to_regrade = NULL,
   missing_assignment_grade = NA,
-  github_issues = FALSE,
-  issue_every_question = FALSE
+  github_issues = FALSE
 )
 }
 \arguments{
@@ -32,8 +31,6 @@ assist_regrading(
 \item{missing_assignment_grade}{numeric; The grade to assign a student with no assignment submission}
 
 \item{github_issues}{logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)}
-
-\item{issue_every_question}{logical, whether the possibility to create issues should be given at every question or only at the end of the assignment}
 }
 \description{
 Assists with regrading, given assist_grading() or assist_advanced_grading() was previously used

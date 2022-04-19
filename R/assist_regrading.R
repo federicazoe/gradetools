@@ -8,7 +8,6 @@
 #' @param teams_to_regrade vector of strings; This argument is for team grading (i.e. if one assignment is connected with multiple students). team_identifiers corresponding to teams to grade, or "all" to specify all assignments should be graded. All teams_to_regrade must be team_identifiers present in the roster
 #' @param missing_assignment_grade numeric; The grade to assign a student with no assignment submission
 #' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
-#' @param issue_every_question logical, whether the possibility to create issues should be given at every question or only at the end of the assignment
 #' @param missing_assignment_grade numeric; The grade to assign a student with no assignment submission
 #' 
 #' @import readr 
@@ -24,8 +23,7 @@ assist_regrading <- function(
     students_to_regrade,
     teams_to_regrade = NULL,
     missing_assignment_grade = NA,
-    github_issues = FALSE,
-    issue_every_question = FALSE
+    github_issues = FALSE
   ) {
   
   if (is.null(students_to_regrade) && is.null(teams_to_regrade)) {
@@ -136,7 +134,10 @@ assist_regrading <- function(
   }
   
   rubric_list <- import_rubric(rubric_path)
-  rubric_prompts <- create_rubric_prompts(rubric_list)
+  rubric_prompts <- create_rubric_prompts(
+    rubric_list,
+    github_issues = github_issues
+  )
   gf_in_rubric <- "general_feedback" %in% names(rubric_prompts)
   qs_valid <- questions_to_regrade %in% names(rubric_prompts)
   
@@ -227,6 +228,7 @@ assist_regrading <- function(
                   last_time_graded = col_datetime()
                 )
               ) 
+              
             }
             
             temp_obj <- grade_student(
@@ -237,14 +239,16 @@ assist_regrading <- function(
               rubric_list = rubric_list,
               rubric_path = rubric_path,
               questions_to_grade = q,
-              github_issues = github_issues,
-              issue_every_question = issue_every_question
+              github_issues = github_issues
             )
             
             # Recreate rubric list and prompts, in case they have been modified
             # while regrading this student
             rubric_list <- import_rubric(rubric_path)
-            rubric_prompts <- create_rubric_prompts(rubric_list)
+            rubric_prompts <- create_rubric_prompts(
+              rubric_list,
+              github_issues = github_issues
+            )
             
             if (is.null(temp_obj)) {
               temp_grade_sheet <- curr_temp_grade_sheet

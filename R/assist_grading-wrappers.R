@@ -12,7 +12,6 @@
 #' @param students_to_grade vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster
 #' @param teams_to_grade vector of strings; team_identifiers corresponding to teams to grade, or "all" to specify all assignments should be graded. Team grading is when the grade of an assignment is share among multiple students. All teams_to_grade must be team_identifiers present in the roster
 #' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
-#' @param issue_every_question logical, whether the possibility to create issues should be given at every question or only at the end of the assignment
 #' 
 #' @name assist_grading_functions
 #' @description Functions to assist with grading and providing personalized feedback to students. \code{assist_grading()} requires minimal user input, while \code{assist_team_grading()} and \code{assist_advanced_grading()} offer more user control and allow for team grading and grading assignments from GitHub
@@ -45,8 +44,7 @@ assist_grading <- function(
     questions_to_grade = "all",
     students_to_grade = "all",
     team_grading = FALSE,
-    github_issues = FALSE,
-    issue_every_question = FALSE
+    github_issues = FALSE
   )
   
 }
@@ -66,8 +64,7 @@ assist_team_grading <- function(
   missing_assignment_grade = NA,
   questions_to_grade = "all",
   teams_to_grade = "all",
-  github_issues = FALSE,
-  issue_every_question = FALSE
+  github_issues = FALSE
 ) {
   
   core_assist_grading(
@@ -82,8 +79,7 @@ assist_team_grading <- function(
     questions_to_grade = questions_to_grade,
     students_to_grade = teams_to_grade,
     team_grading = TRUE,
-    github_issues = github_issues,
-    issue_every_question = issue_every_question
+    github_issues = github_issues
   )
 }
 
@@ -102,8 +98,7 @@ assist_advanced_grading <- function(
   missing_assignment_grade = NA,
   questions_to_grade = "all",
   students_to_grade = "all",
-  github_issues = FALSE,
-  issue_every_question = FALSE
+  github_issues = FALSE
 ) {
   
   core_assist_grading(
@@ -118,8 +113,7 @@ assist_advanced_grading <- function(
     questions_to_grade = questions_to_grade,
     students_to_grade = students_to_grade,
     team_grading = FALSE,
-    github_issues = github_issues,
-    issue_every_question = issue_every_question
+    github_issues = github_issues
   )
   
 }
