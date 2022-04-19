@@ -42,7 +42,7 @@ grade_student <- function(
     curr_q <- names(rubric_prompts)[q]
     
     grade_this_question <- FALSE
-    store_feedback <- FALSE
+    store_feedback_codes <- FALSE
     display_prompt_again <- FALSE
     
     if (curr_q %in% questions_to_grade && !(curr_q %in% previously_graded_qs)) {
@@ -57,7 +57,6 @@ grade_student <- function(
         
       } else if (question_fbk == "i") {
         curr_row <- request_github_issues(curr_row)
-        store_feedback <- TRUE
         display_prompt_again <- TRUE
         
       } else if (question_fbk == "p") { 
@@ -80,20 +79,18 @@ grade_student <- function(
             
           }
           
-          store_feedback <- TRUE
-          
         } 
         
         display_prompt_again <- TRUE
         
         if (curr_q == "general_feedback") {
-          continue_providing_gf <- ok_cancel_box(paste(
+          move_to_next_q <- ok_cancel_box(paste(
             "Press [ok] to move on to grade the next submission.",
             "Press [cancel] to continue providing general feedback.",
             sep = "\n"
           ))
           
-          if (!continue_providing_gf) {
+          if (move_to_next_q) {
             display_prompt_again <- FALSE
           }
            
@@ -115,7 +112,7 @@ grade_student <- function(
         
       } else if (question_fbk == "d" && curr_q == "general_feedback") {
         question_fbk <- "NA"
-        store_feedback <- TRUE
+        store_feedback_codes <- TRUE
         
       } else { 
         question_fbk <- str_replace_all(question_fbk, c(" " = "", "--" = "---"))
@@ -136,7 +133,7 @@ grade_student <- function(
         }
         
         if (all(q_fbk_separated %in% valid_fbk_codes)) {
-          store_feedback <- TRUE
+          store_feedback_codes <- TRUE
           
         } else {
           dlg_message(invalid_fbk_message, type = "ok")
@@ -148,7 +145,7 @@ grade_student <- function(
         
     } # End sorting through input
     
-    if (store_feedback) {
+    if (store_feedback_codes) {
       if (is.na(curr_row$feedback_codes)) {
         curr_row$feedback_codes <- question_fbk
         curr_row$graded_qs <- curr_q
@@ -169,10 +166,6 @@ grade_student <- function(
       curr_row$grading_status <- grade_info$grading_status
       curr_row$last_time_graded <- Sys.time()
       
-      temp_grade_sheet[row, ] <- curr_row
-      
-      write_csv(temp_grade_sheet, file = temp_grade_sheet_path)
-      
       # If this student has been fully graded
       if (curr_row$grading_status == "all questions graded") { 
         cat(paste("Total grade assigned:", grade_info$grade, "\n\n"))
@@ -180,11 +173,16 @@ grade_student <- function(
       
     } # End storing question feedback
     
+    temp_grade_sheet[row, ] <- curr_row
+    write_csv(temp_grade_sheet, file = temp_grade_sheet_path)
+    
     # Move onto next question if valid feedback codes were provided
     if (!display_prompt_again) {
       q <- q + 1
     }
     
   } # End while loop
+  
+  temp_grade_sheet
   
 }
