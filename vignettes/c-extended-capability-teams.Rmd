@@ -41,7 +41,8 @@ Note that now we only have two quizzes since Catalina and Mine worked together o
 ### The roster  
 The roster is also different from that in the example-directory-week09-regression. Team grading requires an additional column to be present in the roster, "team_identified". This identified would be something shared among students in the same team.
 
-<iframe src="https://drive.google.com/file/d/10tWlwQdwvBut7WMwlN8pFP_Ly2A5fQUw/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v3-team-grading-roster.png -->
+<iframe src="https://drive.google.com/file/d/1O-TvMYk2z5fnp0RzIkhmqgVgZWODy5sA/preview" width="640" height="480" allow="autoplay"></iframe>
 
 
 ## Grading with `assist_team_grading()`

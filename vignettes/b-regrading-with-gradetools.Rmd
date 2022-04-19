@@ -27,7 +27,8 @@ For this example we will use the example directory called example-directory-week
 
 For our purpose we will consider the situation where we were in the process of grading and realized we assigned the wrong rubric item to a student.
 
-<iframe src="https://drive.google.com/file/d/1_3nX5wKkTHW9mLM5UOqrjAhnCkkgvccR/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v2-grading-error.png -->
+<iframe src="https://drive.google.com/file/d/1To4vEyeiujf7ZoJsaDzeWxcZkt79VcqE/preview" width="640" height="480" allow="autoplay"></iframe>
 
 Specifically, we provided the prompt code "404" which says the answer is missing and deducts all points, but we can see that the user did provide an answer. 
 
@@ -48,9 +49,15 @@ This exact function call assumes that example-directory-week09-regression is the
 
 If the assignment had been a team assignment then the user would have specified `students_to_regrade` as `NULL` and instead would have provided `teams_to_regrade`.  
 
-Once the function call is made everything will look and function as it did with the assist grading function, except the user will only be prompted to grade the `questions_to_regrade` for the `students_to_regrade`. One additional note is that when regrading, the user is always asked to provide the general feedback, even if it had previously been provided.
+Once the function call is made everything will look and function as it did with the assist grading function, except the user will only be prompted to grade the `questions_to_regrade` for the `students_to_regrade`. 
 
-<iframe src="https://drive.google.com/file/d/1zaaWqgI3FpbRPpD0CguvvjheXg1odNwx/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v2-regrade-q1.png -->
+<iframe src="https://drive.google.com/file/d/1qYJVcGAsTa68rtUW5K3dsB1eCSvP0f9q/preview" width="640" height="480" allow="autoplay"></iframe>
+
+One additional note is that when regrading, the user is always asked to provide the general feedback, even if it had previously been provided.
+
+<!-- v2-regraded-q1.png -->
+<iframe src="https://drive.google.com/file/d/1fcs5MeSjYEW_npcpNq8raDoDYlrnpAE0/preview" width="640" height="480" allow="autoplay"></iframe>
 
 
 If a user were to initiate regrading then stop grading before all `questions_to_regrade` have been regraded, the old grading progress will be retained for those questions that did not get regraded.
