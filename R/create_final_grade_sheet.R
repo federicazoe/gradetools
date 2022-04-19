@@ -119,4 +119,6 @@ create_final_grade_sheet <- function(
   }
   
   dlg_message(finished_message, type = "ok")
+  
+  cat("\n")
 }

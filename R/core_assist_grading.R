@@ -257,12 +257,14 @@ core_assist_grading <- function(
           
           # Check if grading has been suspended
           if (is.null(temp_obj)) {
-
-            # Stop grading
-            cat(paste0(
-              "\nGrading has been suspended.\nTo resume grading at any time keep your temporary grade sheet and rerun the assist grading function."
-            ))
+            Sys.sleep(1)
+            cat("Grading has been suspended.")
+            cat("\nMake sure to keep the temporary grade sheet,")
+            cat("\nit is necessary to maintain grading progress.\n")
+            
             continue_grading <- FALSE
+            
+            Sys.sleep(1)
             
           } else {
             temp_grade_sheet <- temp_obj
@@ -284,9 +286,7 @@ core_assist_grading <- function(
           
         } 
       }
-    
     } 
-    
   }
 
   if (any(temp_grade_sheet$grading_status != "ungraded")) {
@@ -300,27 +300,7 @@ core_assist_grading <- function(
     )
   }
   
-  # Remind that the rubric has changed
-  rubric_list <- import_rubric(rubric_path)  
-  updated_rubric <- !(identical(original_rubric_list, rubric_list))
-  
-  if (updated_rubric == TRUE) {
-    rubric_updated_message <- paste(
-      "The rubric has been updated.",
-      "You will have to share the updated rubric with your teaching team,",
-      "if you would like changes to be reflected on their end."
-    )
-    dlg_message(rubric_updated_message, type = "ok")
-    
-  }
-  
   some_students_graded <- any(temp_grade_sheet$grading_status != "ungraded")
-  
-  # if (github_issues == TRUE  && some_students_graded) {
-  #   push_feedback_issue_message <- 
-  #     "To push feedback files and create issues in GitHub remember to run push_to_github()."
-  #   dlg_message(push_feedback_issue_message, type = "ok")
-  # } 
    
   if (feedback_file_ext %in% c("docx", "html", "pdf") && some_students_graded) {
     
