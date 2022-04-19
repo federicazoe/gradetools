@@ -146,7 +146,7 @@ All assignments associated with Federica are opened and the user is prompted to 
 
 The first student, Federica Zoe, is an amazing student and made no errors so they should receive a perfect score on their quiz. We will enter the prompt code "0" which, as specified in the rubric for this assignment, is a prompt code that is available to all questions (column name is set to "all_questions") and marks that the question is correct. Once a prompt code is typed the user presses enter to submit it. 
 
-Proceeding in this fashion, we give Federica full points and complete grading her assignment, including assigning the general feedback _Great job on the quiz!_ associated with the prompt code 0 of the rubric item named "general_feedback".
+Proceeding in this fashion, we give Federica full points and complete grading her assignment, including assigning the general feedback _Great job on the quiz!_ associated with the prompt code 0 of the rubric item named "general_feedback". General feedback is written at the end of the feedback file.
 
 Upon completion of grading the assignment's final score will be printed and the user will be prompted to grade the next student in the roster.
 <iframe src="https://drive.google.com/file/d/1saZn5tS846n6jwq6x0jVByx9F0uvd9yQ/preview" width="640" height="480" allow="autoplay"></iframe>
@@ -168,15 +168,19 @@ Follow the prompts to provide the following information:
   - feedback: "This is the expected change in the response for a difference in the explanatory value of one unit."
   - points to remove: "1"
   
-Once the new rubric item has been added, the grader will be able to apply it to the current student for this question.
+After providing this information the will be asked to review and confirm their rubric addition. Once the new rubric item has been added, the grader will be able to apply it to the current student for this question.
 
 <iframe src="https://drive.google.com/file/d/1mLd1ky4QgbG_QlU_4yqncfYE35QI5PgK/preview" width="640" height="480" allow="autoplay"></iframe>
 
-Continue grading this student. For the general feedback, we will provide a personalized single-use general feedback. To do so enter "p" for the general feedback rubric item, and a box will pop up for user input.
+All of the additional prompt options (i.e. those that begin with a letter) are actions that can be performed instead of grading. When any of these prompt codes are used the question grading status remains as ungraded, and the user will still be prompted to grade the question at some point.
 
-<iframe src="https://drive.google.com/file/d/1SQaR18ZTITZC4gwfTvdpGsm6CtuQHSKz/preview" width="640" height="480" allow="autoplay"></iframe>
+Sometimes a grader will want to write a feedback message for a student, without adding it to the rubric. The grader can do so by using the "p" prompt code. 
 
-Write the message "We want to use figures to clearly convey information. Plotting with the default axes or producing unused plots is not good practice.".
+Catalina's plot for question 2 is technically correct, but using the default axis is not good practice. Let's leave a comment about this. Enter the prompt code "p" then the message "We want to use figures to clearly convey information, so we should set informative axis labels instead of using the default.".
+
+**Insert v1-2catalina-personalized-feedback-on-plot.png**
+
+Continue to grade, awarding full points for the remaining questions. Decline to provide final feedback by providing prompt code "d".
 
 
 ### Grading Mine's quiz  
@@ -191,13 +195,11 @@ Question 3 is another example of this. Note the rubric items do not need to be e
 
 <iframe src="https://drive.google.com/file/d/1Uj2ew3fttg5NpNN8rCDfeTdT3v3XDmiZ/preview" width="640" height="480" allow="autoplay"></iframe>
 
-Sometimes a grader may want to leave a comment for a student about a specific question. In this case the prompt code "c" would be used. Question 3.a was left blank, so maybe we want to leave a comment reminding students to double check their work. Enter "c" for this question and provide the reminder in the text box. 
+Question 3.a was left blank, before grading this question we will leave a message for the student. Use prompt code "p" and enter the message "Answer this question and resubmit the assignment for partial credit.".
 
 <iframe src="https://drive.google.com/file/d/1dDIQvMLvwb-uKfN4ynr7fxvX-CfKssp1/preview" width="640" height="480" allow="autoplay"></iframe>
 
-We also want to take away all points for this question by entering the all questions prompt code "404".
-
-Note both adding a new rubric item and leaving a comment need to be done before grading the question.
+Next assign the "Answer missing" rubric item by entering the prompt code "404". Note messages need to be provided before the question is graded. Multiple messages or rubric item items can be provided before grading a question.
 
 Question 3.b is missing the slope value and the interpretation is not in context. Both of these are mistakes other students might make so we will create two additional rubric items and then assign them to Mine.
 
@@ -207,7 +209,7 @@ Question 3.b is missing the slope value and the interpretation is not in context
 
 <iframe src="https://drive.google.com/file/d/16uH6h_TU6HeyNlEMgzCa5iN2GBuPKSrM/preview" width="640" height="480" allow="autoplay"></iframe>
 
-Now you can finish grading Mine's assignment.
+Now you can finish grading Mine's (mdogucu's) assignment. 
 
 ### The final grade sheet 
 
@@ -227,6 +229,10 @@ gradetools creates a feedback file for each student as the user grades. This fil
 
 The console will contain a message letting the user know if the feedback files were able to be knitted. If not, it will save the feedback .Rmd file.
 
+Below is part of the feedback html created for Mine.
+
+**Insert feedback png**
+
 ## Final notes  
 
 ### Missing assignments  
@@ -238,3 +244,7 @@ gradetools determines assignment paths by replacing all instances of the `exampl
 The function `assist_advanced_grading()` is like a wrapper of `assist_grading()` where two additional parameters allow the user to specify `students_to_grade` and `questions_to_grade`. These can be specified by a vector of question names corresponding to the names of specific parts of the assignment provided in the column "name" in the rubric. `students_to_grade` and `questions_to_grade` can also be set to "all", which is the default.  
 
 Further capabilities of `assist_advanced_grading()` relate to options available for classes that are managed through GitHub and can be found in the "extended-capability-github" vignette.
+
+### Running code from assignments while grading  
+
+The `assist_grading()` functions automatically open all files associated with a student's (or team's) submission and sometimes a grader may want to run the code in a submission. When grading with gradetools the R console is busy with prompting. If this is the case we recommend having a second R session open for running code. In simple situations the user can simply copy and paste the code into the second console to run it.
