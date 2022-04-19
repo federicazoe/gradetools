@@ -39,8 +39,8 @@ assist_regrading(
   rubric_path = "quiz-09-lin-reg-rubric.csv", 
   temp_grade_sheet_path = "quiz-09-lin-reg-temporary-grade-sheet.csv", 
   final_grade_sheet_path = "quiz-09-lin-reg-final-grade-sheet.csv", 
-  students_to_regrade = "federicazoe", 
-  questions_to_regrade = "Question 1.a"
+  questions_to_regrade = "Question 1.a",
+  students_to_regrade = "federicazoe"
 )
 ```
 
