@@ -12,6 +12,7 @@
 #' 
 #' @import readr 
 #' @importFrom stringr str_split
+#' @importFrom fs path_ext
 #'
 #' @export
 #'
@@ -298,6 +299,12 @@ assist_regrading <- function(
     temp_grade_sheet$feedback_path_to_be_knitted[1]
   )
   
+  # Let the user know that feedback is being knitted
+  cat(paste(
+    "\nTrying to knit feedback files to", 
+    feedback_file_ext, "format...\n"
+  ))
+  
   # Knit feedback
   if (feedback_file_ext %in% c("docx", "html", "pdf")) {
     #Try to render feedback files
@@ -310,7 +317,7 @@ assist_regrading <- function(
           MoreArgs = list(clean = TRUE, quiet = TRUE)  
         )
         
-        cat("succeeded!")
+        cat(paste("\n...Succeeded!\n\n"))
         
         unlink(temp_grade_sheet$feedback_path_Rmd)
       },
