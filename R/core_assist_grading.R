@@ -305,7 +305,10 @@ core_assist_grading <- function(
   if (feedback_file_ext %in% c("docx", "html", "pdf") && some_students_graded) {
     
     # Let the user know that feedback is being knitted
-    cat(paste("Trying to knit feedback files to", feedback_file_ext, "format..."))
+    cat(paste0(
+      "\nTrying to knit feedback files to ", 
+      feedback_file_ext, " format...\n"
+    ))
     
     # Try to render feedback files
     tryCatch(               
@@ -317,7 +320,7 @@ core_assist_grading <- function(
           MoreArgs = list(clean = TRUE, quiet = TRUE)  
         )
         
-        cat("succeeded!")
+        cat(paste("\n...Succeeded!\n\n"))
         
         unlink(temp_grade_sheet$feedback_path_Rmd)
       },

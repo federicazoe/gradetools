@@ -7,7 +7,6 @@
 #' @param rubric_list list whose format corresponds to rubric_list, which is used by most functions in this package. This is produced by import_rubric
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
 #' 
-#' @importFrom svDialogs dlg_message
 #' @importFrom readr write_file
 #' @import dplyr
 #'
@@ -103,22 +102,25 @@ create_final_grade_sheet <- function(
   write_csv(final_grade_sheet, final_grade_sheet_path)
   
   ungraded_message <- paste(
-    "\nNot all questions have been graded, or some students have an assignment missing!",
-    "To finish grading just rerun the assist grading function.\n",
+    "\nNot all questions have been graded,", 
+    "or some students have an assignment missing!",
+    "To finish grading just rerun the assist grading function.",
     sep = "\n"
   )
   
   finished_message <- paste(
-    "A final grade sheet has been created which contains the overall grade as well as the grade decomposed by points per question.",
-    "The final gradesheet will assign students a score of NA if their assignment is not completely graded.",
+    "\nA final grade sheet has been created,",
+    "which contains the overall grade,",
+    "as well as the grade decomposed by points per question.",
+    "Ungraded students will have a score of NA.",
     sep = "\n"
   )
   
   if (!no_assignment_missing || !all_assignments_fully_graded) {
-    finished_message <- paste(ungraded_message, finished_message, sep = "\n\n")
+    finished_message <- paste(ungraded_message, finished_message, sep = "\n")
   }
   
-  dlg_message(finished_message, type = "ok")
+  cat(paste0(finished_message))
   
   cat("\n")
 }
