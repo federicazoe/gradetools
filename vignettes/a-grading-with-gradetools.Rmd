@@ -271,4 +271,4 @@ Further capabilities of `assist_advanced_grading()` relate to options available 
 
 ### Running code from assignments while grading  
 
-The `assist_grading()` functions automatically open all files associated with a student's (or team's) submission and sometimes a grader may want to run the code in a submission. When grading with gradetools the R console is busy with prompting. If this is the case we recommend having a second R session open for running code. In simple situations the user can simply copy and paste the code into the second console to run it.
+The `assist_grading()` functions automatically open all files associated with a student's (or team's) submission and sometimes a grader may want to run the code in a submission. When grading with gradetools the R console is busy with prompting. The user has the option on 

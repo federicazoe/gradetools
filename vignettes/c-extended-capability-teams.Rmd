@@ -27,6 +27,7 @@ This vignette displays gradetools's extended capability of handling team grading
 
 This vignette will walk the user through what needs to be done differently when team grading versus regular grading. An additional column needs to be present in the roster specifying which team the student belongs to and `assist_team_grading()` will be used to grade the student.
 
+
 ## Obtaining the example directory
 
 For this example we will use the example directory called example-team-grading-directory-week09-regression in the [team-grading-week09-regression](https://github.com/gradetools-test-course/team-grading-week09-regression) repository in our gradetools-test-course on GitHub. 
@@ -67,3 +68,5 @@ We will skip the process of grading because that is shown in the "how-to-grade-w
 ## Final notes  
 The assist grading function handles teams as individual students in the temporary grade sheet. The final grade sheet will have a row per student but the temporary grade sheet will have one row per team. This internal difference does not change the process of grading but may have been confusing to a user who wanted to look through their temporary grade sheet.
 
+
+The GitHub compatible functionalities discussed in the vignette "Extended gradetools capability: Assignments on GitHub" also works with `assist_team_grading()`.
