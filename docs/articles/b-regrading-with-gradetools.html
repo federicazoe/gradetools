@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,7 +89,8 @@
 <p>The temporary grade sheet stores grading progress, so if it has been saved after using an assist grading function the user can resume grading or regrade at any point.</p>
 <p>For this example we will use the example directory called example-directory-week09-regression in the <a href="https://github.com/gradetools-test-course/quizzes-collected-week09-regression" class="external-link">quizzes-collected-week09-regression</a> repository in our gradetools-test-course on GitHub.</p>
 <p>For our purpose we will consider the situation where we were in the process of grading and realized we assigned the wrong rubric item to a student.</p>
-<iframe src="https://drive.google.com/file/d/1_3nX5wKkTHW9mLM5UOqrjAhnCkkgvccR/preview" width="640" height="480" allow="autoplay">
+<!-- v2-grading-error.png -->
+<iframe src="https://drive.google.com/file/d/1To4vEyeiujf7ZoJsaDzeWxcZkt79VcqE/preview" width="640" height="480" allow="autoplay">
 </iframe>
 <p>Specifically, we provided the prompt code “404” which says the answer is missing and deducts all points, but we can see that the user did provide an answer.</p>
 <div class="section level2">
@@ -101,20 +102,25 @@
   rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>, 
   temp_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-temporary-grade-sheet.csv"</span>, 
   final_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-final-grade-sheet.csv"</span>, 
-  students_to_regrade <span class="op">=</span> <span class="st">"federicazoe"</span>, 
-  questions_to_regrade <span class="op">=</span> <span class="st">"Question 1.a"</span>
+  questions_to_regrade <span class="op">=</span> <span class="st">"Question 1.a"</span>,
+  students_to_regrade <span class="op">=</span> <span class="st">"federicazoe"</span>
 <span class="op">)</span></code></pre></div>
 <p>This exact function call assumes that example-directory-week09-regression is the working directory.</p>
 <p>If the assignment had been a team assignment then the user would have specified <code>students_to_regrade</code> as <code>NULL</code> and instead would have provided <code>teams_to_regrade</code>.</p>
-<p>Once the function call is made everything will look and function as it did with the assist grading function, except the user will only be prompted to grade the <code>questions_to_regrade</code> for the <code>students_to_regrade</code>. One additional note is that when regrading, the user is always asked to provide the general feedback, even if it had previously been provided.</p>
-<iframe src="https://drive.google.com/file/d/1zaaWqgI3FpbRPpD0CguvvjheXg1odNwx/preview" width="640" height="480" allow="autoplay">
+<p>Once the function call is made everything will look and function as it did with the assist grading function, except the user will only be prompted to grade the <code>questions_to_regrade</code> for the <code>students_to_regrade</code>.</p>
+<!-- v2-regrade-q1.png -->
+<iframe src="https://drive.google.com/file/d/1qYJVcGAsTa68rtUW5K3dsB1eCSvP0f9q/preview" width="640" height="480" allow="autoplay">
+</iframe>
+<p>One additional note is that when regrading, the user is always asked to provide the general feedback, even if it had previously been provided.</p>
+<!-- v2-regraded-q1.png -->
+<iframe src="https://drive.google.com/file/d/1fcs5MeSjYEW_npcpNq8raDoDYlrnpAE0/preview" width="640" height="480" allow="autoplay">
 </iframe>
 <p>If a user were to initiate regrading then stop grading before all <code>questions_to_regrade</code> have been regraded, the old grading progress will be retained for those questions that did not get regraded.</p>
 </div>
 <div class="section level2">
 <h2 id="final-notes">Final notes<a class="anchor" aria-label="anchor" href="#final-notes"></a>
 </h2>
-<p>Changing the rubric is not considered regrading. The temporary grade sheet saves grading progress by saving the assigned prompt codes for each question for each student. At any point a user can edit the rubric and then re run one of the <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> functions and all associated grades and feedback will get updated. Rewriting feedback and prompt messages for clarity, or changing points associated with a question or rubric item is considered updating and is completely fine. On the other hand, the <strong>prompt codes cannot be changed</strong> since they are how gradetools stores grading progress.</p>
+<p>Changing the rubric is not considered regrading. The temporary grade sheet saves grading progress by saving the assigned prompt codes for each question for each student. At any point a user can edit the rubric and then re run one of the assist grading functions and all associated grades and feedback will get updated. Rewriting feedback and prompt messages for clarity, or changing points associated with a question or rubric item is considered updating and is completely fine. On the other hand, the <strong>prompt codes and question names cannot be changed</strong> since they are how gradetools stores grading progress.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

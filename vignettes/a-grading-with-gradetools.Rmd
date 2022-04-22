@@ -24,6 +24,14 @@ library(gradetools)
 
 The goal of this vignette is to introduce users to the gradetools package using a practice example. 
 
+Note gradetools has three grading functions: 
+
+  - `assist_grading()`
+  - `assist_team_grading()` (See "Extended gradetools capability: Team Grading" vignette)
+  - `assist_advanced_grading()` (See "Extended gradetools capability: Assignments on GitHub" vignette)
+  
+`assist_grading()` is basically a wrapper for `assist_advanced_grading()` that requires minimal user specification to use. `assist_team_grading()` is a wrapper specifically for team grading. Here we focus on `assist_grading()`.
+
 ## Obtaining the example directory
 
 For this example we will use the example directory called example-directory-week09-regression in the [quizzes-collected-week09-regression](https://github.com/gradetools-test-course/quizzes-collected-week09-regression/tree/main/example-directory-week09-regression) repository in our gradetools-test-course organization on GitHub. To follow along on your computer you can pull the repo from GitHub or use the "Download ZIP" option in the drop down list from the "Code" button on GitHub.
@@ -159,17 +167,17 @@ The first student, Federica Zoe, is an amazing student and made no errors so the
 
 Proceeding in this fashion, we give Federica full points and complete grading her assignment, including assigning the general feedback _Great job on the quiz!_ associated with the prompt code 0 of the rubric item named "general_feedback". General feedback is written at the end of the feedback file.
 
-Upon completion of grading the assignment's final score will be printed and the user will be prompted to grade the next student in the roster.
-
 <!-- v1-1federica-finish-grading.png -->
 <iframe src="https://drive.google.com/file/d/1lQVZFgGGVdJxfJFHVuU3wmH6n9RiMMkg/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Upon completion of grading the assignment's final score will be printed and the user will be prompted to grade the next student in the roster.
 
 
 ### Grading Catalina's quiz  
 
 The next student, Catalina Medina, is also relatively easy to grade because they made very few mistakes.  
 
-The first question was a simple question to grade, even without any tools to aid the process. Question 1.b is instead one which better represents why gradetools can be helpful. Interpretation is very important in statistics, but not necessarily easy to grade. gradetools helps by allowing to add and save new rubric items as the user grades, and writing the grader's feedback to a file for the student to view.
+The first question was a simple question to grade, even without any tools to aid the process. Question 1.b is instead one which better represents why gradetools can be helpful. Interpretation is very important in statistics, but not necessarily easy to grade. gradetools helps by allowing the user to easily add and save new rubric items as they grade, and writing the grader's feedback to a file for the student to view.
 
 Catalina answered question 1.a correctly but the interpretation she provided in question 1.b is not fully correct. She did not mention that the change is associated with a difference in x of one unit. To convey this we want to add a new rubric item. A new rubric item is added by entering "r" instead of a prompt code.
 
@@ -188,7 +196,7 @@ After providing this information the will be asked to review and confirm their r
 <!-- v1-2catalina-added-new-rubric-item.png -->
 <iframe src="https://drive.google.com/file/d/1hlS7YkmxnzFRJ68vgR81edm8HpJJpec5/preview" width="640" height="480" allow="autoplay"></iframe>
 
-All of the additional prompt options (i.e. those that begin with a letter) are actions that can be performed instead of grading. When any of these prompt codes are used the question grading status remains as ungraded, and the user will still be prompted to grade the question at some point.
+All of the additional prompt options (i.e. those that begin with a letter) are actions that can be performed instead of grading. When any of these prompt codes are used gradetools recognizes that the question is still ungraded, so the user will still be prompted to grade the question after.
 
 Sometimes a grader will want to write a feedback message for a student, without adding it to the rubric. The grader can do so by using the "p" prompt code. 
 
@@ -261,14 +269,12 @@ Below is part of the feedback html created for Mine.
 
 ### Missing assignments  
 
-gradetools determines assignment paths by replacing all instances of the `example_student_identifier` in the `example_assignment_path` with each student identifier. If an assignment is not found at the file path, `assist_grading()` will consider that student's assignment to be missing. The user will never be prompted to grade students with missing assignments. `assist_grading()` has an argument called `missing_assignment_grade` which is `NA` by default. Students with missing assignments will have the their total grade for the assignment in the final grade sheet equal to the value of  `missing_assignment_grade`.
+gradetools determines assignment paths by replacing all instances of the `example_student_identifier` in the `example_assignment_path` with each student identifier. If an assignment is not found at the file path, `assist_grading()` will consider that student's assignment to be missing. The final grade assigned to students with missing assignments will be whatever `missing_assignment_grade` was specified as, which is `NA` by default.
 
 ### Selective grading  
 
-The function `assist_advanced_grading()` is like a wrapper of `assist_grading()` where two additional parameters allow the user to specify `students_to_grade` and `questions_to_grade`. These can be specified by a vector of question names corresponding to the names of specific parts of the assignment provided in the column "name" in the rubric. `students_to_grade` and `questions_to_grade` can also be set to "all", which is the default.  
-
-Further capabilities of `assist_advanced_grading()` relate to options available for classes that are managed through GitHub and can be found in the "extended-capability-github" vignette.
+The functions `assist_advanced_grading()` and`assist_advanced_grading()` function similarly to `assist_grading()`, but with additional arguments allowing for increased user control. Two such arguments are `questions_to_grade` and `students_to_grade`. These can be specified by a vector of question names corresponding question names specified in the `names` column of the rubric. `students_to_grade` and `questions_to_grade` can also be set to "all", which is the default.  
 
 ### Running code from assignments while grading  
 
-The `assist_grading()` functions automatically open all files associated with a student's (or team's) submission and sometimes a grader may want to run the code in a submission. When grading with gradetools the R console is busy with prompting. The user has the option on 
+The assist grading functions automatically open all files associated with a student's (or team's) submission and sometimes a grader may want to run the code in a submission. When grading with gradetools the R console is busy with prompting, so the user cannot directly run code in the console. To run the code in assignment submissions while grading with gradetools we recommend knitting/compiling the document or script. Even R script files can be compiled.

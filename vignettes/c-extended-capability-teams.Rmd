@@ -40,11 +40,14 @@ For our purposes we will assume the rubric has already been created. Please refe
 Note that now we only have two quizzes since Catalina and Mine worked together on quiz 2 and will share the grade for that assignment. 
 
 ### The roster  
-The roster is also different from that in the example-directory-week09-regression. Team grading requires an additional column to be present in the roster, "team_identified". This identified would be something shared among students in the same team.
+The roster is also different from that in the example-directory-week09-regression. Team grading requires an additional column to be present in the roster, `team_identifier`. This identifier would be something shared among students in the same team.
 
 <!-- v3-team-grading-roster.png -->
 <iframe src="https://drive.google.com/file/d/1O-TvMYk2z5fnp0RzIkhmqgVgZWODy5sA/preview" width="640" height="480" allow="autoplay"></iframe>
 
+The team identifier should be unique enough that it does not unintentionally match to something else in the assignment file path.  We know the `student_identifier` (`team_identifier` in this case) must be the only thing unique to the student (team) in the assignment file path and the feedback file path. 
+
+An example of a bad `team_identifier` would be labeling a team "a" or "1". `assist_team_grading()` would look for any instance of the `example_student_identifier` in the `example_assignment_path` and replace each instance with a `student_identifier` (`team_identifier`) from the roster. This is how all assignment file paths are determined. Similarly for feedback file paths. "a" and "1" are single characters that could easily be present in the file paths without intentionally being the `student_identifier` (`team_identifier`).
 
 ## Grading with `assist_team_grading()`
 To do team grading in gradetools we will use `assist_team_grading()`.
@@ -66,7 +69,7 @@ This exact function call assumes that example-team-grading-directory-week09-regr
 We will skip the process of grading because that is shown in the "how-to-grade-with-gradetools" vignette.
 
 ## Final notes  
-The assist grading function handles teams as individual students in the temporary grade sheet. The final grade sheet will have a row per student but the temporary grade sheet will have one row per team. This internal difference does not change the process of grading but may have been confusing to a user who wanted to look through their temporary grade sheet.
+The assist grading function handles teams as individual students in the temporary grade sheet. The final grade sheet will have a row per student but the temporary grade sheet will have one row per team. This internal difference does not change the process of grading but may be confusing to a user who wanted to look through their temporary grade sheet.
 
 
-The GitHub compatible functionalities discussed in the vignette "Extended gradetools capability: Assignments on GitHub" also works with `assist_team_grading()`.
+The GitHub compatible functionalities discussed in the vignette "Extended gradetools capability: Assignments on GitHub" also work with `assist_team_grading()`. `assist_team_grading()` is essentially a wrapper of `assist_advanced_grading()` specifically for team grading.

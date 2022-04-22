@@ -21,15 +21,14 @@ knitr::opts_chunk$set(
 library(gradetools)
 ```
 
-For this vignette we assume that you have already familiarized yourself with the basic functionalities of gradetools (see the vignette "how-to-grade-with-gradetools") and we illustrate additional gradetools's functionalities specific to classes that are managed using GitHub organizations.
+For this vignette we assume that you have already familiarized yourself with the basic functionalities of gradetools (see the vignette "how-to-grade-with-gradetools"). `assist_grading()` and `assist_team_grading()` are essentially wrappers for `assist_advanced_grading()`, so all functionalities available in those functions are also available in this function.
 
+Here we illustrate gradetools's functionalities specific to classes that are managed using GitHub organizations. These extended functionalities involve:
 
-These extended functionalities involve:
-
-- **feedback**: pushing to students' (or teams') repos their personalized feedback files.
-- **GitHub issues**:
-  1. taking note of what issues the grader would like to create in a student's (or team's) repo;
-  2. creating the requested GitHub issues in students' (or teams') repos and assigning them to the student (or to team members).
+  - **feedback**: pushing personalized feedback files to students' (or teams') repositories (repo)
+  - **GitHub issues**:
+    1. taking note of what issues the grader would like to create in a student's (or team's) repo;
+    2. creating the requested GitHub issues in students' (or teams') repos and assigning them to the student (or to team members).
 
 
 If you would like to see an introduction on how to structure your class on GitHub you can look at the vignette of the [ghclass package](https://rundel.github.io/ghclass/articles/ghclass.html).
@@ -62,12 +61,9 @@ A message will be shown to confirm which repos have been cloned (bottom-left scr
 <iframe src="https://drive.google.com/file/d/1qVKZfbkwD_5ONYVocxLpnUE9XIN6uNlu/preview" width="640" height="480" allow="autoplay"></iframe>
 
 
-## Creating GitHub issues  
+## Taking note of GitHub issues with `assist_advanced_grading()`
 
-While we are grading, gradetools can give us the option to take note of some GitHub issues that we would like to create in students' or teams' GitHub repos. To be given this option, we need to grade using `assist_advanced_grading()` with the input `github_issues` set to TRUE. 
-
-### Take note of desired GitHub issues with assist_advanced_grading()
-
+While we are grading, gradetools can give us the option to take note of some GitHub issues that we would like to create in students' or teams' GitHub repos. To be given this option, we need to grade using `assist_advanced_grading()` with the input `github_issues` set to TRUE.  
 Noting and pushing issues are separated across two functions. While grading a user can make note of issues and gradetools stores this information to be easily pushed later using `push_to_github()`. First we will take note of an issue while grading.
 
 The function call below assumes the working directory is a directory with 4 cloned repositories from the gradetools -test-course organization on GitHub:
@@ -129,14 +125,15 @@ push_to_github (
 ```
 
 Here is a description of the specified inputs that are new to us:
-- `class_github_name` is the name of the GitHub organization corresponding to this class;
-- `example_github_repo` is an example of a name of a student's (or a team's) repository for this assignment;
-- `example_identifier` is a student_identifier (or team_identifier) from the class roster. For compatibility with GitHub this must be 
-- `push_feedback = TRUE` asks the function to push the feedback files (the same function could be used to only create issues, see below).
 
-To push issues the additional argument would be setting `push_issues` to TRUE. The two push arguments do not need to be run together or on different function calls.
+  - `class_github_name` is the name of the GitHub organization corresponding to this class;
+  - `example_github_repo` is an example of a name of a student's (or a team's) repository for this assignment;
+  - `example_identifier` is a student_identifier (or team_identifier) from the class roster. For compatibility with GitHub the identifiers need to be student identifiers
+  - `push_feedback = TRUE` asks the function to push the feedback files (the same function could be used to only create issues, see below).
 
-Running this function will push each feedback file to the respective repo, if the repo is found:
+To push issues the additional argument would be setting `push_issues` to TRUE. The two push arguments can be set to true on the same function call.
+
+Running the above function call will push each feedback file to the respective repo, if the repo is found:
 
 <!-- v4-pushed-feedback.png -->
 <iframe src="https://drive.google.com/file/d/1EQAYrvrCVBjGnFYAV8X9NsuvVAdXTfKh/preview" width="640" height="480" allow="autoplay"></iframe>

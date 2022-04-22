@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,9 +102,12 @@
 <div class="section level3">
 <h3 id="the-roster">The roster<a class="anchor" aria-label="anchor" href="#the-roster"></a>
 </h3>
-<p>The roster is also different from that in the example-directory-week09-regression. Team grading requires an additional column to be present in the roster, “team_identified”. This identified would be something shared among students in the same team.</p>
-<iframe src="https://drive.google.com/file/d/10tWlwQdwvBut7WMwlN8pFP_Ly2A5fQUw/preview" width="640" height="480" allow="autoplay">
+<p>The roster is also different from that in the example-directory-week09-regression. Team grading requires an additional column to be present in the roster, <code>team_identifier</code>. This identifier would be something shared among students in the same team.</p>
+<!-- v3-team-grading-roster.png -->
+<iframe src="https://drive.google.com/file/d/1O-TvMYk2z5fnp0RzIkhmqgVgZWODy5sA/preview" width="640" height="480" allow="autoplay">
 </iframe>
+<p>The team identifier should be unique enough that it does not unintentionally match to something else in the assignment file path. We know the <code>student_identifier</code> (<code>team_identifier</code> in this case) must be the only thing unique to the student (team) in the assignment file path and the feedback file path.</p>
+<p>An example of a bad <code>team_identifier</code> would be labeling a team “a” or “1”. <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code> would look for any instance of the <code>example_student_identifier</code> in the <code>example_assignment_path</code> and replace each instance with a <code>student_identifier</code> (<code>team_identifier</code>) from the roster. This is how all assignment file paths are determined. Similarly for feedback file paths. “a” and “1” are single characters that could easily be present in the file paths without intentionally being the <code>student_identifier</code> (<code>team_identifier</code>).</p>
 </div>
 </div>
 <div class="section level2">
@@ -127,7 +130,8 @@
 <div class="section level2">
 <h2 id="final-notes">Final notes<a class="anchor" aria-label="anchor" href="#final-notes"></a>
 </h2>
-<p>The assist grading function handles teams as individual students in the temporary grade sheet. The final grade sheet will have a row per student but the temporary grade sheet will have one row per team. This internal difference does not change the process of grading but may have been confusing to a user who wanted to look through their temporary grade sheet.</p>
+<p>The assist grading function handles teams as individual students in the temporary grade sheet. The final grade sheet will have a row per student but the temporary grade sheet will have one row per team. This internal difference does not change the process of grading but may be confusing to a user who wanted to look through their temporary grade sheet.</p>
+<p>The GitHub compatible functionalities discussed in the vignette “Extended gradetools capability: Assignments on GitHub” also work with <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code>. <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code> is essentially a wrapper of <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> specifically for team grading.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
