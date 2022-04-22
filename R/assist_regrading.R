@@ -306,7 +306,7 @@ assist_regrading <- function(
   ))
   
   # Knit feedback
-  if (feedback_file_ext %in% c("docx", "html", "pdf")) {
+  if (feedback_file_ext %in% c("docx", "html", "pdf", "md")) {
     #Try to render feedback files
     tryCatch(               
       # Specifying expression
@@ -320,6 +320,15 @@ assist_regrading <- function(
         cat(paste("\n...Succeeded!\n\n"))
         
         unlink(temp_grade_sheet$feedback_path_Rmd)
+        
+        if (feedback_file_ext == "md") {
+          unlink(fs::path_ext_set(
+            path = temp_grade_sheet$feedback_path_Rmd,
+            ext = "html"
+          ))
+          
+        }
+        
       },
       
       # Specifying error message

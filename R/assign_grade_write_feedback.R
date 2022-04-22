@@ -260,6 +260,7 @@ assign_grade_write_feedback <- function(
     feedback_file_ext == "html" ~ "html_document",
     feedback_file_ext == "docx" ~ "word_document",
     feedback_file_ext == "pdf" ~ "pdf_document",
+    feedback_file_ext == "md" ~ "github_document",
     TRUE ~ "NA",
   )
   

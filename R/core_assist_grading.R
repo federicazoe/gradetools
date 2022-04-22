@@ -1,15 +1,28 @@
 #' Core function that assists with grading, creates feedback and grade book files
 #'
-#' @param rubric_path string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.
-#' @param roster_path string; file path to the class roster csv containing a column named student_identifier. If team_grading is set to TRUE then the class roster also needs to contain a column named team_identifier
-#' @param temp_grade_sheet_path string; assist-grading() functions save a file which includes information for gradetools's internal use. This is that path for that file. Must be a .csv
+#' @param rubric_path string, path to assignment rubric. 
+#'     This rubric should be created using the function create_rubric_template, then filled in by the user. 
+#'     The rubric file name and column names must not be changed.
+#' @param roster_path string; file path to the class roster csv containing a column named student_identifier. 
+#'     If team_grading is set to TRUE then the class roster also needs to contain a column named team_identifier
+#' @param temp_grade_sheet_path string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+#'     This is that path for that file. Must be a .csv
 #' @param final_grade_sheet_path string; path to save final grade sheet to. Must be a .csv
-#' @param example_assignment_path string; file path to one of the assignments to be graded. This file path structure will be used to determine where the other assignments to be graded are located. The student identifier has to be present somewhere in the file path
-#' @param example_feedback_path string; file path to one of the assignment feedback files that will be generated as the user grades. This file path structure will be used to determine where the other feedback files will be stored. The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. The extension of the feedback file must be one of the following: "Rmd", "docx", "html", "pdf"
-#' @param example_student_identifier string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later
+#' @param example_assignment_path string; file path to one of the assignments to be graded. 
+#'     This file path structure will be used to determine where the other assignments to be graded are located. 
+#'     The student identifier has to be present somewhere in the file path
+#' @param example_feedback_path string; file path to one of the assignment feedback files that will be generated as the user grades. 
+#'     This file path structure will be used to determine where the other feedback files will be stored. 
+#'     The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. 
+#'     The extension of the feedback file must be one of the following: "Rmd", "md", "docx", "html", "pdf". 
+#'     These file types (except the first) will be knitted to: Github, Word, html, and pdf documents respectively
+#' @param example_student_identifier string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. 
+#'     This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later
 #' @param missing_assignment_grade numeric; The grade to assign a student with no assignment submission
-#' @param questions_to_grade vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric
-#' @param students_to_grade vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster
+#' @param questions_to_grade vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. 
+#'     All questions_to_grade must exactly match ones present in the rubric
+#' @param students_to_grade vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. 
+#'     All students_to_grade must be student_identifiers present in the roster
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
 #' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
 #' 
@@ -88,7 +101,7 @@ core_assist_grading <- function(
   # Check example_feedback_path is valid
   feedback_file_ext <- path_ext(example_feedback_path)
   
-  if (!(feedback_file_ext %in% c("Rmd", "docx", "html", "pdf"))) {
+  if (!(feedback_file_ext %in% c("Rmd", "docx", "html", "pdf", "md"))) {
     stop("The extension of the example_feedback_path must be one of the following: '.Rmd', '.docx', '.html', '.pdf'.")
   } else if (!str_detect(example_feedback_path, example_student_identifier)) {
     stop("The example_student_identifier must be present in the example_feedback_path file name.")
@@ -302,7 +315,7 @@ core_assist_grading <- function(
   
   some_students_graded <- any(temp_grade_sheet$grading_status != "ungraded")
    
-  if (feedback_file_ext %in% c("docx", "html", "pdf") && some_students_graded) {
+  if (feedback_file_ext %in% c("docx", "html", "pdf", "md") && some_students_graded) {
     
     # Let the user know that feedback is being knitted
     cat(paste0(
@@ -323,6 +336,15 @@ core_assist_grading <- function(
         cat(paste("\n...Succeeded!\n\n"))
         
         unlink(temp_grade_sheet$feedback_path_Rmd)
+        
+        if (feedback_file_ext == "md") {
+          unlink(fs::path_ext_set(
+            path = temp_grade_sheet$feedback_path_Rmd,
+            ext = "html"
+          ))
+          
+        }
+        
       },
       
       # Specifying error message

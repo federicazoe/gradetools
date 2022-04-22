@@ -128,7 +128,7 @@ The `example_student_identifier` corresponds to any of the identifiers present i
 
 The `example_assignment_path` is the path where the assignment(s) associated with the example_student_identifier are located.
 
-The `example_feedback_path` is the path where the grader wishes to save the feedback file associated with the `example_student_identifier`.
+The `example_feedback_path` is the path where the grader wishes to save the feedback file associated with the `example_student_identifier`. The extension of this path dictates the file type. The current options for extensions are "Rmd", "md", "docx", "html", "pdf". The feedback files are knitted to the accompanying file type (except for Rmd files): Github, Word, html, pdf documents respectively.
 
 The practice example below will clarify all the arguments that we have introduced here. Further details for the arguments can be found in the `assist_grading()` documentation. 
 

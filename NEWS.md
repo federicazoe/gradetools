@@ -6,5 +6,11 @@
 - Prompting is neater 
     - prompt codes starting with digits are user made
     - letter prompt options are options provided by gradetools (e.g. adding rubric items, noting issues, and providing personalized feedback)
+- Feedback files can now have the following extensions: 
+    - Rmd
+    - md (for Github documents)
+    - docx (for Word documents)
+    - html
+    - pdf
 - Moved `questions_to_grade` argument before `students_to_grade` in `assist_team_grading()`, and `assist_advanced_grading()`.
 - Moved `questions_to_regrade` argument before `students_to_regrade` in `assist_grading()`
