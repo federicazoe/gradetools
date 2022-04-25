@@ -16,9 +16,12 @@ assist_regrading(
 )
 }
 \arguments{
-\item{rubric_path}{string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.}
+\item{rubric_path}{string, path to assignment rubric. 
+This rubric should be created using the function create_rubric_template, then filled in by the user. 
+The rubric file name and column names must not be changed.}
 
-\item{temp_grade_sheet_path}{string; path to temporary grade sheet produced by assign_grade_write_feedback}
+\item{temp_grade_sheet_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+This is that path for that file. Must be a .csv}
 
 \item{final_grade_sheet_path}{string; path to save final grade sheet to. Must be a .csv}
 

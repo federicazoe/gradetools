@@ -15,7 +15,8 @@ push_to_github(
 )
 }
 \arguments{
-\item{temp_grade_sheet_path}{data frame, The temp_grade_sheet is a data frame containing information for gradetools internal use}
+\item{temp_grade_sheet_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+This is that path for that file. Must be a .csv}
 
 \item{class_github_name}{string, GitHub name of the class. This input is only needed if github_issues is set to TRUE.}
 

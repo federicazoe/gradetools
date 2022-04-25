@@ -1,14 +1,9 @@
 #' Assists with regrading, given assist_grading() or assist_advanced_grading() was previously used
 #'
-#' @param rubric_path string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.
-#' @param temp_grade_sheet_path string; path to temporary grade sheet produced by assign_grade_write_feedback
-#' @param final_grade_sheet_path string; path to save final grade sheet to. Must be a .csv
+#' @inheritParams assist_grading_functions
 #' @param questions_to_regrade vector of strings; vector of assignment question 'names' to regrade. This can be specified as "all" to apply to all questions. questions_to_grade must exactly match ones present in the rubric
 #' @param students_to_regrade vector of strings; vector of student identifiers to regrade. This can be specified as "all" to apply to all student's in the rubric. students_to_grade must be student_identifiers present in the roster. This should not be provided if the assignment involved team grading
 #' @param teams_to_regrade vector of strings; This argument is for team grading (i.e. if one assignment is connected with multiple students). team_identifiers corresponding to teams to grade, or "all" to specify all assignments should be graded. All teams_to_regrade must be team_identifiers present in the roster
-#' @param missing_assignment_grade numeric; The grade to assign a student with no assignment submission
-#' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
-#' @param missing_assignment_grade numeric; The grade to assign a student with no assignment submission
 #' 
 #' @import readr 
 #' @importFrom stringr str_split
