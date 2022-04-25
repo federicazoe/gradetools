@@ -46,6 +46,12 @@ delete_feedback_grade <- function(
   if ("feedback_pushed" %in% colnames(changed_grade_sheet)){
     changed_grade_sheet$feedback_pushed <- FALSE
   } 
+  
+  if ("issue_titles" %in% colnames(changed_grade_sheet)) {
+    github_issues <- TRUE
+  } else {
+    github_issues <- FALSE
+  }
     
   if (questions_to_delete == "all") {
     changed_grade_sheet <- changed_grade_sheet %>% 
@@ -54,7 +60,7 @@ delete_feedback_grade <- function(
       mutate(graded_qs = NA) %>% 
       mutate(last_time_graded = NA)
     
-    if (issue_titles %in% colnames(changed_grade_sheet)) {
+    if ("issue_titles" %in% colnames(changed_grade_sheet)) {
       issues_cols_to_delete <- c("issue_titles", "issue_bodies", "issue_pushed")
       changed_grade_sheet <- changed_grade_sheet %>% 
         mutate(issue_titles = NA, issue_bodies = NA, issue_pushed = NA)
@@ -62,7 +68,7 @@ delete_feedback_grade <- function(
     
   } else {
     for (i in 1:length(student_ids)) {
-      if (!is.na(changed_grade_sheet$comments)) {
+      if (!is.na(changed_grade_sheet$comments[i])) {
         # Extract comments
         comments <- unlist(str_split(
           changed_grade_sheet$comments[i], 
@@ -76,7 +82,7 @@ delete_feedback_grade <- function(
         
         not_q_comment_position <- which(!(comment_qs %in% questions_to_delete))
         
-        if (length(which(!(comment_qs %in% questions_to_delete))) == 0) {
+        if (length(not_q_comment_position) == 0) {
           changed_grade_sheet$comments[i] <- NA
           
           changed_grade_sheet$comment_qs[i] <- NA
@@ -94,6 +100,22 @@ delete_feedback_grade <- function(
         }
         
       }
+      
+      # if (github_issues) {
+      #   if (!is.na(changed_grade_sheet$issue_titles[i])) {
+      #     # Extract github issues
+      #     comments <- unlist(str_split(
+      #       changed_grade_sheet$comments[i], 
+      #       pattern = " // "
+      #     ))
+      #     
+      #     comment_qs <- unlist(str_split(
+      #       changed_grade_sheet$comment_qs[i], 
+      #       pattern = " // "
+      #     ))          
+      #   }
+      #   
+      # }
       
       # Extract saved grading progress
       fdbk_codes <- unlist(str_split(
@@ -130,7 +152,7 @@ delete_feedback_grade <- function(
         changed_grade_sheet$last_time_graded[i] <- Sys.time()
         
         rubric_list <- import_rubric(rubric_path)
-        rubric_prompts <- create_rubric_prompts(rubric_list)
+        rubric_prompts <- create_rubric_prompts(rubric_list, github_issues)
         
         grade_info <- assign_grade_write_feedback(
           temp_grade_sheet_row = changed_grade_sheet[i, ], 
