@@ -17,3 +17,4 @@ corresponding row of temporary grade sheet
 \description{
 Collects GitHub issue title and body
 }
+\keyword{internal}

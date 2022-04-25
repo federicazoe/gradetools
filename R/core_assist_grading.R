@@ -11,6 +11,8 @@
 #' @import rmarkdown
 #' @import fs
 #' 
+#' @keywords internal
+#' 
 core_assist_grading <- function(
     rubric_path,
     roster_path,

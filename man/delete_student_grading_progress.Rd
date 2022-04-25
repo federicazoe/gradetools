@@ -27,3 +27,4 @@ This can be specified as "all" to apply to all questions.}
 \description{
 Delete feedback and grades for specified students and questions
 }
+\keyword{internal}

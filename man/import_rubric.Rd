@@ -15,3 +15,4 @@ list whose format corresponds to rubric_list, which is used by most functions in
 \description{
 Reads in assignment rubric to produce rubric_list. Alternative to defining rubric as rubric_list manually
 }
+\keyword{internal}

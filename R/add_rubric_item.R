@@ -12,7 +12,8 @@
 #'
 #' @return rubric list
 #' 
-
+#' @keywords internal
+#' 
 add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
   
   rubric <- readr::read_csv(

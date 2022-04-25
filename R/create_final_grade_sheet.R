@@ -9,6 +9,8 @@
 #' 
 #' @importFrom readr write_file
 #' @import dplyr
+#' 
+#' @keywords internal
 #'
 create_final_grade_sheet <- function(
     temp_grade_sheet,

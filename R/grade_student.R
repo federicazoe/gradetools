@@ -17,6 +17,8 @@
 #'
 #' @return temporary grade sheet data frame
 #' 
+#' @keywords internal
+#' 
 grade_student <- function(
   row, 
   temp_grade_sheet, 

@@ -75,9 +75,12 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>rubric_path</dt>
-<dd><p>string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.</p></dd>
+<dd><p>string, path to assignment rubric. 
+This rubric should be created using the function create_rubric_template, then filled in by the user. 
+The rubric file name and column names must not be changed.</p></dd>
 <dt>temp_grade_sheet_path</dt>
-<dd><p>string; path to temporary grade sheet produced by assign_grade_write_feedback</p></dd>
+<dd><p>string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+This is that path for that file. Must be a .csv</p></dd>
 <dt>final_grade_sheet_path</dt>
 <dd><p>string; path to save final grade sheet to. Must be a .csv</p></dd>
 <dt>questions_to_regrade</dt>

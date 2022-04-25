@@ -18,3 +18,4 @@ remove_associated_info(curr_row, questions_to_delete, question_col, info_cols)
 \description{
 Helper function for deleting info
 }
+\keyword{internal}

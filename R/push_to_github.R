@@ -103,6 +103,8 @@ push_to_github <- function(
 #' @import dplyr
 #' @import stringr
 #' @import ghclass
+#' 
+#' @keywords internal
 #'
 push_feedback_github <- function(
   temp_grade_sheet,
@@ -158,6 +160,8 @@ push_feedback_github <- function(
 #' @import dplyr
 #' @import stringr
 #' @import ghclass
+#' 
+#' @keywords internal
 #' 
 create_issues_github <- function(
     temp_grade_sheet,

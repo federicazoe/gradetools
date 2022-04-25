@@ -9,11 +9,15 @@
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
 #'
 #' @return tibble; with the columns read in from roster_path, including student_identifier, and two new columns, feedback_path_Rmd, feedback_path_to_be_knitted, and assignment_path containing the file paths to the student assignment files and student feedback files
+#' 
 #' @import stringr
 #' @import dplyr
 #' @import readr
 #' @importFrom svDialogs dlg_message
 #' @importFrom fs path_ext_set
+#' 
+#' @keywords internal
+#' 
 create_temp_grade_sheet <- function(
     temp_grade_sheet_path,
     example_assignment_path,

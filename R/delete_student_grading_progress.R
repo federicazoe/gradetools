@@ -9,6 +9,8 @@
 #'
 #' @import readr
 #' @import stringr
+#' 
+#' @keywords internal
 #'
 delete_student_grading_progress <- function(
     temp_grade_sheet_path, 
@@ -96,6 +98,9 @@ delete_student_grading_progress <- function(
 #' @param questions_to_delete string; vector of assignment question 'names' to have grade and feedback deleted. 
 #' @param question_col string; name of column containing question names for associated info
 #' @param info_cols vector of strings; names of columns containing info to be deleted
+#' 
+#' @keywords internal
+#' 
 remove_associated_info <- function(
     curr_row, 
     questions_to_delete, 

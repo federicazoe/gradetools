@@ -16,3 +16,4 @@ create_issues_github(temp_grade_sheet, class_github_name, team_grading = FALSE)
 \description{
 Push issues to GitHub
 }
+\keyword{internal}

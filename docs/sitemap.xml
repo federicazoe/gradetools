@@ -94,6 +94,9 @@
     <loc>https://federicazoe.github.io/gradetools/reference/delete_feedback_grade.html</loc>
   </url>
   <url>
+    <loc>https://federicazoe.github.io/gradetools/reference/delete_student_grading_progress.html</loc>
+  </url>
+  <url>
     <loc>https://federicazoe.github.io/gradetools/reference/grade_student.html</loc>
   </url>
   <url>
@@ -103,6 +106,9 @@
     <loc>https://federicazoe.github.io/gradetools/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://federicazoe.github.io/gradetools/reference/note_github_issues.html</loc>
+  </url>
+  <url>
     <loc>https://federicazoe.github.io/gradetools/reference/null_assist_grading.html</loc>
   </url>
   <url>
@@ -110,6 +116,9 @@
   </url>
   <url>
     <loc>https://federicazoe.github.io/gradetools/reference/push_to_github.html</loc>
+  </url>
+  <url>
+    <loc>https://federicazoe.github.io/gradetools/reference/remove_associated_info.html</loc>
   </url>
   <url>
     <loc>https://federicazoe.github.io/gradetools/reference/request_github_issues.html</loc>

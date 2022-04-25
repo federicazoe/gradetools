@@ -17,3 +17,4 @@ list of prompts. One prompt for each question plus one for overall feedback.
 \description{
 Creates assignment rubric prompts
 }
+\keyword{internal}

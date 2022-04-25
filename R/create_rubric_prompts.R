@@ -5,6 +5,9 @@
 #'
 #' @return list of prompts. One prompt for each question plus one for overall feedback.
 #' @import stringr
+#' 
+#' @keywords internal
+#' 
 create_rubric_prompts <- function(rubric_list, github_issues) {
   rubric_names <- names(rubric_list)
   

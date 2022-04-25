@@ -176,7 +176,7 @@
 <p>From the previous sections in this vignette, we already know our rubric and roster paths. Now we need to specify where to save the temporary grade sheet and the final grade sheet. The temporary grade sheet is a file used internally by gradetools which stores all grading progress. Keeping this file allows the user to interrupt and then resume grading, regrade, change rubric items, add assignments to be graded, and many more functionalities.</p>
 <p>The <code>example_student_identifier</code> corresponds to any of the identifiers present in the <code>student_identifier</code> column of the roster.</p>
 <p>The <code>example_assignment_path</code> is the path where the assignment(s) associated with the example_student_identifier are located.</p>
-<p>The <code>example_feedback_path</code> is the path where the grader wishes to save the feedback file associated with the <code>example_student_identifier</code>.</p>
+<p>The <code>example_feedback_path</code> is the path where the grader wishes to save the feedback file associated with the <code>example_student_identifier</code>. The extension of this path dictates the file type. The current options for extensions are “Rmd”, “md”, “docx”, “html”, “pdf”. The feedback files are knitted to the accompanying file type (except for Rmd files): Github, Word, html, pdf documents respectively.</p>
 <p>The practice example below will clarify all the arguments that we have introduced here. Further details for the arguments can be found in the <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> documentation.</p>
 </div>
 </div>
