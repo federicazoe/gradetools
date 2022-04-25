@@ -62,8 +62,8 @@ grade_student <- function(
       } else if (question_fbk == "p") { 
         question_comment <- dlg_input(
           paste(
-            "Type the personalized feedback message and press [enter].",
-            "To cancel writing this message, press [cancel].",
+            "Type personalized feedback and press [ok].",
+            "To cancel typing personalized feedback, press [cancel].",
             sep = "\n"
           )
         )$res
