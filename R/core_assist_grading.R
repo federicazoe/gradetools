@@ -61,8 +61,10 @@ core_assist_grading <- function(
   paths_to_files <- c(rubric_path, roster_path, example_assignment_path)
   for (p in paths_to_files) {
     if (!file.exists(p)) {
-      stop(paste0("No file exists at ", p, ". ",
-                  "Are you sure that this path is correct?"))  
+      stop(paste0(
+        "No file exists at ", p, ". ",
+        "Are you sure that this path is correct?"
+      ))  
       
     }
   }

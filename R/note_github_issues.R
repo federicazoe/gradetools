@@ -1,7 +1,9 @@
-#' Allows the user to input their requested GitHub issues titles and bodies
+#' Collects GitHub issue title and body
 #'
 #' @param curr_row a row extracted from the temp_grade_sheet data table within assist_grading().
-request_github_issues <- function(curr_row) {
+#' @param curr_q name of current question
+#' @return corresponding row of temporary grade sheet
+note_github_issues <- function(curr_row, curr_q) {
 
   issue_title <- dlg_input(
     paste(
@@ -23,11 +25,15 @@ request_github_issues <- function(curr_row) {
     if (length(issue_body) > 0) {
       # If this is the first issue recorded for this student/team
       if (is.na(curr_row$issue_titles)) {
+        curr_row$issue_qs <- curr_q
         curr_row$issue_titles <- issue_title
         curr_row$issue_bodies <- issue_body
         curr_row$issue_pushed <- "FALSE"
         
       } else {
+        curr_row$issue_qs <- paste0(
+          curr_row$issue_qs, "&&&", curr_q
+        )
         curr_row$issue_titles <- paste0(
           curr_row$issue_titles, "&&&", issue_title
         )

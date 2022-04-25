@@ -94,12 +94,12 @@ assign_grade_write_feedback <- function(
     if (!is.na(temp_grade_sheet_row$comments)) {
       comments <- unlist(str_split(
         temp_grade_sheet_row$comments, 
-        pattern = " // "
+        pattern = "&&&"
       ))
       
       comment_qs <- unlist(str_split(
         temp_grade_sheet_row$comment_qs, 
-        pattern = " // "
+        pattern = "&&&"
       ))
       
       if (q %in% comment_qs) {
@@ -172,12 +172,12 @@ assign_grade_write_feedback <- function(
     if (!is.na(temp_grade_sheet_row$comments)) {
       comments <- unlist(str_split(
         temp_grade_sheet_row$comments, 
-        pattern = " // "
+        pattern = "&&&"
       ))
       
       comment_qs <- unlist(str_split(
         temp_grade_sheet_row$comment_qs, 
-        pattern = " // "
+        pattern = "&&&"
       ))
       
       if ("general_feedback" %in% comment_qs) {

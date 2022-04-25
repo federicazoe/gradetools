@@ -212,23 +212,13 @@ assist_regrading <- function(
             curr_temp_grade_sheet <- temp_grade_sheet
             
             if (student_not_ungraded && q %in% graded_questions) {
-              delete_feedback_grade(
+              temp_grade_sheet <- delete_student_grading_progress(
                 temp_grade_sheet_path = temp_grade_sheet_path, 
                 rubric_path = rubric_path,
-                student_ids = curr_id,
-                questions_to_delete = q
+                identifier = curr_id,
+                questions_to_delete = q,
+                github_issues = github_issues
               )
-              
-              temp_grade_sheet <- readr::read_csv(
-                temp_grade_sheet_path,
-                show_col_types = FALSE,
-                col_types = cols(
-                  .default = col_character(),
-                  assignment_missing = col_logical(),
-                  grade_student = col_logical(),
-                  last_time_graded = col_datetime()
-                )
-              ) 
               
             }
             

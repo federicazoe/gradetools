@@ -56,7 +56,7 @@ grade_student <- function(
         return()
         
       } else if (question_fbk == "i") {
-        curr_row <- request_github_issues(curr_row)
+        curr_row <- note_github_issues(curr_row, curr_q = curr_q)
         display_prompt_again <- TRUE
         
       } else if (question_fbk == "p") { 
@@ -74,8 +74,8 @@ grade_student <- function(
             curr_row$comment_qs <- curr_q
             
           } else {
-            curr_row$comments <- paste0(curr_row$comments, " // ", question_comment)
-            curr_row$comment_qs <- paste0(curr_row$comment_qs," // ", curr_q)
+            curr_row$comments <- paste0(curr_row$comments, "&&&", question_comment)
+            curr_row$comment_qs <- paste0(curr_row$comment_qs,"&&&", curr_q)
             
           }
           

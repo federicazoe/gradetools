@@ -126,6 +126,7 @@ create_temp_grade_sheet <- function(
     )
     
     github_cols_to_transfer <- c(
+      "issue_qs",
       "issue_titles", 
       "issue_bodies", 
       "issue_pushed",
@@ -152,6 +153,7 @@ create_temp_grade_sheet <- function(
     # columns where missing from the previously saved temporary grade sheet
     if (github_issues & !("issue_titles" %in% colnames(temp_grade_sheet))) {
       temp_grade_sheet <- temp_grade_sheet %>% 
+        mutate(issue_qs = NA) %>% 
         mutate(issue_titles = NA) %>% 
         mutate(issue_bodies = NA) %>% 
         mutate(issue_pushed = NA)
@@ -168,6 +170,7 @@ create_temp_grade_sheet <- function(
 
     if (github_issues) {
       temp_grade_sheet <- temp_grade_sheet %>% 
+        mutate(issue_qs = NA) %>% 
         mutate(issue_titles = NA) %>% 
         mutate(issue_bodies = NA) %>% 
         mutate(issue_pushed = NA)
@@ -178,8 +181,7 @@ create_temp_grade_sheet <- function(
       "A temporary grade sheet is being created.",
       "This is for gradetools's internal use.",
       "Please do not delete this file.",
-      "It must be retained if the grader does not finish grading and wants to resume,",
-      "or if the grader wishes to change points associated with a rubric item.\n\n",
+      "It must be retained to save grading progress.\n\n",
       sep = "\n"
     )
     
