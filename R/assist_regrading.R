@@ -52,10 +52,10 @@ assist_regrading <- function(
       .default = col_character(),
       assignment_missing = col_logical(),
       grade_student = col_logical(),
-      last_time_graded = col_datetime()
+      last_time_graded = col_datetime(),
     )
   )
-  
+
   # Determine if it is team grading
   team_grading <- "students_in_team" %in% colnames(temp_grade_sheet)
   
@@ -238,8 +238,8 @@ assist_regrading <- function(
             
             if (is.null(temp_obj)) {
               temp_grade_sheet <- curr_temp_grade_sheet
-                
-              write_file(temp_grade_sheet, file = temp_grade_sheet_path)
+              
+              write_csv(temp_grade_sheet, file = temp_grade_sheet_path)
               
               cat(paste0(
                 "\nGrading has been suspended.",
@@ -251,7 +251,7 @@ assist_regrading <- function(
             } else {
               if ("feedback_pushed" %in% colnames(temp_obj)) {
                 # Set feedback_pushed to FALSE if student has been regraded
-                temp_obj$feedback_pushed <- FALSE
+                temp_obj$feedback_pushed <- "FALSE"
               }
               
               temp_grade_sheet <- temp_obj
