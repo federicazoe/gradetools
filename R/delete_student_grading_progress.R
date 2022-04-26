@@ -42,7 +42,7 @@ delete_student_grading_progress <- function(
   
   # Set feedback_pushed = FALSE if column is present
   if ("feedback_pushed" %in% colnames(curr_row)){
-    curr_row$feedback_pushed <- FALSE
+    curr_row$feedback_pushed <- "FALSE"
   } 
   
   curr_row <- remove_associated_info(

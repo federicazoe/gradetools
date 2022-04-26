@@ -7,7 +7,6 @@
 #' @param rubric_list list whose format corresponds to rubric_list, which is used by most functions in this package. This is produced by import_rubric
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
 #' 
-#' @importFrom readr write_file
 #' @import dplyr
 #' 
 #' @keywords internal
