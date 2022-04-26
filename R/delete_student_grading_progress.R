@@ -131,7 +131,7 @@ remove_associated_info <- function(
     keep_info <- !(info_qs %in% questions_to_delete)
     
     if (issue_pushing_present) {
-      keep_info <- keep_info & !issue_pushed_vec
+      keep_info <- keep_info | issue_pushed_vec
     }
     
     curr_row[, col] <- ifelse(
