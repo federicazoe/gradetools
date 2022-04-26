@@ -60,7 +60,7 @@ push_to_github <- function(
     # from this temporary grade sheet
     
     # Initialize column that keeps track of which feedback files have been pushed
-    temp_grade_sheet$feedback_pushed <- FALSE
+    temp_grade_sheet$feedback_pushed <- "FALSE"
     
     # Use the example github identifier and github repos provided to guess
     # the name of all student
@@ -72,11 +72,11 @@ push_to_github <- function(
     
     write_csv(temp_grade_sheet, file = temp_grade_sheet_path) 
     
-  }  
-  
+  }
 
   if (push_feedback) {
     push_feedback_github(
+      temp_grade_sheet_path = temp_grade_sheet_path,
       temp_grade_sheet = temp_grade_sheet,
       class_github_name = class_github_name
     )
@@ -84,6 +84,7 @@ push_to_github <- function(
   
   if (create_issues) {
     create_issues_github(
+      temp_grade_sheet_path = temp_grade_sheet_path,
       temp_grade_sheet = temp_grade_sheet,
       class_github_name = class_github_name,
       team_grading = team_grading
@@ -96,6 +97,8 @@ push_to_github <- function(
   
 #' Push feedback to GitHub
 #'
+#' @param temp_grade_sheet_path string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+#'     This is that path for that file. Must be a .csv
 #' @param temp_grade_sheet tibble created by assist_advanced_grading().
 #' @param class_github_name string, GitHub name of the class. This input is needed to push feedback and issues to the correct class on GitHub.
 #'
@@ -107,16 +110,18 @@ push_to_github <- function(
 #' @keywords internal
 #'
 push_feedback_github <- function(
+  temp_grade_sheet_path,
   temp_grade_sheet,
   class_github_name
 ) {
   
   for (i in 1:nrow(temp_grade_sheet)) {
     
-    if (temp_grade_sheet$feedback_pushed[i] == FALSE) {
+    if (temp_grade_sheet$grading_status[i] == "all questions graded" &
+        temp_grade_sheet$feedback_pushed[i] == "FALSE") {
       
       github_repo <- temp_grade_sheet$github_repo[i]
-      feedback_path <- temp_grade_sheet$feedback_path_Rmd[i]
+      feedback_path <- temp_grade_sheet$feedback_path_to_be_knitted[i]
       
       if (repo_exists(paste(class_github_name, github_repo, sep = "/"))) {
         ghclass::repo_add_file(
@@ -126,7 +131,7 @@ push_feedback_github <- function(
           overwrite = TRUE
         )
         
-        temp_grade_sheet$feedback_pushed[i] <- TRUE
+        temp_grade_sheet$feedback_pushed[i] <- "TRUE"
         
         # Update temporary grade sheet (feedback_pushed for this row has changed)
         write_csv(temp_grade_sheet, file = temp_grade_sheet_path) 
@@ -152,6 +157,8 @@ push_feedback_github <- function(
 
 #' Push issues to GitHub
 #' 
+#' @param temp_grade_sheet_path string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+#'     This is that path for that file. Must be a .csv
 #' @param temp_grade_sheet tibble created by assist_advanced_grading().
 #' @param class_github_name string, GitHub name of the class. This input is needed to push feedback and issues to the correct class on GitHub.
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
@@ -164,6 +171,7 @@ push_feedback_github <- function(
 #' @keywords internal
 #' 
 create_issues_github <- function(
+    temp_grade_sheet_path,
     temp_grade_sheet,
     class_github_name, 
     team_grading = FALSE
@@ -184,6 +192,12 @@ create_issues_github <- function(
         )
     )
   }
+  
+  show_issue_summary <- dlg_message(
+    "Would you like to confirm each issue before creating it?",
+    type = "yesno"
+  )$res
+  
   
   for (i in 1:nrow(temp_grade_sheet)) {
     
@@ -230,49 +244,82 @@ create_issues_github <- function(
           
           if (!already_pushed) {
             
-            if (team_grading == FALSE) {
-              ghclass::issue_create(
-                repo = ghclass::org_repos(class_github_name, github_repo),
-                title = issue_titles[j],
-                body = issue_bodies[j],
-                assignees = temp_grade_sheet$student_identifier[i]
+            proceed_with_issue <- TRUE
+            
+            if (show_issue_summary == "yes") {
+              new_issue <- paste(
+                "You are about to create the following issue: \n",
+                paste0("Issue title: ", issue_titles[j]),
+                paste0("Issue body: ", issue_bodies[j]),
+                paste0("Assignees: ", 
+                       ifelse(!team_grading,
+                              temp_grade_sheet$student_identifier[i],
+                              assignees)),
+                       sep = "\n"
+              )
+              proceed_message <-  paste(
+                new_issue,
+                "\nTo create this issue, press [ok]",
+                "To skip this issue, press [cancel].",
+                sep = "\n"
+              )
+              proceed_with_issue <- ok_cancel_box(proceed_message)
+            }
+            
+            if (proceed_with_issue) {
+              
+              if (!team_grading) {
+                
+                if (proceed_with_issue) {
+                  ghclass::issue_create(
+                    repo = ghclass::org_repos(class_github_name, github_repo),
+                    title = issue_titles[j],
+                    body = issue_bodies[j],
+                    assignees = temp_grade_sheet$student_identifier[i]
+                  )
+                }
+                
+                
+                
+              } else {
+                # Wish we could do this, but multiple assignees aren't supported
+                # by GitHub for private repos in organization owned by free-plan
+                # users
+                # assignees <- roster %>% 
+                #   filter(team_identifier == 
+                #            temp_grade_sheet$student_identifier[i]) %>% 
+                #   pull(student_identifier)
+                #
+                # ghclass::issue_create(
+                #   repo = ghclass::org_repos(class_github_name, repo_path),
+                #   title = issue_titles[i],
+                #   body = issue_bodies[i],
+                #   assignees = assignees
+                # )
+                
+                ghclass::issue_create(
+                  repo = ghclass::org_repos(class_github_name, github_repo),
+                  title = issue_titles[j],
+                  body = paste(issue_bodies[j], assignees)
+                )
+                
+              }
+              
+              current_push_status[j] <- "TRUE"
+              
+              temp_grade_sheet$issue_pushed[i] <- str_c(
+                string = current_push_status, 
+                collapse = "&&&"
               )
               
-            } else {
-              # Wish we could do this, but multiple assignees aren't supported
-              # by GitHub for private repos in organization owned by free-plan
-              # users
-              # assignees <- roster %>% 
-              #   filter(team_identifier == 
-              #            temp_grade_sheet$student_identifier[i]) %>% 
-              #   pull(student_identifier)
-              #
-              # ghclass::issue_create(
-              #   repo = ghclass::org_repos(class_github_name, repo_path),
-              #   title = issue_titles[i],
-              #   body = issue_bodies[i],
-              #   assignees = assignees
-              # )
-              
-              ghclass::issue_create(
-                repo = ghclass::org_repos(class_github_name, github_repo),
-                title = issue_titles[j],
-                body = paste(issue_bodies[j], assignees)
-              )
+              write_csv(temp_grade_sheet, file = temp_grade_sheet_path) 
               
             }
             
-            current_push_status[j] <- "TRUE"
-            
-            temp_grade_sheet$issue_pushed[i] <- str_c(
-              string = current_push_status, 
-              collapse = "&&&"
-            )
-            
-            write_csv(temp_grade_sheet, file = temp_grade_sheet_path) 
-            
           }
+          
         }
+        
       } else {
         
         warning(paste(github_repo,
