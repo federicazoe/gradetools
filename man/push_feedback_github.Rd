@@ -4,9 +4,16 @@
 \alias{push_feedback_github}
 \title{Push feedback to GitHub}
 \usage{
-push_feedback_github(temp_grade_sheet, class_github_name)
+push_feedback_github(
+  temp_grade_sheet_path,
+  temp_grade_sheet,
+  class_github_name
+)
 }
 \arguments{
+\item{temp_grade_sheet_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+This is that path for that file. Must be a .csv}
+
 \item{temp_grade_sheet}{tibble created by assist_advanced_grading().}
 
 \item{class_github_name}{string, GitHub name of the class. This input is needed to push feedback and issues to the correct class on GitHub.}
