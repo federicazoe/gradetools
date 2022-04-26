@@ -1,0 +1,50 @@
+---
+title: "Comprehensive example of grading with gradetools"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Comprehensive example of grading with gradetools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(gradetools)
+```
+
+For this vignette we assume that you have already familiarized yourself with the basic functionalities of gradetools (see the vignette "how-to-grade-with-gradetools"). `assist_grading()` and `assist_team_grading()` are essentially wrappers for `assist_advanced_grading()`, so all functionalities available in those functions are also available in this function.
+
+
+The purpose of this vignette is to provide a different grading scenario which involves:  
+
+  - Project instead of homework or quiz
+  - Team grading
+  - Assignments on Github
+  - Multiple files per submission
+  - Pushing issues and feedback to GitHub
+  
+
+## Cloning project repos  
+
+This vignette uses two GitHub repositories (repos) from the [gradetools-test-course](https://github.com/gradetools-test-course) Github organization:
+ 
+  - [final-project-team-poisson](https://github.com/gradetools-test-course/final-project-team-poisson) for one team submission.
+  - [final-project-team-gamma](https://github.com/gradetools-test-course/final-project-team-gamma) for the second team submission.
+
+
+## Creating issues and grading assignments  
+
+This vignette assumes knowledge on how to grade with gradetools. We will note an issue on one submission and skip grading the rest of the submissions. 
+
+
+## Credits
+
+The extended functionalities for assignments managed using GitHub were possible thanks to the functions in the [ghclass](https://rundel.github.io/ghclass/index.html) package.
+
+The final project submissions were made from the [GitHub repository template](https://github.com/mine-cetinkaya-rundel/ds-final-project) accompanying "The 5Ws and 1H of Term Projects in the Introductory Data Science Classroom" by Çetinkaya-Rundel, Dogucu, and Rummerfield (2022).
