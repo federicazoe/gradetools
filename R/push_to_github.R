@@ -117,8 +117,11 @@ push_feedback_github <- function(
   
   for (i in 1:nrow(temp_grade_sheet)) {
     
-    if (temp_grade_sheet$grading_status[i] == "all questions graded" &
-        temp_grade_sheet$feedback_pushed[i] == "FALSE") {
+    feedback_to_push <- (temp_grade_sheet$feedback_pushed[i] == "FALSE")
+    grading_completed <- 
+      (temp_grade_sheet$grading_status[i] == "all questions graded")
+    
+    if (feedback_to_push & grading_completed) {
       
       github_repo <- temp_grade_sheet$github_repo[i]
       feedback_path <- temp_grade_sheet$feedback_path_to_be_knitted[i]
@@ -193,17 +196,60 @@ create_issues_github <- function(
     )
   }
   
+  all_push_statuses <- str_split(
+    string = temp_grade_sheet$issue_pushed, 
+    pattern = "&&&"
+  ) %>% 
+    unlist()
+  
+  # Interrupt creating issues if there are no issues to create
+  if (all(is.na(all_push_statuses))) {
+    return(cat(
+      paste(
+      "No issues have been annotated in this temporary grade sheet.",
+      "Are you sure that you have provided the right temp_grade_sheet_path?"
+    )))
+  }
+  
+  partially_graded <- dlg_message(
+    c("Would you like to create issues also for assignments that have been partially graded?",
+      "If you select 'no', then issues will only be created for fully graded assignments"),
+    type = "yesno"
+  )$res 
+  
+  relevant_rows <- ifelse(
+    partially_graded == "yes",
+    c(1:nrow(temp_grade_sheet)),
+    (temp_grade_sheet$grading_status == "all questions graded")
+  )
+  
+  relevant_push_statuses <- str_split(
+    string = temp_grade_sheet$issue_pushed[relevant_rows], 
+    pattern = "&&&"
+  ) %>% 
+    unlist()
+  
+  # Interrupt creating issues if all annotated issues have already been pushed
+  if (!any(relevant_push_statuses == "FALSE")) {
+    return(cat(
+      paste(
+        "All issues that were annotated in this temporary grade sheet have already been pushed"
+      )))
+  }
+  
   show_issue_summary <- dlg_message(
-    "Would you like to confirm each issue before creating it?",
+    "Would you like to see and confirm each issue before creating it?",
     type = "yesno"
   )$res
-  
   
   for (i in 1:nrow(temp_grade_sheet)) {
     
     are_there_issues <- !is.na(temp_grade_sheet$issue_titles[i])
+    issues_to_be_pushed <- 
+      (temp_grade_sheet$grading_status[i] == "all questions graded") |
+      (partially_graded == "yes")
     
-    if (are_there_issues == TRUE) {
+    if (are_there_issues & issues_to_be_pushed) {
       
       github_repo <- temp_grade_sheet$github_repo[i]
       
