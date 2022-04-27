@@ -249,22 +249,18 @@ assist_regrading <- function(
               continue_grading <- FALSE
               
             } else {
-              if ("feedback_pushed" %in% colnames(temp_obj)) {
-                # Set feedback_pushed to FALSE if student has been regraded
-                temp_obj$feedback_pushed <- "FALSE"
-              }
               
               temp_grade_sheet <- temp_obj
               
             } 
-          
-            # Close assignment
-            for(j in 1:length(assignment_path)) {
-              invisible(documentClose(id = doc_id[j], save = FALSE))
-            }
             
           }
           
+        }
+        
+        # Close assignment
+        for(j in 1:length(assignment_path)) {
+          invisible(documentClose(id = doc_id[j], save = FALSE))
         }
         
       }
