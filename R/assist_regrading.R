@@ -1,5 +1,6 @@
-#' Assists with regrading, given assist_grading() or assist_advanced_grading() was previously used
+#' Assists with regrading
 #'
+#' @description Assists with regrading, given an assist grading function was previously used. Deletes previously specified grades, feedback, comments and issues for each regraded question.
 #' @inheritParams assist_grading_functions
 #' @param questions_to_regrade vector of strings; vector of assignment question 'names' to regrade. This can be specified as "all" to apply to all questions. questions_to_grade must exactly match ones present in the rubric
 #' @param students_to_regrade vector of strings; vector of student identifiers to regrade. This can be specified as "all" to apply to all student's in the rubric. students_to_grade must be student_identifiers present in the roster. This should not be provided if the assignment involved team grading
@@ -102,27 +103,11 @@ assist_regrading <- function(
     grade_ungraded <- dlg_message(ungraded_present_message, type = "yesno")$res
     
     if (grade_ungraded == "no") {
-      handling_ungraded_message <- paste0(
-        "Would you still like to continue with regrading the previously graded students?"
-      )
-      
-      continue_grading <- dlg_message(
-        handling_ungraded_message, 
-        type = "yesno"
-      )$res
-      
-      if (continue_grading == "yes") {
-        temp_grade_sheet$grade_student[id_ungraded_to_be_graded] <- FALSE
-        
-        if (!any(temp_grade_sheet$grade_student)) {
-          return(
+      if (!any(temp_grade_sheet$grade_student)) {
+        return(
+          message(
             "There are no students to be regraded. Regrading has been cancelled."
-          )
-        }
-        
-      } else {
-        return("Regrading has been cancelled.")
-        
+        ))
       }
       
     }
@@ -145,9 +130,6 @@ assist_regrading <- function(
     stop(
       "\nSome or all questions_to_regrade are not in the 'names' column in the rubric."
     )
-    
-  } else if (!("general_feedback" %in% questions_to_regrade) && gf_in_rubric) {
-    questions_to_regrade <- c(questions_to_regrade, "general_feedback")
     
   }
   

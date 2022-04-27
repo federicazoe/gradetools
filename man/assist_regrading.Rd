@@ -2,7 +2,7 @@
 % Please edit documentation in R/assist_regrading.R
 \name{assist_regrading}
 \alias{assist_regrading}
-\title{Assists with regrading, given assist_grading() or assist_advanced_grading() was previously used}
+\title{Assists with regrading}
 \usage{
 assist_regrading(
   rubric_path,
@@ -36,5 +36,5 @@ This is that path for that file. Must be a .csv}
 \item{github_issues}{logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)}
 }
 \description{
-Assists with regrading, given assist_grading() or assist_advanced_grading() was previously used
+Assists with regrading, given an assist grading function was previously used. Deletes previously specified grades, feedback, comments and issues for each regraded question.
 }
