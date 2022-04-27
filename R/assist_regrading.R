@@ -206,10 +206,6 @@ assist_regrading <- function(
           if (continue_grading) {
             curr_temp_grade_sheet <- temp_grade_sheet
             
-            # paste0(
-            #curr_temp_grade_sheet$issue_pushed[curr_temp_grade_sheet$student_identifier == curr_id]
-            #)
-            
             if (student_not_ungraded && q %in% graded_questions) {
               temp_grade_sheet <- delete_student_grading_progress(
                 temp_grade_sheet_path = temp_grade_sheet_path, 
@@ -218,10 +214,6 @@ assist_regrading <- function(
                 questions_to_delete = q,
                 github_issues = github_issues
               )
-              
-              # paste0(
-              #curr_temp_grade_sheet$issue_pushed[curr_temp_grade_sheet$student_identifier == curr_id]
-              #)
               
             }
             
@@ -235,10 +227,6 @@ assist_regrading <- function(
               questions_to_grade = q,
               github_issues = github_issues
             )
-            
-            # paste0(
-            #curr_temp_grade_sheet$issue_pushed[curr_temp_grade_sheet$student_identifier == curr_id]
-            #)
             
             # Recreate rubric list and prompts, in case they have been modified
             # while regrading this student
