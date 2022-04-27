@@ -28,7 +28,7 @@ note_github_issues <- function(curr_row, curr_q) {
     
     if (length(issue_body) > 0) {
       # If this is the first issue recorded for this student/team
-      if (is.na(curr_row$issue_titles)) {
+      if (is.na(curr_row$issue_titles) || curr_row$issue_titles == "NA") {
         curr_row$issue_qs <- curr_q
         curr_row$issue_titles <- issue_title
         curr_row$issue_bodies <- issue_body
