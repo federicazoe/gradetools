@@ -114,15 +114,14 @@ remove_associated_info <- function(
     "issue_pushed" %in% colnames(curr_row)
   
   if (issue_pushing_present) {
-    issue_pushed_vec <- ifelse(
-      is.na(curr_row$issue_pushed),
-      yes = FALSE,
-      no = as.logical(unlist(str_split(
+    if (is.na(curr_row$issue_pushed)) {
+      issue_pushed_vec <- FALSE
+    } else {
+      issue_pushed_vec <-as.logical(unlist(str_split(
         curr_row$issue_pushed, 
         pattern = "&&&"
       )))
-    )
-    
+    }
   }
   
   for (col in info_cols) {
@@ -155,7 +154,7 @@ remove_associated_info <- function(
       no = NA
     )
   }
-  
+
   curr_row
   
 }
