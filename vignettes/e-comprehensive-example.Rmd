@@ -9,6 +9,7 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  echo = TRUE,
   collapse = TRUE,
   comment = "#>"
 )
@@ -23,7 +24,7 @@ For this vignette we assume that you have already familiarized yourself with the
 
 The purpose of this vignette is to provide a different grading scenario which involves:  
 
-  - Project instead of homework or quiz
+  - A project instead of homework or quiz
   - Team grading
   - Assignments on Github
   - Multiple files per submission
@@ -36,11 +37,32 @@ This vignette uses two GitHub repositories (repos) from the [gradetools-test-cou
  
   - [final-project-team-poisson](https://github.com/gradetools-test-course/final-project-team-poisson) for one team submission.
   - [final-project-team-gamma](https://github.com/gradetools-test-course/final-project-team-gamma) for the second team submission.
+  
+These repos can be cloned by running:
+
+```{r}
+class_github_name <- "gradetools-test-course"
+repo_template_name <- "final-project-team-"
+repos_local_path <- "final-project-team-repos"
+
+ghclass::local_repo_clone(
+  repo = ghclass::org_repos(class_github_name, repo_template_name),
+  local_path = repos_local_path
+)
+```
+
 
 
 ## Creating issues and grading assignments  
 
 This vignette assumes knowledge on how to grade with gradetools. We will note an issue on one submission and skip grading the rest of the submissions. 
+
+Run the following code to begin the grading process.
+
+```{r eval = FALSE}
+
+```
+
 
 
 ## Credits
