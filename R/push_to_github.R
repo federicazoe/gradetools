@@ -115,20 +115,76 @@ push_feedback_github <- function(
   class_github_name
 ) {
   
+  all_push_statuses <- temp_grade_sheet$feedback_pushed
+  
+  # Interrupt pushing feedback if there is no feedback to push
+  if (all(all_push_statuses == "TRUE")) {
+    return(message(
+      paste(
+        "All feedback files have been pushed in this temporary grade sheet.",
+        "Are you sure that you have provided the right temp_grade_sheet_path?"
+      )))
+  }
+  
+  partially_graded <- dlg_message(
+    c("Would you like to push feedback also for assignments that have been partially graded?",
+      "If you select 'no', then feedback will only be pushed for fully graded assignments"),
+    type = "yesno"
+  )$res 
+  
+  if (partially_graded == "yes") {
+    relevant_rows <- temp_grade_sheet$grading_status %in% 
+                        c("all questions graded", "feedback created")
+    if (all(relevant_rows == FALSE)) {
+      stop("No feedback file has been created for this assignment yet.")
+    }
+    no_feedback_to_push_msg <- 
+      "All feedback files that were created for this assignment have already been pushed."
+    
+  } else {
+    relevant_rows <- (temp_grade_sheet$grading_status == "all questions graded")
+    no_feedback_to_push_msg <- 
+      "All feedback files for fully graded students have already been pushed."
+    if (all(relevant_rows == FALSE)) {
+      return(
+        stop("No student has been fully graded for this assignment yet.")
+      )
+    }
+  }
+  
+  relevant_push_statuses <- temp_grade_sheet$feedback_pushed[relevant_rows]
+  
+  # Interrupt pushing feedback if there is no feedback to push
+  if (all(relevant_push_statuses == 'TRUE')) {
+    return(message(no_feedback_to_push_msg))
+  }
+  
   for (i in 1:nrow(temp_grade_sheet)) {
     
     feedback_to_push <- (temp_grade_sheet$feedback_pushed[i] == "FALSE")
-    grading_completed <- 
-      (temp_grade_sheet$grading_status[i] == "all questions graded")
     
-    if (feedback_to_push & grading_completed) {
+    if (partially_graded == "yes") {
+      feedback_to_push <- (temp_grade_sheet$feedback_pushed[i] == "FALSE") &
+        (temp_grade_sheet$grading_status[i] 
+         %in% c("all questions graded", "feedback created"))
+      
+    } else {
+      feedback_to_push <- (temp_grade_sheet$feedback_pushed[i] == "FALSE") &
+        (temp_grade_sheet$grading_status[i] == "all questions graded")
+      
+    }
+    
+    if (feedback_to_push) {
       
       github_repo <- temp_grade_sheet$github_repo[i]
       feedback_path <- temp_grade_sheet$feedback_path_to_be_knitted[i]
       
       if (repo_exists(paste(class_github_name, github_repo, sep = "/"))) {
         ghclass::repo_add_file(
-          repo = ghclass::org_repos(class_github_name, github_repo),
+          repo = ghclass::org_repos(class_github_name, 
+                                    paste0("\\b",
+                                           github_repo,
+                                           "$")),
           message = "Feedback",
           file = feedback_path,
           overwrite = TRUE
@@ -204,11 +260,11 @@ create_issues_github <- function(
   
   # Interrupt creating issues if there are no issues to create
   if (all(is.na(all_push_statuses))) {
-    return(cat(
+    return(message(
       paste(
-      "No issues have been annotated in this temporary grade sheet.",
-      "Are you sure that you have provided the right temp_grade_sheet_path?"
-    )))
+        "No issues have been annotated in this temporary grade sheet.",
+        "Are you sure that you have provided the right temp_grade_sheet_path?"
+      )))
   }
   
   partially_graded <- dlg_message(
@@ -229,16 +285,26 @@ create_issues_github <- function(
   ) %>% 
     unlist()
   
+  # Interrupt creating issues if there are no issues to create
+  if (all(is.na(relevant_push_statuses))) {
+    return(message(
+      paste(
+        "No issues have been noted in this temporary grade sheet.",
+        "Are you sure that you have provided the right temp_grade_sheet_path?"
+      )))
+  }
+  
   # Interrupt creating issues if all annotated issues have already been pushed
   if (!any(relevant_push_statuses == "FALSE")) {
-    return(cat(
+    return(message(
       paste(
-        "All issues that were annotated in this temporary grade sheet have already been pushed"
+        "All issues that were noted in this temporary grade sheet have already been pushed"
       )))
   }
   
   show_issue_summary <- dlg_message(
-    "Would you like to see and confirm each issue before creating it?",
+    c("Would you like to see and confirm each issue before creating it?",
+    "Creating issues on GitHub cannot be undone with gradetools."),
     type = "yesno"
   )$res
   

@@ -164,6 +164,11 @@ grade_student <- function(
         rubric_prompts = rubric_prompts
       )
       
+      # Update feedback_pushed, if it exists
+      if ("feedback_pushed" %in% colnames(curr_row)) {
+        curr_row$feedback_pushed <- "FALSE"
+      }
+      
       # Update grading_status
       curr_row$grading_status <- grade_info$grading_status
       curr_row$last_time_graded <- Sys.time()
