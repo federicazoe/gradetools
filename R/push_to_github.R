@@ -273,11 +273,11 @@ create_issues_github <- function(
     type = "yesno"
   )$res 
   
-  relevant_rows <- ifelse(
-    partially_graded == "yes",
-    c(1:nrow(temp_grade_sheet)),
-    (temp_grade_sheet$grading_status == "all questions graded")
-  )
+  if (partially_graded == "yes") {
+    relevant_rows <- c(1:nrow(temp_grade_sheet))
+  } else {
+    relevant_rows <- temp_grade_sheet$grading_status == "all questions graded"
+  }
   
   relevant_push_statuses <- str_split(
     string = temp_grade_sheet$issue_pushed[relevant_rows], 
