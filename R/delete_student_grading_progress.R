@@ -77,6 +77,7 @@ delete_student_grading_progress <- function(
     github_issues = github_issues
   )
   
+  if (!is.na(curr_row$graded_qs)) {
   grade_info <- assign_grade_write_feedback(
     temp_grade_sheet_row = curr_row, 
     rubric_list = rubric_list,
@@ -85,6 +86,12 @@ delete_student_grading_progress <- function(
   
   curr_row$grading_status <- grade_info$grading_status
   curr_row$last_time_graded <- Sys.time()
+  
+  } else {
+    curr_row$grading_status <- "ungraded"
+    curr_row$last_time_graded <- NA
+    
+  }
   
   temp_grade_sheet[row_to_change, ] <- curr_row
   

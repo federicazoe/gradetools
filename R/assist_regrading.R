@@ -103,6 +103,8 @@ assist_regrading <- function(
     grade_ungraded <- dlg_message(ungraded_present_message, type = "yesno")$res
     
     if (grade_ungraded == "no") {
+      temp_grade_sheet$grade_student[id_ungraded_to_be_graded] <- FALSE
+      
       if (!any(temp_grade_sheet$grade_student)) {
         return(
           message(
