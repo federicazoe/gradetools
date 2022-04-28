@@ -7,7 +7,8 @@
 #' @param teams_to_regrade vector of strings; This argument is for team grading (i.e. if one assignment is connected with multiple students). team_identifiers corresponding to teams to grade, or "all" to specify all assignments should be graded. All teams_to_regrade must be team_identifiers present in the roster
 #' 
 #' @import readr 
-#' @importFrom stringr str_split
+#' @import stringr
+#' @import svDialogs
 #' @importFrom fs path_ext
 #'
 #' @export
@@ -91,13 +92,16 @@ assist_regrading <- function(
   id_ungraded_to_be_graded <- temp_grade_sheet$grade_student & id_ungraded
   
   if (any(id_ungraded_to_be_graded)) {
+    ids_to_be_graded_short <- temp_grade_sheet$student_identifier[id_ungraded_to_be_graded]
+    
+    if (length(ids_to_be_graded_short) > 10) {
+      ids_to_be_graded_short <- c(ids_to_be_graded_short[1:10], "...")
+    }
+    
     ungraded_present_message <- paste0(
-      "The following students_to_regrade were not previously graded: ",
-      paste(
-        temp_grade_sheet$student_identifier[id_ungraded_to_be_graded], 
-        sep = ", "
-      ), 
-      ".  Would you still like to grade these previously ungraded students?"
+      "The following students_to_regrade were not previously graded: \n",
+      str_c(ids_to_be_graded_short, collapse = ",\n"), 
+      "\nWould you still like to grade the previously ungraded students?"
     )
     
     grade_ungraded <- dlg_message(ungraded_present_message, type = "yesno")$res
