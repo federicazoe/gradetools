@@ -282,6 +282,20 @@ core_assist_grading <- function(
       }
     } 
   }
+  
+  if (file.exists(temp_grade_sheet_path)) {
+    temp_grade_sheet <- readr::read_csv(
+      temp_grade_sheet_path,
+      show_col_types = FALSE,
+      col_types = cols(
+        .default = col_character(),
+        assignment_missing = col_logical(),
+        grade_student = col_logical(),
+        last_time_graded = col_datetime()
+      )
+    )
+    
+  }
 
   if (any(temp_grade_sheet$grading_status != "ungraded")) {
     create_final_grade_sheet(
