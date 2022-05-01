@@ -11,6 +11,9 @@ vignette: >
 knitr::opts_chunk$set(
   echo = TRUE,
   collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  eval = FALSE,
   comment = "#>"
 )
 ```
@@ -19,19 +22,17 @@ knitr::opts_chunk$set(
 library(gradetools)
 ```
 
-For this vignette we assume that you have already familiarized yourself with the basic functionalities of gradetools (see the vignette "how-to-grade-with-gradetools"). `assist_grading()` and `assist_team_grading()` are essentially wrappers for `assist_advanced_grading()`, so all functionalities available in those functions are also available in this function.
+For this vignette we assume that you have already familiarized yourself with the various functionalities of gradetools ([individual](https://federicazoe.github.io/gradetools/articles/a-grading-with-gradetools.html), [team](https://federicazoe.github.io/gradetools/articles/c-extended-capability-teams.html) and [GitHub](https://federicazoe.github.io/gradetools/articles/d-extended-capability-github.html) grading).
 
+The purpose of this vignette is to provide a comprehensive grading scenario involving:  
 
-The purpose of this vignette is to provide a different grading scenario which involves:  
-
-  - A project instead of homework or quiz
-  - Team grading
-  - Assignments on Github
-  - Multiple files per submission
+  - A team project (instead of homework or quiz) on GitHub
+  - Multiple files per submission (we will grade `README.md`, `proposal.md` and `presentation.Rmd`)
   - Pushing issues and feedback to GitHub
   
+## Preparing the material
 
-## Cloning project repos  
+### Cloning project repos  
 
 This vignette uses two GitHub repositories (repos) from the [gradetools-test-course](https://github.com/gradetools-test-course) Github organization:
  
@@ -51,22 +52,64 @@ ghclass::local_repo_clone(
 )
 ```
 
+The final project submissions were adapted from the [GitHub repository template](https://github.com/mine-cetinkaya-rundel/ds-final-project) accompanying "The 5Ws and 1H of Term Projects in the Introductory Data Science Classroom" by Çetinkaya-Rundel, Dogucu, and Rummerfield (2022). 
 
+## Making the roster
 
-## Creating issues and grading assignments  
+Most typically, the roster would be downloaded from a school learning management system and saved into a .csv file whose path would be provided to one of the assist grading functions. For this example, we are going to create a minimal roster that only has the two columns required for team grading.
 
-This vignette assumes knowledge on how to grade with gradetools. We will note an issue on one submission and skip grading the rest of the submissions. 
+```{r}
 
-Run the following code to begin the grading process.
+roster <- data.frame(
+  student_identifier = c("federicazoe", "CatalinaMedina", "mdogucu"),
+  team_identifier = c("gamma", "poisson", "poisson")
+)
 
-```{r eval = FALSE}
+readr::write_csv(roster, "roster.csv")
 
 ```
 
 
+## Making the rubric  
+
+We should always use `create_rubric_template()` to begin formatting our rubric. Here we will create a rubric using a positive grading scheme.  
+
+We would like to grade three files for each team: `README.md`, `proposal.md` and `presentation.Rmd`. We will create a rubric item for each file to begin grading (further items can be added while grading).
+
+```{r}
+create_rubric_template(
+  rubric_path = "rubric.csv", 
+  negative_grading = FALSE
+)
+
+rubric <- readr::read_csv("rubric.csv", show_col_types = FALSE)
+
+rubric <- data.frame(
+  names = c("README", "Proposal", "Presentation", "all_questions"),
+  total_points = c(2, 3, 5), 
+  prompt_code = c("1a", "1a", "1a", "0"), 
+  prompt_message = "", 
+  feedback = "", 
+  points_to_remove = ""
+)
+
+readr::write_csv(rubric, "rubric.csv")
+
+
+```
+
+
+## Working directory
+
+After cloning the repos and creating the roster and rubric, your working directory should look like the following:
+
+<!-- v5-directory.png -->
+<iframe src="https://drive.google.com/file/d/1atL8xHeDOz7_HHuuIO6NUKE8tzXlrwp2/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Note: for simplicity, the figure above does not include files and folders present in the cloned repos that are not used for this example.
 
 ## Credits
 
 The extended functionalities for assignments managed using GitHub were possible thanks to the functions in the [ghclass](https://rundel.github.io/ghclass/index.html) package.
 
-The final project submissions were made from the [GitHub repository template](https://github.com/mine-cetinkaya-rundel/ds-final-project) accompanying "The 5Ws and 1H of Term Projects in the Introductory Data Science Classroom" by Çetinkaya-Rundel, Dogucu, and Rummerfield (2022).
+The final project submissions were adapted from the [GitHub repository template](https://github.com/mine-cetinkaya-rundel/ds-final-project) accompanying "The 5Ws and 1H of Term Projects in the Introductory Data Science Classroom" by Çetinkaya-Rundel, Dogucu, and Rummerfield (2022).
