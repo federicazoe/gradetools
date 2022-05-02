@@ -56,46 +56,57 @@ The final project submissions were adapted from the [GitHub repository template]
 
 ## Making the roster
 
-Most typically, the roster would be downloaded from a school learning management system and saved into a .csv file whose path would be provided to one of the assist grading functions. For this example, we are going to create a minimal roster that only has the two columns required for team grading.
+Most typically, the roster would be downloaded from a school learning management system and saved into a .csv file whose path would be provided to one of the assist grading functions. For this example, we are going to use a minimal roster that only has the two columns required for team grading.
 
-```{r}
-
+```{r, eval = TRUE, echo = FALSE}
 roster <- data.frame(
   student_identifier = c("federicazoe", "CatalinaMedina", "mdogucu"),
   team_identifier = c("gamma", "poisson", "poisson")
 )
 
-readr::write_csv(roster, "roster.csv")
-
+knitr::kable(roster, 'html', align = "l")
 ```
+
 
 
 ## Making the rubric  
 
-We should always use `create_rubric_template()` to begin formatting our rubric. Here we will create a rubric using a positive grading scheme.  
-
-We would like to grade three files for each team: `README.md`, `proposal.md` and `presentation.Rmd`. We will create a rubric item for each file to begin grading (further items can be added while grading).
+To make sure the rubric has the correct formatting, we should always create it by using `create_rubric_template()` and then fill it in. 
 
 ```{r}
 create_rubric_template(
-  rubric_path = "rubric.csv", 
-  negative_grading = FALSE
+  rubric_path = "rubric.csv"
 )
+```
 
-rubric <- readr::read_csv("rubric.csv", show_col_types = FALSE)
+We would like to grade three files for each team: 
+  - `README.md`
+  - `proposal.md`
+  - `presentation.Rmd`
+We will consider each file as a component of the final project and have a one rubric item per component to begin grading (further items can be added while grading).
 
+```{r, eval = TRUE, echo = FALSE}
 rubric <- data.frame(
   names = c("README", "Proposal", "Presentation", "all_questions"),
-  total_points = c(2, 3, 5), 
+  total_points = c(2, 3, 5, NA), 
   prompt_code = c("1a", "1a", "1a", "0"), 
-  prompt_message = "", 
-  feedback = "", 
-  points_to_remove = ""
+  prompt_message = c(
+    "Summary needs improvements",
+    "Missing method motivation",
+    "Title not informative",
+    "Unfilled"
+  ), 
+  feedback = c(
+    "The summary section of the README should introduce the project and its relavance, outline the methods, and summarize important results.",
+    "The data analysis plan should provide motivation for the proposed model.",
+    "The presentation title should inform the reader of the general contents of the project.",
+    "The template for the file was unchanged. Did you miss this part or forget to push?"
+  ), 
+  points_to_remove = c(1, 1, 0.5, 100)
 )
 
-readr::write_csv(rubric, "rubric.csv")
 
-
+knitr::kable(rubric, 'html', align = "l")
 ```
 
 
