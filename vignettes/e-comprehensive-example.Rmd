@@ -87,7 +87,7 @@ We will consider each file as a component of the final project and have a one ru
 
 ```{r, eval = TRUE, echo = FALSE}
 rubric <- data.frame(
-  names = c("README", "Proposal", "Presentation", "all_questions"),
+  name = c("README", "Proposal", "Presentation", "all_questions"),
   total_points = c(2, 3, 5, NA), 
   prompt_code = c("1a", "1a", "1a", "0"), 
   prompt_message = c(
@@ -109,8 +109,7 @@ rubric <- data.frame(
 knitr::kable(rubric, 'html', align = "l")
 ```
 
-
-## Working directory
+### Working directory
 
 After cloning the repos and creating the roster and rubric, your working directory should look like the following:
 
@@ -118,6 +117,103 @@ After cloning the repos and creating the roster and rubric, your working directo
 <iframe src="https://drive.google.com/file/d/1atL8xHeDOz7_HHuuIO6NUKE8tzXlrwp2/preview" width="640" height="480" allow="autoplay"></iframe>
 
 Note: for simplicity, the figure above does not include files and folders present in the cloned repos that are not used for this example.
+
+## Grading
+
+For grading, we are going to use `assist_team_grading()`. Note that `example_assignment_path` is a vector in this case, since we want to look at three files for each team.
+
+```{r}
+assist_team_grading(
+  rubric_path = "rubric.csv",
+  roster_path = "roster.csv",
+  temp_grade_sheet_path  = "temporary-grade-sheet.csv",
+  final_grade_sheet_path = "final-grade-sheet.csv",
+  example_assignment_path = c(
+    "final-project-team-repos/final-project-team-gamma/README.md",
+    "final-project-team-repos/final-project-team-gamma/proposal/proposal.md",
+    "final-project-team-repos/final-project-team-gamma/presentation/presentation.Rmd"
+  ) ,
+  example_feedback_path = "final-project-team-repos/final-project-team-gamma/feedback.md",
+  example_team_identifier = "gamma",
+  github_issues = TRUE
+)
+```
+
+Once we run the above call, all files associated to the first team in the roster will be open. When reviewing the README, we see that the summary needs to be expanded upon and that the data source was not cited. We do not have a rubric item yet for the second mistake, so we first enter 'r' to add a new rubric item:
+
+<!-- v5-new-rubric-item.png -->
+<iframe src="https://drive.google.com/file/d/1lYmVUBefqKD-1pifYePqv9Re4A4ov-3i/preview" width="640" height="480" allow="autoplay"></iframe>
+
+with the following information:
+
+<!-- v5-new-rubric-item-summary.png -->
+<iframe src="https://drive.google.com/file/d/1DW2osdQ2hrFZLE1JO8oQrzRtGYTFrYEp/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Once the new rubric item has been created, we can assign a grade and a feedback to this team's README by entering prompt codes '1a' and '3a' separated by a double hyphen.
+
+Next, we move on to this team's proposal and notice that the template has not been filled in. We want to give the team the chance to complete the proposal for partial credit. Creating an issue can be a fast way to communicate this opportunity to the team. So we enter 'i' and provide an issue title and body:
+
+<!-- v5-issue-title.png -->
+<iframe src="https://drive.google.com/file/d/15-Cx23623YNzWgwn3vJjdoztfv44j0uT/preview" width="640" height="480" allow="autoplay"></iframe>
+
+After noting the issue, we enter '0' to remove 100% of the points allocated to the project proposal. 
+
+Finally, we move on to the presentation. This consists of an .Rmd file that we may want to visualize. Even though the console is already busy with rubric prompting, in RStudio we can click on _Knit_ and view the compiled slides in the viewer. 
+
+When grading this presentation, we notice: 
+
+- the title should be more specific 
+- the plot axis don't match the order of response and exploratory variables
+- the relationship visualized in the plot was not accounted for in the model
+
+Simplistic titles were expected as a common error so a rubric item already exists for this. The other two mistakes are instead specific to this submission, and so we leave personalized feedback messages for each of these. Just like with noting issues and adding new rubric items, we can provide as many personalized feedback messages as desired prior to assigning prompt codes by typing 'p'.
+
+<!-- v5-personalized-feedback-1.png -->
+<iframe src="https://drive.google.com/file/d/1YaJKU7hm1Eg1MmIFkc2vJna6zsWDEo2o/preview" width="640" height="480" allow="autoplay"></iframe>
+
+<!-- v5-personalized-feedback-2.png -->
+<iframe src="https://drive.google.com/file/d/1g_rCagLVN8_pkfI1SvSc7D9OuDS9wYyf/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Note that personalized feedback does not affect the assigned grade. If we wanted, we could add to our rubric a vague item with no specific feedback associated with it in order to remove some points after we provide personalized feedback (e.g. one that removes 0.5 points for a 'minor error'). 
+
+We finish grading team _gamma_ by assigning the rubric item '1a' for the presentation component. Prior to grading the next team, we can interrupt grading and push feedback and noted issues for the team _gamma_ if we wish.
+
+
+## Pushing feedback and creating issues on GitHub
+
+Once we have finished grading one or multiple students, we can push the feedback file(s) and/or create the issue(s) that we have noted while grading by using `push_to_github()` and specifying the logical arguments `push_feedback` and `create_issues`. Because this project involves teams, we also need to set the logical argument `team_grading` to `TRUE`:   
+
+```{r}
+push_to_github(
+  temp_grade_sheet_path = "temporary-grade-sheet.csv",
+  class_github_name = "gradetools-test-course",
+  example_identifier = "gamma",
+  example_github_repo = "final-project-team-gamma",
+  push_feedback = TRUE,
+  create_issues = TRUE,
+  team_grading = TRUE
+)
+
+```
+
+When calling this function, we will be asked whether we want to perform this actions only for assignments who have been fully graded or also for partially graded assignments. 
+
+Here is an example of team _gamma_'s pushed feedback file:
+
+<!-- v5-feedback-pushed.png -->
+<iframe src="https://drive.google.com/file/d/1aqbMuAVDukExjb20sYOwOEYOYzJ1r7EY/preview" width="640" height="480" allow="autoplay"></iframe>
+
+If we set `create_issues` to `TRUE` then we will be asked if we wish to review and confirm each issue that was noted before actually creating it on GitHub. If we choose so, then the following is an example of a confirmation message that we would see:
+
+<!-- v5-issue-confirmation-message.png -->
+<iframe src="https://drive.google.com/file/d/1W-CcIAi4SnEOFFa6TE0zUoGdKdpsDWlP/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Because GitHub does not currently support multiple assignees for private repositories in free organizations, all team members will be tagged in the issue body so that they will receive notification of the issue creation:
+
+<!-- v5-issue-created.png -->
+<iframe src="https://drive.google.com/file/d/1oY0X97OZ5YNfwhjoULH46QbD7ZLrS1Z3/preview" width="640" height="480" allow="autoplay"></iframe>
+
+
 
 ## Credits
 
