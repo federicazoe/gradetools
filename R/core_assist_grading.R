@@ -48,7 +48,7 @@ core_assist_grading <- function(
     }
   }
   
-  # Check that feedback, temporary and final grade sheets paths 
+  # Check that feedback, grading progress log and final grade sheets paths 
   # include correct directories
   paths_to_write_to <- c(
     example_feedback_path,
@@ -65,7 +65,7 @@ core_assist_grading <- function(
     }
   }
   
-  # Check that temporary and final grade sheets paths are to .csv files
+  # Check that grading progress log and final grade sheet paths are to .csv files
   temp_file_ext <- path_ext(grading_progress_log_path)
   final_file_ext <- path_ext(final_grade_sheet_path)
   if (!all(c(temp_file_ext, final_file_ext) %in% c("csv"))) {
@@ -73,7 +73,7 @@ core_assist_grading <- function(
     
   }
   
-  # Check that temporary and final grade sheets paths differ
+  # Check that grading progress log and final grade sheet paths differ
   if (grading_progress_log_path == final_grade_sheet_path) {
     stop("Inputs grading_progress_log_path and final_grade_sheet_path need to be different (otherwise one file would overwrite the other).")
     
@@ -142,7 +142,7 @@ core_assist_grading <- function(
     
   }
   
-  # Create /(load and merge) temporary grade sheet
+  # Create /(load and merge) grading progress log
   grading_progress_log <- create_grading_progress_log(
     grading_progress_log_path = grading_progress_log_path,
     example_assignment_path = example_assignment_path, 
@@ -253,7 +253,7 @@ core_assist_grading <- function(
           if (is.null(temp_obj)) {
             Sys.sleep(1)
             cat("Grading has been suspended.")
-            cat("\nMake sure to keep the temporary grade sheet,")
+            cat("\nMake sure to keep the grading progress log,")
             cat("\nit is necessary to maintain grading progress.\n")
             
             continue_grading <- FALSE
@@ -348,7 +348,7 @@ core_assist_grading <- function(
           "There was an error when trying to render the feedback file in the specified format.",
           "\nCompiling pdf's in R requires additional software.",
           "We suggest you rerun the assist grading function with a different feedback_file_format.",
-          "All of your progressed will be saved in the temporary grade sheet.",
+          "All of your progressed will be saved in the grading progress log.",
          sep = "\n"
         ))
       }

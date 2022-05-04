@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_grading_progress_log.R
 \name{create_grading_progress_log}
 \alias{create_grading_progress_log}
-\title{Prepares temporary grade sheet for gradetools internal use}
+\title{Prepares grading progress log for gradetools internal use}
 \usage{
 create_grading_progress_log(
   grading_progress_log_path,
@@ -33,6 +33,6 @@ create_grading_progress_log(
 tibble; with the columns read in from roster_path, including student_identifier, and two new columns, feedback_path_Rmd, feedback_path_to_be_knitted, and assignment_path containing the file paths to the student assignment files and student feedback files
 }
 \description{
-Prepares temporary grade sheet for gradetools internal use
+Prepares grading progress log for gradetools internal use
 }
 \keyword{internal}

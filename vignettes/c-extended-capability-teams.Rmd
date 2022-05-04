@@ -69,7 +69,7 @@ This exact function call assumes that example-team-grading-directory-week09-regr
 We will skip the process of grading because that is shown in the "how-to-grade-with-gradetools" vignette.
 
 ## Final notes  
-The assist grading function handles teams as individual students in the temporary grade sheet. The final grade sheet will have a row per student but the temporary grade sheet will have one row per team. This internal difference does not change the process of grading but may be confusing to a user who wanted to look through their temporary grade sheet.
+The assist grading function handles teams as individual students in the grading progress log. The final grade sheet will have a row per student but the grading progress log will have one row per team. This internal difference does not change the process of grading but may be confusing to a user who wanted to look through their grading progress log.
 
 
 The GitHub compatible functionalities discussed in the vignette "Extended gradetools capability: Assignments on GitHub" also work with `assist_team_grading()`. `assist_team_grading()` is essentially a wrapper of `assist_advanced_grading()` specifically for team grading.

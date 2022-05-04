@@ -12,7 +12,7 @@ note_github_issues(curr_row, curr_q)
 \item{curr_q}{name of current question}
 }
 \value{
-corresponding row of temporary grade sheet
+corresponding row of grading progress log
 }
 \description{
 Collects GitHub issue title and body

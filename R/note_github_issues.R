@@ -3,7 +3,7 @@
 #' @param curr_row a row extracted from the grading_progress_log data table within assist_grading().
 #' @param curr_q name of current question
 #' 
-#' @return corresponding row of temporary grade sheet
+#' @return corresponding row of grading progress log
 #' 
 #' @keywords internal
 #' 
@@ -51,7 +51,7 @@ note_github_issues <- function(curr_row, curr_q) {
       }
       
       cat(paste(
-        "The issue has been noted in the temporary grade sheet.",
+        "The issue has been noted in the grading progress log.",
         "After grading use push_to_github() to push issues.",
         sep = "\n"
       ))

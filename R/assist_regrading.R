@@ -41,7 +41,7 @@ assist_regrading <- function(
     
   }
   
-  # Check temporary and final grade sheets paths differ
+  # Check grading_progress_log and final grade sheets paths differ
   if (grading_progress_log_path == final_grade_sheet_path) {
     stop("Inputs grading_progress_log_path and final_grade_sheet_path need to be different (otherwise one file would overwrite the other).")
     
@@ -63,12 +63,12 @@ assist_regrading <- function(
   
   if (is.null(teams_to_regrade) && team_grading) {
     stop(paste0(
-      "\nThe temporary grade sheet indicates that the assignment involved team grading but teams_to_regrade was not provided.",
+      "\nThe grading progress log indicates that the assignment involved team grading but teams_to_regrade was not provided.",
       "\nPlease rerun and provide teams_to_regrade instead of students_to_regrade."
     ))
   } else if (!is.null(teams_to_regrade) && !team_grading) {
     stop(paste0(
-      "\nThe temporary grade sheet indicates that the assignment did not involve team grading but teams_to_regrade was provided.",
+      "\nThe grading progress log indicates that the assignment did not involve team grading but teams_to_regrade was provided.",
       "\nPlease rerun and provide students_to_regrade instead of teams_to_regrade."
     ))
   }
@@ -81,7 +81,7 @@ assist_regrading <- function(
     
   } else if (!all(identifier_valid) || length(students_to_regrade) == 0) {
     stop(
-      "\nSome or all students_to_regrade are not in the 'student_identifier' column of the temporary gradesheet.
+      "\nSome or all students_to_regrade are not in the 'student_identifier' column of the grading progress log.
       \nIf there is a change to the roster please rerun assist_grading() or assist_advanced_grading()."
     )
   }
@@ -320,7 +320,7 @@ assist_regrading <- function(
           "There was an error when trying to render the feedback file in the specified format.",
           "\nCompiling pdf's in R requires additional software.",
           "We suggest you rerun the assist grading function with a different feedback_file_format.",
-          "All of your progressed will be saved in the temporary grade sheet.",
+          "All of your progressed will be saved in the grading progress log.",
           sep = "\n"
         ))
       }

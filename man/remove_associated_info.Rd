@@ -7,7 +7,7 @@
 remove_associated_info(curr_row, questions_to_delete, question_col, info_cols)
 }
 \arguments{
-\item{curr_row}{string; row of temporary grade sheet to change}
+\item{curr_row}{string; row of grading progress log to change}
 
 \item{questions_to_delete}{string; vector of assignment question 'names' to have grade and feedback deleted.}
 

@@ -122,7 +122,7 @@ The gradetools `assist_grading()` function helps the user by opening assignments
   - `example_assignment_path`
   - `example_feedback_path`
 
-From the previous sections in this vignette, we already know our rubric and roster paths. Now we need to specify where to save the temporary grade sheet and the final grade sheet. The temporary grade sheet is a file used internally by gradetools which stores all grading progress. Keeping this file allows the user to interrupt and then resume grading, regrade, change rubric items, add assignments to be graded, and many more functionalities. 
+From the previous sections in this vignette, we already know our rubric and roster paths. Now we need to specify where to save the grading progress log and the final grade sheet. The grading progress log is a file used internally by gradetools which stores all grading progress. Keeping this file allows the user to interrupt and then resume grading, regrade, change rubric items, add assignments to be graded, and many more functionalities. 
 
 The `example_student_identifier` corresponds to any of the identifiers present in the `student_identifier` column of the roster.
 
@@ -150,7 +150,7 @@ assist_grading(
 
 The above function call assumes that example-directory-week09-regression is the working directory.
 
-When a user begins grading an assignment for the first time, a message will be displayed informing the user that a temporary grade sheet is begin created, which must not be deleted.
+When a user begins grading an assignment for the first time, a message will be displayed informing the user that a grading progress log is begin created, which must not be deleted.
 
 Next, the user will be informed which student they are going to begin grading and if there is any previous grading progress. All assignments associated with this student in this grading session will then be opened for the grader to view while grading. The grader will be prompted in the console to grade the first ungraded question for this student. 
 

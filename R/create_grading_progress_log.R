@@ -1,4 +1,4 @@
-#' Prepares temporary grade sheet for gradetools internal use
+#' Prepares grading progress log for gradetools internal use
 #'
 #' @param grading_progress_log_path string; assist-grading() functions save a file which includes information for gradetools's internal use. This is that path for that file. Must be a .csv
 #' @param example_assignment_path string or a vector of strings; file paths to all of the assignments to be graded for one student. This file path structure will be used to determine where the other assignments to be graded are located. The student identifier has to be present somewhere in each of the file paths. The student identifier is assumed to be the only part of the example_assignment_path unique to the student
@@ -154,7 +154,7 @@ create_grading_progress_log <- function(
       full_join(grading_progress_log_new, by = "student_identifier")
     
     # Add columns needed for issues if github_issues = TRUE but these
-    # columns where missing from the previously saved temporary grade sheet
+    # columns where missing from the previously saved grading progress log
     if (github_issues & !("issue_titles" %in% colnames(grading_progress_log))) {
       grading_progress_log <- grading_progress_log %>% 
         mutate(issue_qs = NA) %>% 
@@ -182,7 +182,7 @@ create_grading_progress_log <- function(
     }
     
     grading_progress_log_message <- paste(
-      "A temporary grade sheet is being created.",
+      "A grading progress log is being created.",
       "This is for gradetools's internal use.",
       "Please do not delete this file.",
       "It must be retained to save grading progress.\n\n",

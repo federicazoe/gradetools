@@ -1,6 +1,6 @@
 #' Delete feedback and grades for specified students and questions
 #'
-#' @param grading_progress_log_path string; path to temporary grade sheet produced by assign_grade
+#' @param grading_progress_log_path string; path to grading progress log produced by assign_grade
 #' @param rubric_path string; path to assignment rubric.
 #' @param identifier string; single student_identifier (or team_identifier) to have grading progress deleted.
 #' @param questions_to_delete string; vector of assignment question 'names' to have grade and feedback deleted. 
@@ -70,7 +70,7 @@ delete_student_grading_progress <- function(
     )
   }
     
-  # Update feedback and temporary grade sheet
+  # Update feedback and grading progress log
   rubric_list <- import_rubric(rubric_path)
   rubric_prompts <- create_rubric_prompts(
     rubric_list, 
@@ -101,7 +101,7 @@ delete_student_grading_progress <- function(
 
 
 #' Helper function for deleting info
-#' @param curr_row string; row of temporary grade sheet to change
+#' @param curr_row string; row of grading progress log to change
 #' @param questions_to_delete string; vector of assignment question 'names' to have grade and feedback deleted. 
 #' @param question_col string; name of column containing question names for associated info
 #' @param info_cols vector of strings; names of columns containing info to be deleted

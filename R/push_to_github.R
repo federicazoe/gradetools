@@ -57,7 +57,7 @@ push_to_github <- function(
   
   if (!("feedback_pushed" %in% colnames(grading_progress_log))) {
     # This means it is the first time that the grader tries to push feedback 
-    # from this temporary grade sheet
+    # from this grading progress log
     
     # Initialize column that keeps track of which feedback files have been pushed
     grading_progress_log$feedback_pushed <- "FALSE"
@@ -121,7 +121,7 @@ push_feedback_github <- function(
   if (all(all_push_statuses == "TRUE")) {
     return(message(
       paste(
-        "All feedback files have been pushed in this temporary grade sheet.",
+        "All feedback files have been pushed in this grading progress log.",
         "Are you sure that you have provided the right grading_progress_log_path?"
       )))
   }
@@ -192,7 +192,7 @@ push_feedback_github <- function(
         
         grading_progress_log$feedback_pushed[i] <- "TRUE"
         
-        # Update temporary grade sheet (feedback_pushed for this row has changed)
+        # Update grading progress log (feedback_pushed for this row has changed)
         write_csv(grading_progress_log, file = grading_progress_log_path) 
     
       } else {
@@ -238,14 +238,14 @@ create_issues_github <- function(
   
   
   if (!("issue_titles" %in% colnames(grading_progress_log))) {
-    stop("No column `issue_titles` was found in this temporary grade sheet. Are you sure that you have used assist grading with `github_issues = TRUE` and that you have specified the right `grading_progress_log_path`?")
+    stop("No column `issue_titles` was found in this grading progress log. Are you sure that you have used assist grading with `github_issues = TRUE` and that you have specified the right `grading_progress_log_path`?")
   }
   
   if (team_grading & !("students_in_team" %in% colnames(grading_progress_log))) {
     stop(
         paste(
           "You set team_grading = TRUE",
-          "but there is no students_in_team column in the temporary grade sheet",
+          "but there is no students_in_team column in the grading progress log",
           "loaded from the path you specified. Are you sure that the path",
           "is correct and that you graded using assist_team_grading()?"
         )
@@ -262,7 +262,7 @@ create_issues_github <- function(
   if (all(is.na(all_push_statuses))) {
     return(message(
       paste(
-        "No issues have been annotated in this temporary grade sheet.",
+        "No issues have been annotated in this grading progress log.",
         "Are you sure that you have provided the right grading_progress_log_path?"
       )))
   }
@@ -289,7 +289,7 @@ create_issues_github <- function(
   if (all(is.na(relevant_push_statuses))) {
     return(message(
       paste(
-        "No issues have been noted in this temporary grade sheet.",
+        "No issues have been noted in this grading progress log.",
         "Are you sure that you have provided the right grading_progress_log_path?"
       )))
   }
@@ -298,7 +298,7 @@ create_issues_github <- function(
   if (!any(relevant_push_statuses == "FALSE")) {
     return(message(
       paste(
-        "All issues that were noted in this temporary grade sheet have already been pushed"
+        "All issues that were noted in this grading progress log have already been pushed"
       )))
   }
   

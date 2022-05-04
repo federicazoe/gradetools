@@ -13,7 +13,7 @@ delete_student_grading_progress(
 )
 }
 \arguments{
-\item{grading_progress_log_path}{string; path to temporary grade sheet produced by assign_grade}
+\item{grading_progress_log_path}{string; path to grading progress log produced by assign_grade}
 
 \item{rubric_path}{string; path to assignment rubric.}
 

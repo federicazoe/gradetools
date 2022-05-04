@@ -21,7 +21,7 @@ library(gradetools)
 
 The objective of this vignette is to demonstrate how to regrade all or certain questions from assignments previously graded with gradetools. 
 
-The temporary grade sheet stores grading progress, so if it has been saved after using an assist grading function the user can resume grading or regrade at any point.
+The grading progress log stores grading progress, so if it has been saved after using an assist grading function the user can resume grading or regrade at any point.
 
 For this example we will use the example directory called example-directory-week09-regression in the [quizzes-collected-week09-regression](https://github.com/gradetools-test-course/quizzes-collected-week09-regression) repository in our gradetools-test-course on GitHub.
 
@@ -63,4 +63,4 @@ One additional note is that when regrading, the user is always asked to provide 
 If a user were to initiate regrading then stop grading before all `questions_to_regrade` have been regraded, the old grading progress will be retained for those questions that did not get regraded.
 
 ## Final notes  
-Changing the rubric is not considered regrading. The temporary grade sheet saves grading progress by saving the assigned prompt codes for each question for each student. At any point a user can edit the rubric and then re run one of the assist grading functions and all associated grades and feedback will get updated. Rewriting feedback and prompt messages for clarity, or changing points associated with a question or rubric item is considered updating and is completely fine. On the other hand, the **prompt codes and question names cannot be changed** since they are how gradetools stores grading progress.
+Changing the rubric is not considered regrading. The grading progress log saves grading progress by saving the assigned prompt codes for each question for each student. At any point a user can edit the rubric and then re run one of the assist grading functions and all associated grades and feedback will get updated. Rewriting feedback and prompt messages for clarity, or changing points associated with a question or rubric item is considered updating and is completely fine. On the other hand, the **prompt codes and question names cannot be changed** since they are how gradetools stores grading progress.

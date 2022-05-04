@@ -118,7 +118,7 @@ Here is what a call to `push_to_github()` could look like to push feedback files
 
 ```{r}
 push_to_github (
-  grading_progress_log_path =  "quiz-09-lin-reg-temporary-grade-sheet.csv",
+  grading_progress_log_path =  "quiz-09-lin-reg-grading_progress_log.csv",
   class_github_name = "gradetools-test-course",
   example_github_repo = "week09-regression-federicazoe",
   example_identifier = "federicazoe",

@@ -15,7 +15,7 @@
 #' @import rstudioapi
 #' @import svDialogs
 #'
-#' @return temporary grade sheet data frame
+#' @return grading progress log data frame
 #' 
 #' @keywords internal
 #' 

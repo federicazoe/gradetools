@@ -33,7 +33,7 @@ grade_student(
 \item{questions_to_grade}{vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric}
 }
 \value{
-temporary grade sheet data frame
+grading progress log data frame
 }
 \description{
 Leads grader through grading a student
