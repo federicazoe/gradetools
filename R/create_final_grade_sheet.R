@@ -57,20 +57,28 @@ create_final_grade_sheet <- function(
     
   }
   
-  final_grade_sheet <- final_grade_sheet %>% 
-    select(-c(
-      feedback_path_Rmd, 
-      feedback_path_to_be_knitted,
-      assignment_path,
-      assignment_missing,
-      grading_status, 
-      feedback_codes,
-      graded_qs,
-      last_time_graded,
-      grade_student,
-      comments,
-      comment_qs
-    ))
+  cols_to_remove <- c(
+    "feedback_path_Rmd", 
+    "feedback_path_to_be_knitted",
+    "assignment_path",
+    "assignment_missing",
+    "grading_status", 
+    "feedback_codes",
+    "graded_qs",
+    "last_time_graded",
+    "grade_student",
+    "comments",
+    "comment_qs",
+    "issue_pushed",
+    "issue_qs",
+    "issue_titles",
+    "issue_bodies",
+    "feedback_pushed"
+  )
+  
+  ind_cols_to_remove <- colnames(final_grade_sheet) %in% cols_to_remove
+  
+  final_grade_sheet <- final_grade_sheet[, !(ind_cols_to_remove)]
   
   if (team_grading) {
     brief_roster <- final_grade_sheet %>% 

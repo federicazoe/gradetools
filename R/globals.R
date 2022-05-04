@@ -19,6 +19,7 @@ utils::globalVariables(c(
   "feedback_path_to_be_knitted", # colname in grading_progress_log
   "assignment_path",             # colname in grading_progress_log
   "assignment_missing",          # colname in grading_progress_log
+  "grade_student",                # colname in grading_progress_log
   "questions_to_regrade",        # argument in assist_regrading()
   "grading_progress_log_path",   # argument in core_assist_grading()
   "points_to_remove"             # colname in rubric
