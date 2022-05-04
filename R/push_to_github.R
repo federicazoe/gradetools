@@ -340,7 +340,7 @@ create_issues_github <- function(
         if (team_grading) {
           assignees <- str_split(
             string = grading_progress_log$students_in_team[i], 
-            pattern = " &&& "
+            pattern = "&&&"
           ) %>% 
             unlist()
           

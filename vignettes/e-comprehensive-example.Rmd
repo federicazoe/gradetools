@@ -43,7 +43,7 @@ These repos can be cloned by running:
 
 ```{r}
 class_github_name <- "gradetools-test-course"
-repo_template_name <- "final-project-team-"
+repo_template_name <- "final-project-team"
 repos_local_path <- "final-project-team-repos"
 
 ghclass::local_repo_clone(
@@ -206,7 +206,7 @@ Here is an example of team _gamma_'s pushed feedback file:
 If we set `create_issues` to `TRUE` then we will be asked if we wish to review and confirm each issue that was noted before actually creating it on GitHub. If we choose so, then the following is an example of a confirmation message that we would see:
 
 <!-- v5-issue-confirmation-message.png -->
-<iframe src="https://drive.google.com/file/d/1W-CcIAi4SnEOFFa6TE0zUoGdKdpsDWlP/preview" width="640" height="480" allow="autoplay"></iframe>
+<iframe src="https://drive.google.com/file/d/1Cl2PyEceFQCKyVv04FapdHwV8rVl3ULb/preview" width="640" height="480" allow="autoplay"></iframe>
 
 Because GitHub does not currently support multiple assignees for private repositories in free organizations, all team members will be tagged in the issue body so that they will receive notification of the issue creation:
 
@@ -225,7 +225,8 @@ assist_regrading(
   final_grade_sheet_path = "final-grade-sheet.csv",
   questions_to_regrade = c("Proposal"),
   students_to_regrade = NULL,
-  teams_to_regrade = c("gamma")
+  teams_to_regrade = c("gamma"),
+  github_issues = TRUE
 )
 
 ```
