@@ -108,7 +108,7 @@
 <p>These repos can be cloned by running:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">class_github_name</span> <span class="op">&lt;-</span> <span class="st">"gradetools-test-course"</span>
-<span class="va">repo_template_name</span> <span class="op">&lt;-</span> <span class="st">"final-project-team-"</span>
+<span class="va">repo_template_name</span> <span class="op">&lt;-</span> <span class="st">"final-project-team"</span>
 <span class="va">repos_local_path</span> <span class="op">&lt;-</span> <span class="st">"final-project-team-repos"</span>
 
 <span class="fu">ghclass</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ghclass/man/local_repo.html" class="external-link">local_repo_clone</a></span><span class="op">(</span>
@@ -353,7 +353,7 @@ The template for the file was unchanged. Did you miss this part or forget to pus
 </iframe>
 <p>If we set <code>create_issues</code> to <code>TRUE</code> then we will be asked if we wish to review and confirm each issue that was noted before actually creating it on GitHub. If we choose so, then the following is an example of a confirmation message that we would see:</p>
 <!-- v5-issue-confirmation-message.png -->
-<iframe src="https://drive.google.com/file/d/1W-CcIAi4SnEOFFa6TE0zUoGdKdpsDWlP/preview" width="640" height="480" allow="autoplay">
+<iframe src="https://drive.google.com/file/d/1Cl2PyEceFQCKyVv04FapdHwV8rVl3ULb/preview" width="640" height="480" allow="autoplay">
 </iframe>
 <p>Because GitHub does not currently support multiple assignees for private repositories in free organizations, all team members will be tagged in the issue body so that they will receive notification of the issue creation:</p>
 <!-- v5-issue-created.png -->
@@ -372,7 +372,8 @@ The template for the file was unchanged. Did you miss this part or forget to pus
   final_grade_sheet_path <span class="op">=</span> <span class="st">"final-grade-sheet.csv"</span>,
   questions_to_regrade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Proposal"</span><span class="op">)</span>,
   students_to_regrade <span class="op">=</span> <span class="cn">NULL</span>,
-  teams_to_regrade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gamma"</span><span class="op">)</span>
+  teams_to_regrade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gamma"</span><span class="op">)</span>,
+  github_issues <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
 <p>We can create a new rubric item for giving them partial credit:</p>
 <!-- v5-partial-credit.png -->
