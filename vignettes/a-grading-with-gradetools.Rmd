@@ -24,14 +24,29 @@ library(gradetools)
 
 The goal of this vignette is to introduce users to the gradetools package using a practice example. 
 
+Note gradetools has three grading functions: 
+
+  - `assist_grading()`
+  - `assist_team_grading()` (See "Extended gradetools capability: Team Grading" vignette)
+  - `assist_advanced_grading()` (See "Extended gradetools capability: Assignments on GitHub" vignette)
+  
+`assist_grading()` is basically a wrapper for `assist_advanced_grading()` that requires minimal user specification to use. `assist_team_grading()` is a wrapper specifically for team grading. Here we focus on `assist_grading()`.
+
 ## Obtaining the example directory
 
 For this example we will use the example directory called example-directory-week09-regression in the [quizzes-collected-week09-regression](https://github.com/gradetools-test-course/quizzes-collected-week09-regression/tree/main/example-directory-week09-regression) repository in our gradetools-test-course organization on GitHub. To follow along on your computer you can pull the repo from GitHub or use the "Download ZIP" option in the drop down list from the "Code" button on GitHub.
 
-<iframe src="https://drive.google.com/file/d/1Lxhpo5LvJUurNRUBKzxgYBjnZWMJ8cYw/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-example-directory.png -->
+<iframe src="https://drive.google.com/file/d/1sEUA9whzeUtMz3VbG7kDCM7jvhbA-Cpl/preview" width="640" height="480" allow="autoplay"></iframe>
 
-Everything that we will be using here is in the example-directory-week09-regression folder. This folder contains the class-roster.csv, quiz-09a-lin-reg-rubric.csv, and a folder named quizzes (shown below) which contains students' quizzes as well as a template copy of the quiz.
+Everything that we will be using here is in the example-directory-week09-regression folder. This folder contains the class-roster.csv, quiz-09a-lin-reg-rubric.csv, and a folder named quizzes.
 
+<!-- v1-example-directory.png -->
+<iframe src="https://drive.google.com/file/d/1LSTvGwXp7e7cWmY-P-1wvkmbZF9CiotR/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Quiz folder contains students' quizzes as well as a template copy of the quiz.
+
+<!-- v1-example-submission-directory.png -->
 <iframe src="https://drive.google.com/file/d/134pDOPLzyCqbyKImFP9pnVOkNJyeDqxI/preview" width="640" height="480" allow="autoplay"></iframe>
 
 ## Preparing to grade with gradetools  
@@ -46,7 +61,8 @@ All columns present in the class roster will be present in the final grade sheet
 
 The class roster we will use for this example has GitHub usernames as the student_identifier and an extra column called Name.
 
-<iframe src="https://drive.google.com/file/d/1n_n6DkGu51vBwi610l4Am7MDQnI_mXzy/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-class-roster.png -->
+<iframe src="https://drive.google.com/file/d/1vqhHfzWQT_VZRucNE3kulfmgsVZVGdUb/preview" width="640" height="480" allow="autoplay"></iframe>
 
 ### The rubric  
 
@@ -63,11 +79,13 @@ create_rubric_template(
 
 After the above call a .csv file will be created which will only contain headers. 
 
-<iframe src="https://drive.google.com/file/d/1YaON28y3U9guSsJiGgLdvfPpQOGKT7Ry/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-rubric-blank.png -->
+<iframe src="https://drive.google.com/file/d/1o-qU2FNzLC9TcGVLbtQ7mXCvG9lJiKdV/preview" width="640" height="480" allow="autoplay"></iframe>
 
 The user will then fill this rubric according to the specifications described in the documentation of `create_rubric_template()`. The filled out rubric is provided in the example directory.
 
-<iframe src="https://drive.google.com/file/d/1tMheSNOEgPmqma9nmRvBARfV1JPSYFdp/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-rubric-filled.png -->
+<iframe src="https://drive.google.com/file/d/1mNPUQbCTmliDGVciOzzzt2hxCGvbISun/preview" width="640" height="480" allow="autoplay"></iframe>
 
 From the screenshot above, notice that the rubric includes three types of entries in the column "name": specific parts of the assignment (Question 1.a through Question 3.b), "all_questions" and "general_feedback".
 
@@ -98,19 +116,19 @@ The gradetools `assist_grading()` function helps the user by opening assignments
   
   - `rubric_path`
   - `roster_path`
-  - `temp_grade_sheet_path`
+  - `grading_progress_log_path`
   - `final_grade_sheet_path`
   - `example_student_identifier`
   - `example_assignment_path`
   - `example_feedback_path`
 
-From the previous sections in this vignette, we already know our rubric and roster paths. Now we need to specify where to save the temporary grade sheet and the final grade sheet. The temporary grade sheet is a file used internally by gradetools which stores all grading progress. Keeping this file allows the user to interrupt and then resume grading, regrade, change rubric items, add assignments to be graded, and many more functionalities. 
+From the previous sections in this vignette, we already know our rubric and roster paths. Now we need to specify where to save the grading progress log and the final grade sheet. The grading progress log is a file used internally by gradetools which stores all grading progress. Keeping this file allows the user to interrupt and then resume grading, regrade, change rubric items, add assignments to be graded, and many more functionalities. 
 
 The `example_student_identifier` corresponds to any of the identifiers present in the `student_identifier` column of the roster.
 
 The `example_assignment_path` is the path where the assignment(s) associated with the example_student_identifier are located.
 
-The `example_feedback_path` is the path where the grader wishes to save the feedback file associated with the `example_student_identifier`.
+The `example_feedback_path` is the path where the grader wishes to save the feedback file associated with the `example_student_identifier`. The extension of this path dictates the file type. The current options for extensions are "Rmd", "md", "docx", "html", "pdf". The feedback files are knitted to the accompanying file type (except for Rmd files): GitHub, Word, html, pdf documents respectively.
 
 The practice example below will clarify all the arguments that we have introduced here. Further details for the arguments can be found in the `assist_grading()` documentation. 
 
@@ -122,7 +140,7 @@ We are now ready to begin grading with gradetools. This package should be used i
 assist_grading(
   rubric_path = "quiz-09-lin-reg-rubric.csv", 
   roster_path = "class-roster.csv", 
-  temp_grade_sheet_path = "quiz-09-lin-reg-temporary-grade-sheet.csv", 
+  grading_progress_log_path = "quiz-09-lin-reg-grading_progress_log.csv", 
   final_grade_sheet_path = "quiz-09-lin-reg-final-grade-sheet.csv", 
   example_student_identifier = "federicazoe",
   example_assignment_path = "quizzes/quiz-09a-lin-reg-federicazoe.Rmd", 
@@ -132,7 +150,7 @@ assist_grading(
 
 The above function call assumes that example-directory-week09-regression is the working directory.
 
-When a user begins grading an assignment for the first time, a message will be displayed informing the user that a temporary grade sheet is begin created, which must not be deleted.
+When a user begins grading an assignment for the first time, a message will be displayed informing the user that a grading progress log is begin created, which must not be deleted.
 
 Next, the user will be informed which student they are going to begin grading and if there is any previous grading progress. All assignments associated with this student in this grading session will then be opened for the grader to view while grading. The grader will be prompted in the console to grade the first ungraded question for this student. 
 
@@ -142,24 +160,29 @@ When an assignment is opened the cursor moves out of the console to the new assi
 
 All assignments associated with Federica are opened and the user is prompted to grade the first question in the console.
 
-<iframe src="https://drive.google.com/file/d/1sDDJ5DGJKjlXOfb2v1nlX0YIY8QzS4kB/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-1federica-begin-grading.png -->
+<iframe src="https://drive.google.com/file/d/1x8BkLRJ2ybSBZfXoHY4Ba5hlMbowHs3I/preview" width="640" height="480" allow="autoplay"></iframe>
 
 The first student, Federica Zoe, is an amazing student and made no errors so they should receive a perfect score on their quiz. We will enter the prompt code "0" which, as specified in the rubric for this assignment, is a prompt code that is available to all questions (column name is set to "all_questions") and marks that the question is correct. Once a prompt code is typed the user presses enter to submit it. 
 
-Proceeding in this fashion, we give Federica full points and complete grading her assignment, including assigning the general feedback _Great job on the quiz!_ associated with the prompt code 0 of the rubric item named "general_feedback".
+Proceeding in this fashion, we give Federica full points and complete grading her assignment, including assigning the general feedback _Great job on the quiz!_ associated with the prompt code 0 of the rubric item named "general_feedback". General feedback is written at the end of the feedback file.
+
+<!-- v1-1federica-finish-grading.png -->
+<iframe src="https://drive.google.com/file/d/1lQVZFgGGVdJxfJFHVuU3wmH6n9RiMMkg/preview" width="640" height="480" allow="autoplay"></iframe>
 
 Upon completion of grading the assignment's final score will be printed and the user will be prompted to grade the next student in the roster.
-<iframe src="https://drive.google.com/file/d/1saZn5tS846n6jwq6x0jVByx9F0uvd9yQ/preview" width="640" height="480" allow="autoplay"></iframe>
+
 
 ### Grading Catalina's quiz  
 
 The next student, Catalina Medina, is also relatively easy to grade because they made very few mistakes.  
 
-The first question was a simple question to grade, even without any tools to aid the process. Question 1.b is instead one which better represents why gradetools can be helpful. Interpretation is very important in statistics, but not necessarily easy to grade. gradetools helps by allowing to add and save new rubric items as the user grades, and writing the grader's feedback to a file for the student to view.
+The first question was a simple question to grade, even without any tools to aid the process. Question 1.b is instead one which better represents why gradetools can be helpful. Interpretation is very important in statistics, but not necessarily easy to grade. gradetools helps by allowing the user to easily add and save new rubric items as they grade, and writing the grader's feedback to a file for the student to view.
 
 Catalina answered question 1.a correctly but the interpretation she provided in question 1.b is not fully correct. She did not mention that the change is associated with a difference in x of one unit. To convey this we want to add a new rubric item. A new rubric item is added by entering "r" instead of a prompt code.
 
-<iframe src="https://drive.google.com/file/d/1T9-2OZCKl7BKCzCBAUbzmmNp7-QNY6Ds/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-2catalina-add-new-rubric-item.png -->
+<iframe src="https://drive.google.com/file/d/1P7PYpslyYoX5x9ro9KibKwqKGwuX9xZx/preview" width="640" height="480" allow="autoplay"></iframe>
 
 Follow the prompts to provide the following information:
 
@@ -168,15 +191,21 @@ Follow the prompts to provide the following information:
   - feedback: "This is the expected change in the response for a difference in the explanatory value of one unit."
   - points to remove: "1"
   
-Once the new rubric item has been added, the grader will be able to apply it to the current student for this question.
+After providing this information the will be asked to review and confirm their rubric addition. Once the new rubric item has been added, the grader will be able to apply it to the current student for this question.
 
-<iframe src="https://drive.google.com/file/d/1mLd1ky4QgbG_QlU_4yqncfYE35QI5PgK/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-2catalina-added-new-rubric-item.png -->
+<iframe src="https://drive.google.com/file/d/1hlS7YkmxnzFRJ68vgR81edm8HpJJpec5/preview" width="640" height="480" allow="autoplay"></iframe>
 
-Continue grading this student. For the general feedback, we will provide a personalized single-use general feedback. To do so enter "p" for the general feedback rubric item, and a box will pop up for user input.
+All of the additional prompt options (i.e. those that begin with a letter) are actions that can be performed instead of grading. When any of these prompt codes are used gradetools recognizes that the question is still ungraded, so the user will still be prompted to grade the question after.
 
-<iframe src="https://drive.google.com/file/d/1SQaR18ZTITZC4gwfTvdpGsm6CtuQHSKz/preview" width="640" height="480" allow="autoplay"></iframe>
+Sometimes a grader will want to write a feedback message for a student, without adding it to the rubric. The grader can do so by using the "p" prompt code. 
 
-Write the message "We want to use figures to clearly convey information. Plotting with the default axes or producing unused plots is not good practice.".
+Catalina's plot for question 2 is technically correct, but using the default axis is not good practice. Let's leave a comment about this. Enter the prompt code "p" then the message "We want to use figures to clearly convey information, so we should set informative axis labels instead of using the default.".
+
+<!-- v1-2catalina-personalized-feedback-on-plot.png -->
+<iframe src="https://drive.google.com/file/d/1KOcTJfH06FUmzqneFoP35P6roNqj3AtW/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Continue to grade, awarding full points for the remaining questions. Decline to provide final feedback by providing prompt code "d".
 
 
 ### Grading Mine's quiz  
@@ -185,35 +214,39 @@ The last student, Mine Docugu, is a struggling student with many errors on their
 
 Mine's questions 1.a and 1.b are completely incorrect, proceed to grade those two questions. Her plot for question 2 has multiple errors, so we want to assign multiple rubric items to mark each error. Assign items "1d" and "1a" by using two dashes to separate the prompt codes
 
-<iframe src="https://drive.google.com/file/d/14St8RLYqArLw-vkug_9_x0J6oB4GJVa6/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-3mine-multiple-rubric-items1.png -->
+<iframe src="https://drive.google.com/file/d/1JSp1P9MsVlQR52WdrxZa4QY0zCZPJeEO/preview" width="640" height="480" allow="autoplay"></iframe>
 
 Question 3 is another example of this. Note the rubric items do not need to be entered in order.
 
-<iframe src="https://drive.google.com/file/d/1Uj2ew3fttg5NpNN8rCDfeTdT3v3XDmiZ/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-3mine-multiple-rubric-items2.png -->
+<iframe src="https://drive.google.com/file/d/1qfXb1CJuDCs2ezhQ_Y8aBo0tpyWJh5i7/preview" width="640" height="480" allow="autoplay"></iframe>
 
-Sometimes a grader may want to leave a comment for a student about a specific question. In this case the prompt code "c" would be used. Question 3.a was left blank, so maybe we want to leave a comment reminding students to double check their work. Enter "c" for this question and provide the reminder in the text box. 
+Question 3.a was left blank, before grading this question we will leave a message for the student. Use prompt code "p" and enter the message "Answer this question and resubmit the assignment for partial credit.".
 
-<iframe src="https://drive.google.com/file/d/1dDIQvMLvwb-uKfN4ynr7fxvX-CfKssp1/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-3mine-personalized-feedback.png -->
+<iframe src="https://drive.google.com/file/d/1Q0CsMSgRal6Kbnz6m_MwXiYlk3g5Ycf_/preview" width="640" height="480" allow="autoplay"></iframe>
 
-We also want to take away all points for this question by entering the all questions prompt code "404".
-
-Note both adding a new rubric item and leaving a comment need to be done before grading the question.
+Next assign the "Answer missing" rubric item by entering the prompt code "404". Note messages need to be provided before the question is graded. Multiple messages or rubric item items can be provided before grading a question.
 
 Question 3.b is missing the slope value and the interpretation is not in context. Both of these are mistakes other students might make so we will create two additional rubric items and then assign them to Mine.
 
-<iframe src="https://drive.google.com/file/d/13VbgCL3HXxFXYRZE8x61PP6M1FbCb3zn/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-3mine-q3b-new-rubric-item1.png -->
+<iframe src="https://drive.google.com/file/d/11zCGennmWsNGww_9VH-Dd0sV-PLgQnko/preview" width="640" height="480" allow="autoplay"></iframe>
 
 <br>
 
-<iframe src="https://drive.google.com/file/d/16uH6h_TU6HeyNlEMgzCa5iN2GBuPKSrM/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-3mine-q3b-new-rubric-item2.png -->
+<iframe src="https://drive.google.com/file/d/1TE_55Iq4AiJvk-13mnehx0RiXve16BpF/preview" width="640" height="480" allow="autoplay"></iframe>
 
-Now you can finish grading Mine's assignment.
+Now you can finish grading Mine's (mdogucu's) assignment. 
 
 ### The final grade sheet 
 
 Once all students have been graded a message will appear telling the grader about the final grade sheet.
 
-<iframe src="https://drive.google.com/file/d/1jIDCYmv6g_OuHKgeEQk-rMCMlJcawlt2/preview" width="640" height="480" allow="autoplay"></iframe>
+<!-- v1-final-grade-sheet.png -->
+<iframe src="https://drive.google.com/file/d/14YuyT66AyxmWWSlk3nTgdFtqLM7l7BcO/preview" width="640" height="480" allow="autoplay"></iframe>
 
 The final grade sheet will contain all of the columns present in the roster, plus two additional columns. One of these columns will be the final grade for each student and one will be the grade decomposition, the number of points a student earned for each question. 
 
@@ -227,14 +260,21 @@ gradetools creates a feedback file for each student as the user grades. This fil
 
 The console will contain a message letting the user know if the feedback files were able to be knitted. If not, it will save the feedback .Rmd file.
 
+Below is part of the feedback html created for Mine.
+
+<!-- v1-feedback-file.png -->
+<iframe src="https://drive.google.com/file/d/11BQj8LjiSd0hZqzhpKSe4wvbCHvG4SmZ/preview" width="640" height="480" allow="autoplay"></iframe>
+
 ## Final notes  
 
 ### Missing assignments  
 
-gradetools determines assignment paths by replacing all instances of the `example_student_identifier` in the `example_assignment_path` with each student identifier. If an assignment is not found at the file path, `assist_grading()` will consider that student's assignment to be missing. The user will never be prompted to grade students with missing assignments. `assist_grading()` has an argument called `missing_assignment_grade` which is `NA` by default. Students with missing assignments will have the their total grade for the assignment in the final grade sheet equal to the value of  `missing_assignment_grade`.
+gradetools determines assignment paths by replacing all instances of the `example_student_identifier` in the `example_assignment_path` with each student identifier. If an assignment is not found at the file path, `assist_grading()` will consider that student's assignment to be missing. The final grade assigned to students with missing assignments will be whatever `missing_assignment_grade` was specified as, which is `NA` by default.
 
 ### Selective grading  
 
-The function `assist_advanced_grading()` is like a wrapper of `assist_grading()` where two additional parameters allow the user to specify `students_to_grade` and `questions_to_grade`. These can be specified by a vector of question names corresponding to the names of specific parts of the assignment provided in the column "name" in the rubric. `students_to_grade` and `questions_to_grade` can also be set to "all", which is the default.  
+The functions `assist_advanced_grading()` and`assist_advanced_grading()` function similarly to `assist_grading()`, but with additional arguments allowing for increased user control. Two such arguments are `questions_to_grade` and `students_to_grade`. These can be specified by a vector of question names corresponding question names specified in the `names` column of the rubric. `students_to_grade` and `questions_to_grade` can also be set to "all", which is the default.  
 
-Further capabilities of `assist_advanced_grading()` relate to options available for classes that are managed through GitHub and can be found in the "extended-capability-github" vignette.
+### Running code from assignments while grading  
+
+The assist grading functions automatically open all files associated with a student's (or team's) submission and sometimes a grader may want to run the code in a submission. When grading with gradetools the R console is busy with prompting, so the user cannot directly run code in the console. To run the code in assignment submissions while grading with gradetools we recommend knitting/compiling the document or script. Even R script files can be compiled.

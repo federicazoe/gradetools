@@ -4,10 +4,18 @@
 \alias{create_issues_github}
 \title{Push issues to GitHub}
 \usage{
-create_issues_github(temp_grade_sheet, class_github_name, team_grading = FALSE)
+create_issues_github(
+  grading_progress_log_path,
+  grading_progress_log,
+  class_github_name,
+  team_grading = FALSE
+)
 }
 \arguments{
-\item{temp_grade_sheet}{tibble created by assist_advanced_grading().}
+\item{grading_progress_log_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+This is that path for that file. Must be a .csv}
+
+\item{grading_progress_log}{tibble created by assist_advanced_grading().}
 
 \item{class_github_name}{string, GitHub name of the class. This input is needed to push feedback and issues to the correct class on GitHub.}
 
@@ -16,3 +24,4 @@ create_issues_github(temp_grade_sheet, class_github_name, team_grading = FALSE)
 \description{
 Push issues to GitHub
 }
+\keyword{internal}

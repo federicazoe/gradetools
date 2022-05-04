@@ -1,0 +1,243 @@
+---
+title: "Comprehensive example of grading with gradetools"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Comprehensive example of grading with gradetools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  eval = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(gradetools)
+```
+
+For this vignette we assume that you have already familiarized yourself with the various functionalities of gradetools ([individual](https://federicazoe.github.io/gradetools/articles/a-grading-with-gradetools.html), [team](https://federicazoe.github.io/gradetools/articles/c-extended-capability-teams.html) and [GitHub](https://federicazoe.github.io/gradetools/articles/d-extended-capability-github.html) grading).
+
+The purpose of this vignette is to provide a comprehensive grading scenario involving:  
+
+  - A team project (instead of homework or quiz) on GitHub
+  - Multiple files per submission (we will grade `README.md`, `proposal.md` and `presentation.Rmd`)
+  - Pushing issues and feedback to GitHub
+  
+## Preparing the material
+
+### Cloning project repos  
+
+This vignette uses two GitHub repositories (repos) from the [gradetools-test-course](https://github.com/gradetools-test-course) GitHub organization:
+ 
+  - [final-project-team-poisson](https://github.com/gradetools-test-course/final-project-team-poisson) for one team submission.
+  - [final-project-team-gamma](https://github.com/gradetools-test-course/final-project-team-gamma) for the second team submission.
+  
+These repos can be cloned by running:
+
+```{r}
+class_github_name <- "gradetools-test-course"
+repo_template_name <- "final-project-team-"
+repos_local_path <- "final-project-team-repos"
+
+ghclass::local_repo_clone(
+  repo = ghclass::org_repos(class_github_name, repo_template_name),
+  local_path = repos_local_path
+)
+```
+
+The final project submissions were adapted from the [GitHub repository template](https://github.com/mine-cetinkaya-rundel/ds-final-project) accompanying "The 5Ws and 1H of Term Projects in the Introductory Data Science Classroom" by Çetinkaya-Rundel, Dogucu, and Rummerfield (2022). 
+
+## Making the roster
+
+Most typically, the roster would be downloaded from a school learning management system and saved into a .csv file whose path would be provided to one of the assist grading functions. For this example, we are going to use a minimal roster that only has the two columns required for team grading.
+
+```{r, eval = TRUE, echo = FALSE}
+roster <- data.frame(
+  student_identifier = c("federicazoe", "CatalinaMedina", "mdogucu"),
+  team_identifier = c("gamma", "gamma", "poisson")
+)
+
+knitr::kable(roster, 'html', align = "l")
+```
+
+
+
+## Making the rubric  
+
+To make sure the rubric has the correct formatting, we should always create it by using `create_rubric_template()` and then fill it in. 
+
+```{r}
+create_rubric_template(
+  rubric_path = "rubric.csv"
+)
+```
+
+We would like to grade three files for each team: 
+  - `README.md`
+  - `proposal.md`
+  - `presentation.Rmd`
+We will consider each file as a component of the final project and have a one rubric item per component to begin grading (further items can be added while grading).
+
+```{r, eval = TRUE, echo = FALSE}
+rubric <- data.frame(
+  name = c("README", "Proposal", "Presentation", "all_questions"),
+  total_points = c(2, 3, 5, NA), 
+  prompt_code = c("1a", "1a", "1a", "0"), 
+  prompt_message = c(
+    "Summary needs improvements",
+    "Missing method motivation",
+    "Title not informative",
+    "Unfilled"
+  ), 
+  feedback = c(
+    "The summary section of the README should introduce the project and its relavance, outline the methods, and summarize important results.",
+    "The data analysis plan should provide motivation for the proposed model.",
+    "The presentation title should inform the reader of the general contents of the project.",
+    "The template for the file was unchanged. Did you miss this part or forget to push?"
+  ), 
+  points_to_remove = c(1, 1, 0.5, 100)
+)
+
+
+knitr::kable(rubric, 'html', align = "l")
+```
+
+### Working directory
+
+After cloning the repos and creating the roster and rubric, your working directory should look like the following:
+
+<!-- v5-directory.png -->
+<iframe src="https://drive.google.com/file/d/1atL8xHeDOz7_HHuuIO6NUKE8tzXlrwp2/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Note: for simplicity, the figure above does not include files and folders present in the cloned repos that are not used for this example.
+
+## Grading
+
+For grading, we are going to use `assist_team_grading()`. Note that `example_assignment_path` is a vector in this case, since we want to look at three files for each team.
+
+```{r}
+assist_team_grading(
+  rubric_path = "rubric.csv",
+  roster_path = "roster.csv",
+  grading_progress_log_path  = "grading_progress_log.csv",
+  final_grade_sheet_path = "final-grade-sheet.csv",
+  example_assignment_path = c(
+    "final-project-team-repos/final-project-team-gamma/README.md",
+    "final-project-team-repos/final-project-team-gamma/proposal/proposal.md",
+    "final-project-team-repos/final-project-team-gamma/presentation/presentation.Rmd"
+  ) ,
+  example_feedback_path = "final-project-team-repos/final-project-team-gamma/feedback.md",
+  example_team_identifier = "gamma",
+  github_issues = TRUE
+)
+```
+
+Once we run the above call, all files associated to the first team in the roster will be open. When reviewing the README, we see that the summary needs to be expanded upon and that the data source was not cited. We do not have a rubric item yet for the second mistake, so we first enter 'r' to add a new rubric item:
+
+<!-- v5-new-rubric-item.png -->
+<iframe src="https://drive.google.com/file/d/1lYmVUBefqKD-1pifYePqv9Re4A4ov-3i/preview" width="640" height="480" allow="autoplay"></iframe>
+
+with the following information:
+
+<!-- v5-new-rubric-item-summary.png -->
+<iframe src="https://drive.google.com/file/d/1DW2osdQ2hrFZLE1JO8oQrzRtGYTFrYEp/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Once the new rubric item has been created, we can assign a grade and a feedback to this team's README by entering prompt codes '1a' and '3a' separated by a double hyphen.
+
+Next, we move on to this team's proposal and notice that the template has not been filled in. We want to give the team the chance to complete the proposal for partial credit. Creating an issue can be a fast way to communicate this opportunity to the team. So we enter 'i' and provide an issue title and body:
+
+<!-- v5-issue-title.png -->
+<iframe src="https://drive.google.com/file/d/15-Cx23623YNzWgwn3vJjdoztfv44j0uT/preview" width="640" height="480" allow="autoplay"></iframe>
+
+After noting the issue, we enter '0' to remove 100% of the points allocated to the project proposal. 
+
+Finally, we move on to the presentation. This consists of an .Rmd file that we may want to visualize. Even though the console is already busy with rubric prompting, in RStudio we can click on _Knit_ and view the compiled slides in the viewer. 
+
+When grading this presentation, we notice: 
+
+- the title should be more specific 
+- the plot axis don't match the order of response and exploratory variables
+- the relationship visualized in the plot was not accounted for in the model
+
+Simplistic titles were expected as a common error so a rubric item already exists for this. The other two mistakes are instead specific to this submission, and so we leave personalized feedback messages for each of these. Just like with noting issues and adding new rubric items, we can provide as many personalized feedback messages as desired prior to assigning prompt codes by typing 'p'.
+
+<!-- v5-personalized-feedback-1.png -->
+<iframe src="https://drive.google.com/file/d/1YaJKU7hm1Eg1MmIFkc2vJna6zsWDEo2o/preview" width="640" height="480" allow="autoplay"></iframe>
+
+<!-- v5-personalized-feedback-2.png -->
+<iframe src="https://drive.google.com/file/d/1g_rCagLVN8_pkfI1SvSc7D9OuDS9wYyf/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Note that personalized feedback does not affect the assigned grade. If we wanted, we could add to our rubric a vague item with no specific feedback associated with it in order to remove some points after we provide personalized feedback (e.g. one that removes 0.5 points for a 'minor error'). 
+
+We finish grading team _gamma_ by assigning the rubric item '1a' for the presentation component. Prior to grading the next team, we can interrupt grading and push feedback and noted issues for the team _gamma_ if we wish.
+
+
+## Pushing feedback and creating issues on GitHub
+
+Once we have finished grading one or multiple students, we can push the feedback file(s) and/or create the issue(s) that we have noted while grading by using `push_to_github()` and specifying the logical arguments `push_feedback` and `create_issues`. Because this project involves teams, we also need to set the logical argument `team_grading` to `TRUE`:   
+
+```{r}
+push_to_github(
+  grading_progress_log_path = "grading_progress_log.csv",
+  class_github_name = "gradetools-test-course",
+  example_identifier = "gamma",
+  example_github_repo = "final-project-team-gamma",
+  push_feedback = TRUE,
+  create_issues = TRUE,
+  team_grading = TRUE
+)
+
+```
+
+When calling this function, we will be asked whether we want to perform this actions only for assignments who have been fully graded or also for partially graded assignments. 
+
+Here is an example of team _gamma_'s pushed feedback file:
+
+<!-- v5-feedback-pushed.png -->
+<iframe src="https://drive.google.com/file/d/1aqbMuAVDukExjb20sYOwOEYOYzJ1r7EY/preview" width="640" height="480" allow="autoplay"></iframe>
+
+If we set `create_issues` to `TRUE` then we will be asked if we wish to review and confirm each issue that was noted before actually creating it on GitHub. If we choose so, then the following is an example of a confirmation message that we would see:
+
+<!-- v5-issue-confirmation-message.png -->
+<iframe src="https://drive.google.com/file/d/1W-CcIAi4SnEOFFa6TE0zUoGdKdpsDWlP/preview" width="640" height="480" allow="autoplay"></iframe>
+
+Because GitHub does not currently support multiple assignees for private repositories in free organizations, all team members will be tagged in the issue body so that they will receive notification of the issue creation:
+
+<!-- v5-issue-created.png -->
+<iframe src="https://drive.google.com/file/d/1oY0X97OZ5YNfwhjoULH46QbD7ZLrS1Z3/preview" width="640" height="480" allow="autoplay"></iframe>
+
+## Regrading a specified question, for a specified student
+
+Once the _gamma_ team has pushed their project proposal to their repo and closed the issue, we want to go ahead and regrade this part of their final project and give them partial credit. We can do so with `assist_regrading()`! Note that because we wish to regrade a team, then we need to set `students_to_regrade` to `NULL` and provide the argument `teams_to_regrade`:
+
+```{r}
+
+assist_regrading(
+  rubric_path = "rubric.csv",
+  grading_progress_log_path = "grading_progress_log.csv",
+  final_grade_sheet_path = "final-grade-sheet.csv",
+  questions_to_regrade = c("Proposal"),
+  students_to_regrade = NULL,
+  teams_to_regrade = c("gamma")
+)
+
+```
+
+We can create a new rubric item for giving them partial credit:
+
+<!-- v5-partial-credit.png -->
+<iframe src="https://drive.google.com/file/d/1HTOqqgYWFSlSeVpNf3FKQam1cXHgq53R/preview" width="640" height="480" allow="autoplay"></iframe>
+
+
+## Credits
+
+The extended functionalities for assignments managed using GitHub were possible thanks to the functions in the [ghclass](https://rundel.github.io/ghclass/index.html) package.
+
+The final project submissions were adapted from the [GitHub repository template](https://github.com/mine-cetinkaya-rundel/ds-final-project) accompanying "The 5Ws and 1H of Term Projects in the Introductory Data Science Classroom" by Çetinkaya-Rundel, Dogucu, and Rummerfield (2022).

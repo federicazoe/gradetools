@@ -2,24 +2,26 @@
 % Please edit documentation in R/assist_regrading.R
 \name{assist_regrading}
 \alias{assist_regrading}
-\title{Assists with regrading, given assist_grading() or assist_advanced_grading() was previously used}
+\title{Assists with regrading}
 \usage{
 assist_regrading(
   rubric_path,
-  temp_grade_sheet_path,
+  grading_progress_log_path,
   final_grade_sheet_path,
   questions_to_regrade,
   students_to_regrade,
   teams_to_regrade = NULL,
   missing_assignment_grade = NA,
-  github_issues = FALSE,
-  issue_every_question = FALSE
+  github_issues = FALSE
 )
 }
 \arguments{
-\item{rubric_path}{string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.}
+\item{rubric_path}{string, path to assignment rubric. 
+This rubric should be created using the function create_rubric_template, then filled in by the user. 
+The rubric file name and column names must not be changed.}
 
-\item{temp_grade_sheet_path}{string; path to temporary grade sheet produced by assign_grade_write_feedback}
+\item{grading_progress_log_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+This is that path for that file. Must be a .csv}
 
 \item{final_grade_sheet_path}{string; path to save final grade sheet to. Must be a .csv}
 
@@ -32,9 +34,7 @@ assist_regrading(
 \item{missing_assignment_grade}{numeric; The grade to assign a student with no assignment submission}
 
 \item{github_issues}{logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)}
-
-\item{issue_every_question}{logical, whether the possibility to create issues should be given at every question or only at the end of the assignment}
 }
 \description{
-Assists with regrading, given assist_grading() or assist_advanced_grading() was previously used
+Assists with regrading, given an assist grading function was previously used. Deletes previously specified grades, feedback, comments and issues for each regraded question.
 }

@@ -1,5 +1,5 @@
 #' Prompts grader to add a rubric item for the current question
-#'
+#' 
 #' @param curr_q string, the name of the question that was being graded and for which the grader has asked to add a rubric item. Needs to be one of the names in the column
 #' @param rubric_path string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.
 #' @param rubric_list list whose format corresponds to rubric_list, which is used by most functions in this package. This is produced by import_rubric
@@ -12,7 +12,8 @@
 #'
 #' @return rubric list
 #' 
-
+#' @keywords internal
+#' 
 add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
   
   rubric <- readr::read_csv(

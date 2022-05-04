@@ -7,7 +7,7 @@
 core_assist_grading(
   rubric_path,
   roster_path,
-  temp_grade_sheet_path,
+  grading_progress_log_path,
   final_grade_sheet_path,
   example_assignment_path,
   example_feedback_path,
@@ -16,37 +16,48 @@ core_assist_grading(
   questions_to_grade = "all",
   students_to_grade = "all",
   team_grading = FALSE,
-  github_issues = FALSE,
-  issue_every_question = FALSE
+  github_issues = FALSE
 )
 }
 \arguments{
-\item{rubric_path}{string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.}
+\item{rubric_path}{string, path to assignment rubric. 
+This rubric should be created using the function create_rubric_template, then filled in by the user. 
+The rubric file name and column names must not be changed.}
 
-\item{roster_path}{string; file path to the class roster csv containing a column named student_identifier. If team_grading is set to TRUE then the class roster also needs to contain a column named team_identifier}
+\item{roster_path}{string; file path to the class roster csv containing a column named student_identifier. 
+If team_grading is set to TRUE then the class roster also needs to contain a column named team_identifier}
 
-\item{temp_grade_sheet_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. This is that path for that file. Must be a .csv}
+\item{grading_progress_log_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+This is that path for that file. Must be a .csv}
 
 \item{final_grade_sheet_path}{string; path to save final grade sheet to. Must be a .csv}
 
-\item{example_assignment_path}{string; file path to one of the assignments to be graded. This file path structure will be used to determine where the other assignments to be graded are located. The student identifier has to be present somewhere in the file path}
+\item{example_assignment_path}{string; file path to one of the assignments to be graded. 
+This file path structure will be used to determine where the other assignments to be graded are located. 
+The student identifier has to be present somewhere in the file path}
 
-\item{example_feedback_path}{string; file path to one of the assignment feedback files that will be generated as the user grades. This file path structure will be used to determine where the other feedback files will be stored. The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. The extension of the feedback file must be one of the following: "Rmd", "docx", "html", "pdf"}
+\item{example_feedback_path}{string; file path to one of the assignment feedback files that will be generated as the user grades. 
+This file path structure will be used to determine where the other feedback files will be stored. 
+The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. 
+The extension of the feedback file must be one of the following: "Rmd", "md", "docx", "html", "pdf". 
+These file types (except the first) will be knitted to: GitHub, Word, html, and pdf documents respectively}
 
-\item{example_student_identifier}{string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later}
+\item{example_student_identifier}{string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. 
+This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later}
 
 \item{missing_assignment_grade}{numeric; The grade to assign a student with no assignment submission}
 
-\item{questions_to_grade}{vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric}
+\item{questions_to_grade}{vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. 
+All questions_to_grade must exactly match ones present in the rubric}
 
-\item{students_to_grade}{vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster}
+\item{students_to_grade}{vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. 
+All students_to_grade must be student_identifiers present in the roster}
 
 \item{team_grading}{logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)}
 
 \item{github_issues}{logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)}
-
-\item{issue_every_question}{logical, whether the possibility to create issues should be given at every question or only at the end of the assignment}
 }
 \description{
 Core function that assists with grading, creates feedback and grade book files
 }
+\keyword{internal}

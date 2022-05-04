@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +47,7 @@
     <a class="dropdown-item" href="articles/b-regrading-with-gradetools.html">How to regrade assignments with gradetools</a>
     <a class="dropdown-item" href="articles/c-extended-capability-teams.html">Extended gradetools capability: Team Grading</a>
     <a class="dropdown-item" href="articles/d-extended-capability-github.html">Extended gradetools capability: Assignments on GitHub</a>
+    <a class="dropdown-item" href="articles/e-comprehensive-example.html">Comprehensive example of grading with gradetools</a>
   </div>
 </li>
 <li class="nav-item">
@@ -72,44 +73,64 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="gradetools-">gradetools <img src="reference/figures/gradetools-logo.png" align="right" width="200" alt="a hex shaped logo with a cat in front of a laptop sending out paper planes and a notepad with A+ on it. The logo reads gradetools"><a class="anchor" aria-label="anchor" href="#gradetools-"></a>
+<div class="page-header"><h1 id="gradetools-">gradetools
+<img src="reference/figures/gradetools-logo.png" align="right" width="200" alt="a hex shaped logo with a cat in front of a laptop sending out paper planes and a notepad with A+ on it. The logo reads gradetools"><a class="anchor" aria-label="anchor" href="#gradetools-"></a>
 </h1></div>
-<p><strong>gradetools</strong> is created with data science instructors in mind. Assessing students with open-ended assignments (e.g. projects, interpretation questions) can be impactful but can also be arduous when it comes to grading. gradetools supports grading assessments for which automated feedback is not possible.</p>
+<p><strong>gradetools</strong> is created with data science instructors
+in mind. Assessing students with open-ended assignments (e.g. projects,
+interpretation questions) can be impactful but can also be arduous when
+it comes to grading. gradetools supports grading assessments for which
+automated feedback is not possible.</p>
 <p>gradetools aims to do two major things:</p>
 <ol style="list-style-type: decimal">
 <li>Automate the grading workflow not the feedback.</li>
-<li>Minimize switching between different interfaces (grade book, student’s work, GitHub etc.)</li>
+<li>Minimize switching between different interfaces (grade book,
+student’s work, GitHub etc.)</li>
 </ol>
 <p>The functions in gradetools allow the grader to:</p>
 <ul>
-<li>efficiently grade assignments in several formats (e.g. .R, .Rmd, .py, .txt);</li>
+<li>efficiently grade assignments in several formats (e.g. .R, .Rmd,
+.py, .txt);</li>
 <li>specify the rubric and modify it dynamically while grading;</li>
 <li>save a final grade sheet with all assigned grades;</li>
 <li>save a personalized feedback file for each student;</li>
 <li>grade both individual and team-based assignments;</li>
 <li>regrade specified students and questions;</li>
-<li>push feedback and create GitHub issues into students’ GitHub repos.</li>
+<li>push feedback and create GitHub issues into students’ GitHub
+repos.</li>
 </ul>
 <p>The package has only been tested with RStudio GUI.</p>
 <div class="section level2">
 <h2 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a>
 </h2>
-<p>Throughout the vignettes we provide example grading scenarios that you can use to test the functions. There are currently four vignettes available.</p>
+<p>Throughout the vignettes we provide example grading scenarios that
+you can use to test the functions. There are currently four vignettes
+available.</p>
 <ol style="list-style-type: decimal">
 <li>
-<a href="https://federicazoe.github.io/gradetools/articles/a-grading-with-gradetools.html">How to grade with gradetools</a>: For beginner users we recommend starting with this vignette.</li>
+<a href="https://federicazoe.github.io/gradetools/articles/a-grading-with-gradetools.html">How
+to grade with gradetools</a>: For beginner users we recommend starting
+with this vignette.</li>
 <li>
-<a href="https://federicazoe.github.io/gradetools/articles/b-regrading-with-gradetools.html">How to regrade assignments with gradetools</a>: This vignette shows how to change previously assigned grades.</li>
+<a href="https://federicazoe.github.io/gradetools/articles/b-regrading-with-gradetools.html">How
+to regrade assignments with gradetools</a>: This vignette shows how to
+change previously assigned grades.</li>
 <li>
-<a href="https://federicazoe.github.io/gradetools/articles/c-extended-capability-teams.html">Extended gradetools Capability: Team Grading</a>: This vignette is only relevant for grading assignments that are team-based.</li>
+<a href="https://federicazoe.github.io/gradetools/articles/c-extended-capability-teams.html">Extended
+gradetools Capability: Team Grading</a>: This vignette is only relevant
+for grading assignments that are team-based.</li>
 <li>
-<a href="https://federicazoe.github.io/gradetools/articles/d-extended-capability-github.html">Extended gradetools Capability: Assignments on GitHub</a>: This vignette is only relevant for assignments that are on GitHub.</li>
+<a href="https://federicazoe.github.io/gradetools/articles/d-extended-capability-github.html">Extended
+gradetools Capability: Assignments on GitHub</a>: This vignette is only
+relevant for assignments that are on GitHub.</li>
 </ol>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version from GitHub. You would also need to install the devtools package if you do not have it installed already.</p>
+<p>You can install the development version from GitHub. You would also
+need to install the devtools package if you do not have it installed
+already.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#install.packages</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"federicazoe/gradetools"</span><span class="op">)</span></code></pre></div>
@@ -132,7 +153,8 @@
 <img src="reference/figures/hpi-logo.jpeg" align="center" alt="NSF logo" width="120">
 </td>
 <td style="text-align: left">
-This work was also supported by the HPI Research Center in Machine Learning and Data Science at UC Irvine.
+This work was also supported by the HPI Research Center in Machine
+Learning and Data Science at UC Irvine.
 </td>
 </tr>
 </table>
@@ -184,7 +206,8 @@ This work was also supported by the HPI Research Center in Machine Learning and 
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
     </footer>

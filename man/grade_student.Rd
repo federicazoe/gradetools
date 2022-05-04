@@ -6,22 +6,21 @@
 \usage{
 grade_student(
   row,
-  temp_grade_sheet,
-  temp_grade_sheet_path,
+  grading_progress_log,
+  grading_progress_log_path,
   rubric_prompts,
   rubric_list,
   rubric_path,
   github_issues,
-  issue_every_question,
   questions_to_grade
 )
 }
 \arguments{
-\item{row}{integer; This number indicates which row of the temp_grade_sheet is to be used / graded}
+\item{row}{integer; This number indicates which row of the grading_progress_log is to be used / graded}
 
-\item{temp_grade_sheet}{data frame; The temp_grade_sheet is a data frame containing information for gradetools internal use}
+\item{grading_progress_log}{data frame; The grading_progress_log is a data frame containing information for gradetools internal use}
 
-\item{temp_grade_sheet_path}{string; path to temp_grade_sheet}
+\item{grading_progress_log_path}{string; path to grading_progress_log}
 
 \item{rubric_prompts}{list of prompts; One prompt for each question plus one for overall feedback. This is produced by create_rubric_prompts}
 
@@ -31,13 +30,12 @@ grade_student(
 
 \item{github_issues}{Boolean; indicates if grader wants to be able to create GitHub issues}
 
-\item{issue_every_question}{logical, whether the possibility to create issues should be given at every question or only at the end of the assignment}
-
 \item{questions_to_grade}{vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric}
 }
 \value{
-temporary grade sheet data frame
+grading progress log data frame
 }
 \description{
 Leads grader through grading a student
 }
+\keyword{internal}
