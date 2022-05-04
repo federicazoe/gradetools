@@ -64,7 +64,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">core_assist_grading</span><span class="op">(</span>
   <span class="va">rubric_path</span>,
   <span class="va">roster_path</span>,
-  <span class="va">temp_grade_sheet_path</span>,
+  <span class="va">grading_progress_log_path</span>,
   <span class="va">final_grade_sheet_path</span>,
   <span class="va">example_assignment_path</span>,
   <span class="va">example_feedback_path</span>,
@@ -86,7 +86,7 @@ The rubric file name and column names must not be changed.</p></dd>
 <dt>roster_path</dt>
 <dd><p>string; file path to the class roster csv containing a column named student_identifier. 
 If team_grading is set to TRUE then the class roster also needs to contain a column named team_identifier</p></dd>
-<dt>temp_grade_sheet_path</dt>
+<dt>grading_progress_log_path</dt>
 <dd><p>string; assist-grading() functions save a file which includes information for gradetools's internal use. 
 This is that path for that file. Must be a .csv</p></dd>
 <dt>final_grade_sheet_path</dt>

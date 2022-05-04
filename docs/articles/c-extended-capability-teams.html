@@ -152,7 +152,7 @@ easily be present in the file paths without intentionally being the
 <code class="sourceCode R"><span class="fu"><a href="../reference/assist_grading_functions.html">assist_team_grading</a></span><span class="op">(</span>
   rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>, 
   roster_path <span class="op">=</span> <span class="st">"class-roster.csv"</span>, 
-  temp_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-temporary-grade-sheet.csv"</span>, 
+  grading_progress_log_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-grading_progress_log.csv"</span>, 
   final_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-final-grade-sheet.csv"</span>, 
   example_team_identifier <span class="op">=</span> <span class="st">"team1"</span>,
   example_assignment_path <span class="op">=</span> <span class="st">"quizzes/quiz-09a-lin-reg-team1.Rmd"</span>, 
@@ -163,16 +163,20 @@ example-team-grading-directory-week09-regression is the working
 directory.</p>
 <p>We will skip the process of grading because that is shown in the
 “how-to-grade-with-gradetools” vignette.</p>
+<p>When regrading with <code><a href="../reference/assist_regrading.html">assist_regrading()</a></code> the only
+difference when team grading is <code>teams_to_regrade</code> must be
+provided and <code>students_to_regrade</code> must be set to
+<code>NULL</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="final-notes">Final notes<a class="anchor" aria-label="anchor" href="#final-notes"></a>
 </h2>
 <p>The assist grading function handles teams as individual students in
-the temporary grade sheet. The final grade sheet will have a row per
-student but the temporary grade sheet will have one row per team. This
+the grading progress log. The final grade sheet will have a row per
+student but the grading progress log will have one row per team. This
 internal difference does not change the process of grading but may be
-confusing to a user who wanted to look through their temporary grade
-sheet.</p>
+confusing to a user who wanted to look through their grading progress
+log.</p>
 <p>The GitHub compatible functionalities discussed in the vignette
 “Extended gradetools capability: Assignments on GitHub” also work with
 <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code>. <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code>

@@ -61,13 +61,17 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">assign_grade_write_feedback</span><span class="op">(</span><span class="va">temp_grade_sheet_row</span>, <span class="va">rubric_list</span>, <span class="va">rubric_prompts</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">assign_grade_write_feedback</span><span class="op">(</span>
+  <span class="va">grading_progress_log_row</span>,
+  <span class="va">rubric_list</span>,
+  <span class="va">rubric_prompts</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>temp_grade_sheet_row</dt>
-<dd><p>data frame with 1 row; The temp_grade_sheet is a data frame containing information for gradetools internal use. This row should correspond to the student that needs to be graded and have feedback written</p></dd>
+    <dl><dt>grading_progress_log_row</dt>
+<dd><p>data frame with 1 row; The grading_progress_log is a data frame containing information for gradetools internal use. This row should correspond to the student that needs to be graded and have feedback written</p></dd>
 <dt>rubric_list</dt>
 <dd><p>list of lists; each sub-list corresponds to a part of the assignment rubric and specifies the name of this part (e.g. "question_1"), the total points that can be earned for this part, the rubric etc. Rubric should be made using 'create_rubric_template()'.</p></dd>
 <dt>rubric_prompts</dt>

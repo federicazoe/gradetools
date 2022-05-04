@@ -63,7 +63,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">assist_regrading</span><span class="op">(</span>
   <span class="va">rubric_path</span>,
-  <span class="va">temp_grade_sheet_path</span>,
+  <span class="va">grading_progress_log_path</span>,
   <span class="va">final_grade_sheet_path</span>,
   <span class="va">questions_to_regrade</span>,
   <span class="va">students_to_regrade</span>,
@@ -79,7 +79,7 @@
 <dd><p>string, path to assignment rubric. 
 This rubric should be created using the function create_rubric_template, then filled in by the user. 
 The rubric file name and column names must not be changed.</p></dd>
-<dt>temp_grade_sheet_path</dt>
+<dt>grading_progress_log_path</dt>
 <dd><p>string; assist-grading() functions save a file which includes information for gradetools's internal use. 
 This is that path for that file. Must be a .csv</p></dd>
 <dt>final_grade_sheet_path</dt>

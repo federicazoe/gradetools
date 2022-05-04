@@ -236,7 +236,7 @@ necessary arguments are:</p>
 <ul>
 <li><code>rubric_path</code></li>
 <li><code>roster_path</code></li>
-<li><code>temp_grade_sheet_path</code></li>
+<li><code>grading_progress_log_path</code></li>
 <li><code>final_grade_sheet_path</code></li>
 <li><code>example_student_identifier</code></li>
 <li><code>example_assignment_path</code></li>
@@ -244,8 +244,8 @@ necessary arguments are:</p>
 </ul>
 <p>From the previous sections in this vignette, we already know our
 rubric and roster paths. Now we need to specify where to save the
-temporary grade sheet and the final grade sheet. The temporary grade
-sheet is a file used internally by gradetools which stores all grading
+grading progress log and the final grade sheet. The grading progress log
+is a file used internally by gradetools which stores all grading
 progress. Keeping this file allows the user to interrupt and then resume
 grading, regrade, change rubric items, add assignments to be graded, and
 many more functionalities.</p>
@@ -277,7 +277,7 @@ user would call the <code><a href="../reference/assist_grading_functions.html">a
 <code class="sourceCode R"><span class="fu"><a href="../reference/assist_grading_functions.html">assist_grading</a></span><span class="op">(</span>
   rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>, 
   roster_path <span class="op">=</span> <span class="st">"class-roster.csv"</span>, 
-  temp_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-temporary-grade-sheet.csv"</span>, 
+  grading_progress_log_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-grading_progress_log.csv"</span>, 
   final_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-final-grade-sheet.csv"</span>, 
   example_student_identifier <span class="op">=</span> <span class="st">"federicazoe"</span>,
   example_assignment_path <span class="op">=</span> <span class="st">"quizzes/quiz-09a-lin-reg-federicazoe.Rmd"</span>, 
@@ -286,8 +286,8 @@ user would call the <code><a href="../reference/assist_grading_functions.html">a
 <p>The above function call assumes that
 example-directory-week09-regression is the working directory.</p>
 <p>When a user begins grading an assignment for the first time, a
-message will be displayed informing the user that a temporary grade
-sheet is begin created, which must not be deleted.</p>
+message will be displayed informing the user that a grading progress log
+is begin created, which must not be deleted.</p>
 <p>Next, the user will be informed which student they are going to begin
 grading and if there is any previous grading progress. All assignments
 associated with this student in this grading session will then be opened
