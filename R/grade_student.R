@@ -18,7 +18,7 @@
 #' @return grading progress log data frame
 #' 
 #' @keywords internal
-#' 
+
 grade_student <- function(
   row, 
   grading_progress_log, 
