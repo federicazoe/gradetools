@@ -1,5 +1,0 @@
-names,total_points,prompt_code,prompt_message,feedback,points_to_remove
-README,2,1a,Summary needs improvements,"The summary section of the README should introduce the project and its relavance, outline the methods, and summarize important results.",1
-Proposal,3,1a,Missing method motivation,The data analysis plan should provide motivation for the proposed model.,1
-Presentation,5,1a,Title not informative,The presentation title should inform the reader of the general contents of the project.,0.5
-all_questions,NA,0,Unfilled,The template for the file was unchanged. Did you miss this part or forget to push?,100
