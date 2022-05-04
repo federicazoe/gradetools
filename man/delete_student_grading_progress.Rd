@@ -5,7 +5,7 @@
 \title{Delete feedback and grades for specified students and questions}
 \usage{
 delete_student_grading_progress(
-  temp_grade_sheet_path,
+  grading_progress_log_path,
   rubric_path,
   identifier,
   questions_to_delete,
@@ -13,7 +13,7 @@ delete_student_grading_progress(
 )
 }
 \arguments{
-\item{temp_grade_sheet_path}{string; path to temporary grade sheet produced by assign_grade}
+\item{grading_progress_log_path}{string; path to temporary grade sheet produced by assign_grade}
 
 \item{rubric_path}{string; path to assignment rubric.}
 

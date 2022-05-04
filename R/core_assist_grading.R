@@ -16,7 +16,7 @@
 core_assist_grading <- function(
     rubric_path,
     roster_path,
-    temp_grade_sheet_path,
+    grading_progress_log_path,
     final_grade_sheet_path,
     example_assignment_path,
     example_feedback_path,
@@ -52,7 +52,7 @@ core_assist_grading <- function(
   # include correct directories
   paths_to_write_to <- c(
     example_feedback_path,
-    temp_grade_sheet_path,
+    grading_progress_log_path,
     final_grade_sheet_path
   )
   
@@ -66,16 +66,16 @@ core_assist_grading <- function(
   }
   
   # Check that temporary and final grade sheets paths are to .csv files
-  temp_file_ext <- path_ext(temp_grade_sheet_path)
+  temp_file_ext <- path_ext(grading_progress_log_path)
   final_file_ext <- path_ext(final_grade_sheet_path)
   if (!all(c(temp_file_ext, final_file_ext) %in% c("csv"))) {
-    stop("The extension of temp_grade_sheet_path and final_grade_sheet_path must be .csv")
+    stop("The extension of grading_progress_log_path and final_grade_sheet_path must be .csv")
     
   }
   
   # Check that temporary and final grade sheets paths differ
-  if (temp_grade_sheet_path == final_grade_sheet_path) {
-    stop("Inputs temp_grade_sheet_path and final_grade_sheet_path need to be different (otherwise one file would overwrite the other).")
+  if (grading_progress_log_path == final_grade_sheet_path) {
+    stop("Inputs grading_progress_log_path and final_grade_sheet_path need to be different (otherwise one file would overwrite the other).")
     
   } 
     
@@ -143,8 +143,8 @@ core_assist_grading <- function(
   }
   
   # Create /(load and merge) temporary grade sheet
-  temp_grade_sheet <- create_temp_grade_sheet(
-    temp_grade_sheet_path = temp_grade_sheet_path,
+  grading_progress_log <- create_grading_progress_log(
+    grading_progress_log_path = grading_progress_log_path,
     example_assignment_path = example_assignment_path, 
     example_feedback_path = example_feedback_path,
     example_student_identifier = example_student_identifier, 
@@ -155,42 +155,42 @@ core_assist_grading <- function(
   
   # Specify which students to grade
   if (students_to_grade == "all") {
-    students_to_grade <- temp_grade_sheet$student_identifier
+    students_to_grade <- grading_progress_log$student_identifier
   }
   
-  temp_grade_sheet <- temp_grade_sheet %>% 
+  grading_progress_log <- grading_progress_log %>% 
     mutate(grade_student = student_identifier %in% students_to_grade)
 
   continue_grading <- TRUE
   
   # Loop through students, grading each
-  for (i in 1:nrow(temp_grade_sheet)) {
+  for (i in 1:nrow(grading_progress_log)) {
     if (continue_grading) {
       # Currently, if a feedback file exists that student does not get graded because their status is changed to feedback created
-      all_qs_graded <- temp_grade_sheet$grading_status[i] == "all questions graded"
+      all_qs_graded <- grading_progress_log$grading_status[i] == "all questions graded"
       
       assignment_should_be_graded <- (
         # Assignment is not missing
-        !temp_grade_sheet$assignment_missing[i] &&
+        !grading_progress_log$assignment_missing[i] &&
         # This student is supposed to be graded this session
-        temp_grade_sheet$grade_student[i] &&
+        grading_progress_log$grade_student[i] &&
         # All questions have not already been graded for this student
         !all_qs_graded
       )
         
       if (assignment_should_be_graded) {
-        if (temp_grade_sheet$grading_status[i] == "feedback created") {
+        if (grading_progress_log$grading_status[i] == "feedback created") {
           # Print message
           begin_message <- paste(
             paste0(
               "You are going to grade ",
               ifelse(team_grading, yes = "team: ", no = "student: "),
-              temp_grade_sheet$student_identifier[i],
+              grading_progress_log$student_identifier[i],
               ".\n This assignment was previously partially graded, with the last edit performed at: ",
-              temp_grade_sheet$last_time_graded[i],
+              grading_progress_log$last_time_graded[i],
               ".\n The following questions were already graded: ",
               str_replace_all(
-                temp_grade_sheet$graded_qs[i], 
+                grading_progress_log$graded_qs[i], 
                 pattern = "&&&", 
                 replacement = ", "
               ),
@@ -205,7 +205,7 @@ core_assist_grading <- function(
             paste0(
               "You are going to grade ",
               ifelse(team_grading, yes = "team: ", no = "student: "),
-              temp_grade_sheet$student_identifier[i],
+              grading_progress_log$student_identifier[i],
               "."
             ),
             "Press [enter] or [ok] to continue or [cancel] to stop.",
@@ -221,7 +221,7 @@ core_assist_grading <- function(
         if (continue_grading) {
           # Get assignment_path
           assignment_path <- unlist(
-            str_split(temp_grade_sheet$assignment_path[i], ", ")
+            str_split(grading_progress_log$assignment_path[i], ", ")
           )
           
           doc_id <- NULL
@@ -235,8 +235,8 @@ core_assist_grading <- function(
           
           temp_obj <- grade_student(
             row = i, 
-            temp_grade_sheet = temp_grade_sheet, 
-            temp_grade_sheet_path = temp_grade_sheet_path,
+            grading_progress_log = grading_progress_log, 
+            grading_progress_log_path = grading_progress_log_path,
             rubric_prompts = rubric_prompts,
             rubric_list = rubric_list,
             rubric_path = rubric_path,
@@ -261,7 +261,7 @@ core_assist_grading <- function(
             Sys.sleep(1)
             
           } else {
-            temp_grade_sheet <- temp_obj
+            grading_progress_log <- temp_obj
             
           } 
           
@@ -283,9 +283,9 @@ core_assist_grading <- function(
     } 
   }
   
-  if (file.exists(temp_grade_sheet_path)) {
-    temp_grade_sheet <- readr::read_csv(
-      temp_grade_sheet_path,
+  if (file.exists(grading_progress_log_path)) {
+    grading_progress_log <- readr::read_csv(
+      grading_progress_log_path,
       show_col_types = FALSE,
       col_types = cols(
         .default = col_character(),
@@ -297,9 +297,9 @@ core_assist_grading <- function(
     
   }
 
-  if (any(temp_grade_sheet$grading_status != "ungraded")) {
+  if (any(grading_progress_log$grading_status != "ungraded")) {
     create_final_grade_sheet(
-      temp_grade_sheet = temp_grade_sheet, 
+      grading_progress_log = grading_progress_log, 
       final_grade_sheet_path = final_grade_sheet_path,
       missing_assignment_grade = missing_assignment_grade,
       rubric_list = rubric_list,
@@ -308,7 +308,7 @@ core_assist_grading <- function(
     )
   }
   
-  some_students_graded <- any(temp_grade_sheet$grading_status != "ungraded")
+  some_students_graded <- any(grading_progress_log$grading_status != "ungraded")
    
   if (feedback_file_ext %in% c("docx", "html", "pdf", "md") && some_students_graded) {
     
@@ -324,17 +324,17 @@ core_assist_grading <- function(
       expr = {              
         paths_returned <- mapply(
           render,
-          temp_grade_sheet$feedback_path_Rmd[temp_grade_sheet$grading_status != "ungraded"],
+          grading_progress_log$feedback_path_Rmd[grading_progress_log$grading_status != "ungraded"],
           MoreArgs = list(clean = TRUE, quiet = TRUE)  
         )
         
         cat(paste("\n...Succeeded!\n\n"))
         
-        unlink(temp_grade_sheet$feedback_path_Rmd)
+        unlink(grading_progress_log$feedback_path_Rmd)
         
         if (feedback_file_ext == "md") {
           unlink(fs::path_ext_set(
-            path = temp_grade_sheet$feedback_path_Rmd,
+            path = grading_progress_log$feedback_path_Rmd,
             ext = "html"
           ))
           

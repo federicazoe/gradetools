@@ -4,7 +4,7 @@
 #'     The rubric file name and column names must not be changed.
 #' @param roster_path string; file path to the class roster csv containing a column named student_identifier. 
 #'     If team_grading is set to TRUE then the class roster also needs to contain a column named team_identifier
-#' @param temp_grade_sheet_path string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+#' @param grading_progress_log_path string; assist-grading() functions save a file which includes information for gradetools's internal use. 
 #'     This is that path for that file. Must be a .csv
 #' @param final_grade_sheet_path string; path to save final grade sheet to. Must be a .csv
 #' @param example_assignment_path string; file path to one of the assignments to be graded. 
@@ -41,7 +41,7 @@ NULL
 assist_grading <- function(
     rubric_path,
     roster_path,
-    temp_grade_sheet_path,
+    grading_progress_log_path,
     final_grade_sheet_path,
     example_assignment_path,
     example_feedback_path,
@@ -52,7 +52,7 @@ assist_grading <- function(
   core_assist_grading(
     rubric_path = rubric_path,
     roster_path = roster_path,
-    temp_grade_sheet_path = temp_grade_sheet_path,
+    grading_progress_log_path = grading_progress_log_path,
     final_grade_sheet_path = final_grade_sheet_path,
     example_assignment_path = example_assignment_path,
     example_feedback_path = example_feedback_path,
@@ -73,7 +73,7 @@ assist_grading <- function(
 assist_team_grading <- function(
   rubric_path,
   roster_path,
-  temp_grade_sheet_path,
+  grading_progress_log_path,
   final_grade_sheet_path,
   example_assignment_path,
   example_feedback_path,
@@ -87,7 +87,7 @@ assist_team_grading <- function(
   core_assist_grading(
     rubric_path = rubric_path,
     roster_path = roster_path,
-    temp_grade_sheet_path = temp_grade_sheet_path,
+    grading_progress_log_path = grading_progress_log_path,
     final_grade_sheet_path = final_grade_sheet_path,
     example_assignment_path = example_assignment_path,
     example_feedback_path = example_feedback_path,
@@ -107,7 +107,7 @@ assist_team_grading <- function(
 assist_advanced_grading <- function(
   rubric_path,
   roster_path,
-  temp_grade_sheet_path,
+  grading_progress_log_path,
   final_grade_sheet_path,
   example_assignment_path,
   example_feedback_path,
@@ -121,7 +121,7 @@ assist_advanced_grading <- function(
   core_assist_grading(
     rubric_path = rubric_path,
     roster_path = roster_path,
-    temp_grade_sheet_path = temp_grade_sheet_path,
+    grading_progress_log_path = grading_progress_log_path,
     final_grade_sheet_path = final_grade_sheet_path,
     example_assignment_path = example_assignment_path,
     example_feedback_path = example_feedback_path,

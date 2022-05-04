@@ -1,8 +1,8 @@
 #' Leads grader through grading a student
 #'
-#' @param row integer; This number indicates which row of the temp_grade_sheet is to be used / graded
-#' @param temp_grade_sheet data frame; The temp_grade_sheet is a data frame containing information for gradetools internal use 
-#' @param temp_grade_sheet_path string; path to temp_grade_sheet
+#' @param row integer; This number indicates which row of the grading_progress_log is to be used / graded
+#' @param grading_progress_log data frame; The grading_progress_log is a data frame containing information for gradetools internal use 
+#' @param grading_progress_log_path string; path to grading_progress_log
 #' @param rubric_prompts list of prompts; One prompt for each question plus one for overall feedback. This is produced by create_rubric_prompts
 #' @param rubric_list list whose format corresponds to rubric_list, which is used by most functions in this package. This is produced by import_rubric
 #' @param rubric_path string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.
@@ -21,8 +21,8 @@
 #' 
 grade_student <- function(
   row, 
-  temp_grade_sheet, 
-  temp_grade_sheet_path, 
+  grading_progress_log, 
+  grading_progress_log_path, 
   rubric_prompts,
   rubric_list,
   rubric_path,
@@ -30,7 +30,7 @@ grade_student <- function(
   questions_to_grade
 ){
   
-  curr_row <- temp_grade_sheet[row, ]
+  curr_row <- grading_progress_log[row, ]
   
   invalid_fbk_message <- 'Please enter a valid prompt code, or enter "s" to stop.'
   
@@ -159,7 +159,7 @@ grade_student <- function(
       }
       
       grade_info <- assign_grade_write_feedback(
-        temp_grade_sheet_row = curr_row, 
+        grading_progress_log_row = curr_row, 
         rubric_list = rubric_list,
         rubric_prompts = rubric_prompts
       )
@@ -180,8 +180,8 @@ grade_student <- function(
       
     } # End storing question feedback
     
-    temp_grade_sheet[row, ] <- curr_row
-    write_csv(temp_grade_sheet, file = temp_grade_sheet_path)
+    grading_progress_log[row, ] <- curr_row
+    write_csv(grading_progress_log, file = grading_progress_log_path)
     
     # Move onto next question if valid feedback codes were provided
     if (!display_prompt_again) {
@@ -190,6 +190,6 @@ grade_student <- function(
     
   } # End while loop
   
-  temp_grade_sheet
+  grading_progress_log
   
 }

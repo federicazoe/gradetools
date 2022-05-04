@@ -5,7 +5,7 @@
 \title{Push feedback and issues to GitHub}
 \usage{
 push_to_github(
-  temp_grade_sheet_path,
+  grading_progress_log_path,
   class_github_name,
   example_github_repo,
   example_identifier,
@@ -15,7 +15,7 @@ push_to_github(
 )
 }
 \arguments{
-\item{temp_grade_sheet_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+\item{grading_progress_log_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. 
 This is that path for that file. Must be a .csv}
 
 \item{class_github_name}{string, GitHub name of the class. This input is only needed if github_issues is set to TRUE.}

@@ -6,8 +6,8 @@
 \usage{
 grade_student(
   row,
-  temp_grade_sheet,
-  temp_grade_sheet_path,
+  grading_progress_log,
+  grading_progress_log_path,
   rubric_prompts,
   rubric_list,
   rubric_path,
@@ -16,11 +16,11 @@ grade_student(
 )
 }
 \arguments{
-\item{row}{integer; This number indicates which row of the temp_grade_sheet is to be used / graded}
+\item{row}{integer; This number indicates which row of the grading_progress_log is to be used / graded}
 
-\item{temp_grade_sheet}{data frame; The temp_grade_sheet is a data frame containing information for gradetools internal use}
+\item{grading_progress_log}{data frame; The grading_progress_log is a data frame containing information for gradetools internal use}
 
-\item{temp_grade_sheet_path}{string; path to temp_grade_sheet}
+\item{grading_progress_log_path}{string; path to grading_progress_log}
 
 \item{rubric_prompts}{list of prompts; One prompt for each question plus one for overall feedback. This is produced by create_rubric_prompts}
 

@@ -126,7 +126,7 @@ For grading, we are going to use `assist_team_grading()`. Note that `example_ass
 assist_team_grading(
   rubric_path = "rubric.csv",
   roster_path = "roster.csv",
-  temp_grade_sheet_path  = "temporary-grade-sheet.csv",
+  grading_progress_log_path  = "grading_progress_log.csv",
   final_grade_sheet_path = "final-grade-sheet.csv",
   example_assignment_path = c(
     "final-project-team-repos/final-project-team-gamma/README.md",
@@ -185,7 +185,7 @@ Once we have finished grading one or multiple students, we can push the feedback
 
 ```{r}
 push_to_github(
-  temp_grade_sheet_path = "temporary-grade-sheet.csv",
+  grading_progress_log_path = "grading_progress_log.csv",
   class_github_name = "gradetools-test-course",
   example_identifier = "gamma",
   example_github_repo = "final-project-team-gamma",

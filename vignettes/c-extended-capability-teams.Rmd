@@ -56,7 +56,7 @@ To do team grading in gradetools we will use `assist_team_grading()`.
 assist_team_grading(
   rubric_path = "quiz-09-lin-reg-rubric.csv", 
   roster_path = "class-roster.csv", 
-  temp_grade_sheet_path = "quiz-09-lin-reg-temporary-grade-sheet.csv", 
+  grading_progress_log_path = "quiz-09-lin-reg-grading_progress_log.csv", 
   final_grade_sheet_path = "quiz-09-lin-reg-final-grade-sheet.csv", 
   example_team_identifier = "team1",
   example_assignment_path = "quizzes/quiz-09a-lin-reg-team1.Rmd", 

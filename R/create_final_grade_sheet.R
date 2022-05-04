@@ -1,6 +1,6 @@
 #' Writes final grade sheet csv
 #'
-#' @param temp_grade_sheet data frame; The temp_grade_sheet is a data frame containing information for gradetools internal use 
+#' @param grading_progress_log data frame; The grading_progress_log is a data frame containing information for gradetools internal use 
 #' @param final_grade_sheet_path string; path to save final grade sheet to. Must be a .csv
 #' @param missing_assignment_grade numeric; The grade to assign a student with no assignment submission
 #' @param rubric_prompts list of prompts; One prompt for each question plus one for overall feedback. This is produced by create_rubric_prompts
@@ -12,7 +12,7 @@
 #' @keywords internal
 #'
 create_final_grade_sheet <- function(
-    temp_grade_sheet,
+    grading_progress_log,
     final_grade_sheet_path,
     missing_assignment_grade,
     rubric_list,
@@ -20,29 +20,29 @@ create_final_grade_sheet <- function(
     team_grading
   ) {
   
-  final_grade_sheet <- temp_grade_sheet %>% 
+  final_grade_sheet <- grading_progress_log %>% 
     mutate(assignment_missing = as.logical(assignment_missing)) %>% 
     mutate(grade_student = as.logical(grade_student)) %>% 
     mutate(grade = NA) %>% 
     mutate(grade_decomposition = NA)
   
   # Final grade is only created for students without grade status "ungraded"
-  no_assignment_missing <- all(temp_grade_sheet$assignment_missing == FALSE)
+  no_assignment_missing <- all(grading_progress_log$assignment_missing == FALSE)
   all_assignments_fully_graded <- all(
-    temp_grade_sheet$grading_status == "all questions graded"
+    grading_progress_log$grading_status == "all questions graded"
   )
   
-  for (j in 1:nrow(temp_grade_sheet)) {
+  for (j in 1:nrow(grading_progress_log)) {
     # Get final grade and grade_decomposition and write feedback
-    if (temp_grade_sheet$grading_status[j] != "ungraded") {
+    if (grading_progress_log$grading_status[j] != "ungraded") {
       grade_info <- assign_grade_write_feedback(
-        temp_grade_sheet[j, ],
+        grading_progress_log[j, ],
         rubric_list = rubric_list,
         rubric_prompts = rubric_prompts
       )
     }
     
-    if (temp_grade_sheet$grading_status[j] == "all questions graded") {
+    if (grading_progress_log$grading_status[j] == "all questions graded") {
       final_grade_sheet$grade[j] <-  grade_info$grade
       
       final_grade_sheet$grade_decomposition[j] <- paste(
@@ -50,7 +50,7 @@ create_final_grade_sheet <- function(
         collapse = " & "
       )
       
-    } else if (temp_grade_sheet$assignment_missing[j]) {
+    } else if (grading_progress_log$assignment_missing[j]) {
       final_grade_sheet$grade[j] <- missing_assignment_grade
       
     }

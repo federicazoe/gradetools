@@ -38,7 +38,7 @@ There can be many reasons a user may want to regrade an assignment, so `assist_r
 ```{r}
 assist_regrading(
   rubric_path = "quiz-09-lin-reg-rubric.csv", 
-  temp_grade_sheet_path = "quiz-09-lin-reg-temporary-grade-sheet.csv", 
+  grading_progress_log_path = "quiz-09-lin-reg-grading_progress_log.csv", 
   final_grade_sheet_path = "quiz-09-lin-reg-final-grade-sheet.csv", 
   questions_to_regrade = "Question 1.a",
   students_to_regrade = "federicazoe"

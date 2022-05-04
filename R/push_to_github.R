@@ -16,7 +16,7 @@
 #' @import ghclass
 #'
 push_to_github <- function(
-    temp_grade_sheet_path,
+    grading_progress_log_path,
     class_github_name,
     example_github_repo,
     example_identifier,
@@ -28,8 +28,8 @@ push_to_github <- function(
   if (push_feedback == FALSE & create_issues == FALSE) {
     stop("At least one between push_feedback and create_issues must be set to TRUE.")
   }
-  if (!file.exists(temp_grade_sheet_path)) {
-    stop("No file found at the specified temp_grade_sheet_path. Please provide a valid path.")
+  if (!file.exists(grading_progress_log_path)) {
+    stop("No file found at the specified grading_progress_log_path. Please provide a valid path.")
   }
   
   if (!org_exists(class_github_name)) {
@@ -44,8 +44,8 @@ push_to_github <- function(
     stop("Input example_github_repo does not contain input example_identifier. Make sure repos are distinguished by their identifiers.")
   }
   
-  temp_grade_sheet <- readr::read_csv(
-    temp_grade_sheet_path,
+  grading_progress_log <- readr::read_csv(
+    grading_progress_log_path,
     show_col_types = FALSE,
     col_types = cols(
       .default = col_character(),
@@ -55,37 +55,37 @@ push_to_github <- function(
     )
   )
   
-  if (!("feedback_pushed" %in% colnames(temp_grade_sheet))) {
+  if (!("feedback_pushed" %in% colnames(grading_progress_log))) {
     # This means it is the first time that the grader tries to push feedback 
     # from this temporary grade sheet
     
     # Initialize column that keeps track of which feedback files have been pushed
-    temp_grade_sheet$feedback_pushed <- "FALSE"
+    grading_progress_log$feedback_pushed <- "FALSE"
     
     # Use the example github identifier and github repos provided to guess
     # the name of all student
-    temp_grade_sheet$github_repo <- str_replace_all(
+    grading_progress_log$github_repo <- str_replace_all(
       example_github_repo, 
       pattern = example_identifier, 
-      replacement = temp_grade_sheet$student_identifier
+      replacement = grading_progress_log$student_identifier
     )
     
-    write_csv(temp_grade_sheet, file = temp_grade_sheet_path) 
+    write_csv(grading_progress_log, file = grading_progress_log_path) 
     
   }
 
   if (push_feedback) {
     push_feedback_github(
-      temp_grade_sheet_path = temp_grade_sheet_path,
-      temp_grade_sheet = temp_grade_sheet,
+      grading_progress_log_path = grading_progress_log_path,
+      grading_progress_log = grading_progress_log,
       class_github_name = class_github_name
     )
   }
   
   if (create_issues) {
     create_issues_github(
-      temp_grade_sheet_path = temp_grade_sheet_path,
-      temp_grade_sheet = temp_grade_sheet,
+      grading_progress_log_path = grading_progress_log_path,
+      grading_progress_log = grading_progress_log,
       class_github_name = class_github_name,
       team_grading = team_grading
     )
@@ -97,9 +97,9 @@ push_to_github <- function(
   
 #' Push feedback to GitHub
 #'
-#' @param temp_grade_sheet_path string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+#' @param grading_progress_log_path string; assist-grading() functions save a file which includes information for gradetools's internal use. 
 #'     This is that path for that file. Must be a .csv
-#' @param temp_grade_sheet tibble created by assist_advanced_grading().
+#' @param grading_progress_log tibble created by assist_advanced_grading().
 #' @param class_github_name string, GitHub name of the class. This input is needed to push feedback and issues to the correct class on GitHub.
 #'
 #' @import readr
@@ -110,19 +110,19 @@ push_to_github <- function(
 #' @keywords internal
 #'
 push_feedback_github <- function(
-  temp_grade_sheet_path,
-  temp_grade_sheet,
+  grading_progress_log_path,
+  grading_progress_log,
   class_github_name
 ) {
   
-  all_push_statuses <- temp_grade_sheet$feedback_pushed
+  all_push_statuses <- grading_progress_log$feedback_pushed
   
   # Interrupt pushing feedback if there is no feedback to push
   if (all(all_push_statuses == "TRUE")) {
     return(message(
       paste(
         "All feedback files have been pushed in this temporary grade sheet.",
-        "Are you sure that you have provided the right temp_grade_sheet_path?"
+        "Are you sure that you have provided the right grading_progress_log_path?"
       )))
   }
   
@@ -133,7 +133,7 @@ push_feedback_github <- function(
   )$res 
   
   if (partially_graded == "yes") {
-    relevant_rows <- temp_grade_sheet$grading_status %in% 
+    relevant_rows <- grading_progress_log$grading_status %in% 
                         c("all questions graded", "feedback created")
     if (all(relevant_rows == FALSE)) {
       stop("No feedback file has been created for this assignment yet.")
@@ -142,7 +142,7 @@ push_feedback_github <- function(
       "All feedback files that were created for this assignment have already been pushed."
     
   } else {
-    relevant_rows <- (temp_grade_sheet$grading_status == "all questions graded")
+    relevant_rows <- (grading_progress_log$grading_status == "all questions graded")
     no_feedback_to_push_msg <- 
       "All feedback files for fully graded students have already been pushed."
     if (all(relevant_rows == FALSE)) {
@@ -152,32 +152,32 @@ push_feedback_github <- function(
     }
   }
   
-  relevant_push_statuses <- temp_grade_sheet$feedback_pushed[relevant_rows]
+  relevant_push_statuses <- grading_progress_log$feedback_pushed[relevant_rows]
   
   # Interrupt pushing feedback if there is no feedback to push
   if (all(relevant_push_statuses == 'TRUE')) {
     return(message(no_feedback_to_push_msg))
   }
   
-  for (i in 1:nrow(temp_grade_sheet)) {
+  for (i in 1:nrow(grading_progress_log)) {
     
-    feedback_to_push <- (temp_grade_sheet$feedback_pushed[i] == "FALSE")
+    feedback_to_push <- (grading_progress_log$feedback_pushed[i] == "FALSE")
     
     if (partially_graded == "yes") {
-      feedback_to_push <- (temp_grade_sheet$feedback_pushed[i] == "FALSE") &
-        (temp_grade_sheet$grading_status[i] 
+      feedback_to_push <- (grading_progress_log$feedback_pushed[i] == "FALSE") &
+        (grading_progress_log$grading_status[i] 
          %in% c("all questions graded", "feedback created"))
       
     } else {
-      feedback_to_push <- (temp_grade_sheet$feedback_pushed[i] == "FALSE") &
-        (temp_grade_sheet$grading_status[i] == "all questions graded")
+      feedback_to_push <- (grading_progress_log$feedback_pushed[i] == "FALSE") &
+        (grading_progress_log$grading_status[i] == "all questions graded")
       
     }
     
     if (feedback_to_push) {
       
-      github_repo <- temp_grade_sheet$github_repo[i]
-      feedback_path <- temp_grade_sheet$feedback_path_to_be_knitted[i]
+      github_repo <- grading_progress_log$github_repo[i]
+      feedback_path <- grading_progress_log$feedback_path_to_be_knitted[i]
       
       if (repo_exists(paste(class_github_name, github_repo, sep = "/"))) {
         ghclass::repo_add_file(
@@ -190,10 +190,10 @@ push_feedback_github <- function(
           overwrite = TRUE
         )
         
-        temp_grade_sheet$feedback_pushed[i] <- "TRUE"
+        grading_progress_log$feedback_pushed[i] <- "TRUE"
         
         # Update temporary grade sheet (feedback_pushed for this row has changed)
-        write_csv(temp_grade_sheet, file = temp_grade_sheet_path) 
+        write_csv(grading_progress_log, file = grading_progress_log_path) 
     
       } else {
         
@@ -216,9 +216,9 @@ push_feedback_github <- function(
 
 #' Push issues to GitHub
 #' 
-#' @param temp_grade_sheet_path string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+#' @param grading_progress_log_path string; assist-grading() functions save a file which includes information for gradetools's internal use. 
 #'     This is that path for that file. Must be a .csv
-#' @param temp_grade_sheet tibble created by assist_advanced_grading().
+#' @param grading_progress_log tibble created by assist_advanced_grading().
 #' @param class_github_name string, GitHub name of the class. This input is needed to push feedback and issues to the correct class on GitHub.
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
 #' 
@@ -230,18 +230,18 @@ push_feedback_github <- function(
 #' @keywords internal
 #' 
 create_issues_github <- function(
-    temp_grade_sheet_path,
-    temp_grade_sheet,
+    grading_progress_log_path,
+    grading_progress_log,
     class_github_name, 
     team_grading = FALSE
   ) {
   
   
-  if (!("issue_titles" %in% colnames(temp_grade_sheet))) {
-    stop("No column `issue_titles` was found in this temporary grade sheet. Are you sure that you have used assist grading with `github_issues = TRUE` and that you have specified the right `temp_grade_sheet_path`?")
+  if (!("issue_titles" %in% colnames(grading_progress_log))) {
+    stop("No column `issue_titles` was found in this temporary grade sheet. Are you sure that you have used assist grading with `github_issues = TRUE` and that you have specified the right `grading_progress_log_path`?")
   }
   
-  if (team_grading & !("students_in_team" %in% colnames(temp_grade_sheet))) {
+  if (team_grading & !("students_in_team" %in% colnames(grading_progress_log))) {
     stop(
         paste(
           "You set team_grading = TRUE",
@@ -253,7 +253,7 @@ create_issues_github <- function(
   }
   
   all_push_statuses <- str_split(
-    string = temp_grade_sheet$issue_pushed, 
+    string = grading_progress_log$issue_pushed, 
     pattern = "&&&"
   ) %>% 
     unlist()
@@ -263,7 +263,7 @@ create_issues_github <- function(
     return(message(
       paste(
         "No issues have been annotated in this temporary grade sheet.",
-        "Are you sure that you have provided the right temp_grade_sheet_path?"
+        "Are you sure that you have provided the right grading_progress_log_path?"
       )))
   }
   
@@ -274,13 +274,13 @@ create_issues_github <- function(
   )$res 
   
   if (partially_graded == "yes") {
-    relevant_rows <- c(1:nrow(temp_grade_sheet))
+    relevant_rows <- c(1:nrow(grading_progress_log))
   } else {
-    relevant_rows <- temp_grade_sheet$grading_status == "all questions graded"
+    relevant_rows <- grading_progress_log$grading_status == "all questions graded"
   }
   
   relevant_push_statuses <- str_split(
-    string = temp_grade_sheet$issue_pushed[relevant_rows], 
+    string = grading_progress_log$issue_pushed[relevant_rows], 
     pattern = "&&&"
   ) %>% 
     unlist()
@@ -290,7 +290,7 @@ create_issues_github <- function(
     return(message(
       paste(
         "No issues have been noted in this temporary grade sheet.",
-        "Are you sure that you have provided the right temp_grade_sheet_path?"
+        "Are you sure that you have provided the right grading_progress_log_path?"
       )))
   }
   
@@ -308,38 +308,38 @@ create_issues_github <- function(
     type = "yesno"
   )$res
   
-  for (i in 1:nrow(temp_grade_sheet)) {
+  for (i in 1:nrow(grading_progress_log)) {
     
-    are_there_issues <- !is.na(temp_grade_sheet$issue_titles[i])
+    are_there_issues <- !is.na(grading_progress_log$issue_titles[i])
     issues_to_be_pushed <- 
-      (temp_grade_sheet$grading_status[i] == "all questions graded") |
+      (grading_progress_log$grading_status[i] == "all questions graded") |
       (partially_graded == "yes")
     
     if (are_there_issues & issues_to_be_pushed) {
       
-      github_repo <- temp_grade_sheet$github_repo[i]
+      github_repo <- grading_progress_log$github_repo[i]
       
       if (repo_exists(paste(class_github_name, github_repo, sep = "/"))) {
         
-        issue_titles <- temp_grade_sheet$issue_titles[i] %>% 
+        issue_titles <- grading_progress_log$issue_titles[i] %>% 
           str_split(pattern = "&&&") %>%
           unlist()
         
-        issue_bodies <- temp_grade_sheet$issue_bodies[i] %>% 
+        issue_bodies <- grading_progress_log$issue_bodies[i] %>% 
           str_split(pattern = "&&&") %>%
           unlist()
         
         num_issues <- length(issue_titles)
         
         current_push_status <-  str_split(
-          string = temp_grade_sheet$issue_pushed[i], 
+          string = grading_progress_log$issue_pushed[i], 
           pattern = "&&&"
         ) %>% 
           unlist()
         
         if (team_grading) {
           assignees <- str_split(
-            string = temp_grade_sheet$students_in_team[i], 
+            string = grading_progress_log$students_in_team[i], 
             pattern = " &&& "
           ) %>% 
             unlist()
@@ -365,7 +365,7 @@ create_issues_github <- function(
                 paste0("Issue body: ", issue_bodies[j]),
                 paste0("Assignees: ", 
                        ifelse(!team_grading,
-                              temp_grade_sheet$student_identifier[i],
+                              grading_progress_log$student_identifier[i],
                               assignees)),
                        sep = "\n"
               )
@@ -387,7 +387,7 @@ create_issues_github <- function(
                     repo = ghclass::org_repos(class_github_name, github_repo),
                     title = issue_titles[j],
                     body = issue_bodies[j],
-                    assignees = temp_grade_sheet$student_identifier[i]
+                    assignees = grading_progress_log$student_identifier[i]
                   )
                 }
                 
@@ -399,7 +399,7 @@ create_issues_github <- function(
                 # users
                 # assignees <- roster %>% 
                 #   filter(team_identifier == 
-                #            temp_grade_sheet$student_identifier[i]) %>% 
+                #            grading_progress_log$student_identifier[i]) %>% 
                 #   pull(student_identifier)
                 #
                 # ghclass::issue_create(
@@ -419,12 +419,12 @@ create_issues_github <- function(
               
               current_push_status[j] <- "TRUE"
               
-              temp_grade_sheet$issue_pushed[i] <- str_c(
+              grading_progress_log$issue_pushed[i] <- str_c(
                 string = current_push_status, 
                 collapse = "&&&"
               )
               
-              write_csv(temp_grade_sheet, file = temp_grade_sheet_path) 
+              write_csv(grading_progress_log, file = grading_progress_log_path) 
               
             }
             

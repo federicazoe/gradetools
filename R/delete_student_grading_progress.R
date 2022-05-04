@@ -1,6 +1,6 @@
 #' Delete feedback and grades for specified students and questions
 #'
-#' @param temp_grade_sheet_path string; path to temporary grade sheet produced by assign_grade
+#' @param grading_progress_log_path string; path to temporary grade sheet produced by assign_grade
 #' @param rubric_path string; path to assignment rubric.
 #' @param identifier string; single student_identifier (or team_identifier) to have grading progress deleted.
 #' @param questions_to_delete string; vector of assignment question 'names' to have grade and feedback deleted. 
@@ -13,15 +13,15 @@
 #' @keywords internal
 #'
 delete_student_grading_progress <- function(
-    temp_grade_sheet_path, 
+    grading_progress_log_path, 
     rubric_path,
     identifier,
     questions_to_delete,
     github_issues
   ) {
   
-  temp_grade_sheet <- readr::read_csv(
-    temp_grade_sheet_path,
+  grading_progress_log <- readr::read_csv(
+    grading_progress_log_path,
     show_col_types = FALSE,
     col_types = cols(
       .default = col_character(),
@@ -32,8 +32,8 @@ delete_student_grading_progress <- function(
   )
 
   # extract row
-  row_to_change <- temp_grade_sheet$student_identifier == identifier
-  curr_row <- temp_grade_sheet[row_to_change, ]
+  row_to_change <- grading_progress_log$student_identifier == identifier
+  curr_row <- grading_progress_log[row_to_change, ]
   
   # Delete old feedback file
   unlink(curr_row$feedback_path_Rmd)
@@ -79,7 +79,7 @@ delete_student_grading_progress <- function(
   
   if (!is.na(curr_row$graded_qs)) {
   grade_info <- assign_grade_write_feedback(
-    temp_grade_sheet_row = curr_row, 
+    grading_progress_log_row = curr_row, 
     rubric_list = rubric_list,
     rubric_prompts = rubric_prompts
   )
@@ -93,9 +93,9 @@ delete_student_grading_progress <- function(
     
   }
   
-  temp_grade_sheet[row_to_change, ] <- curr_row
+  grading_progress_log[row_to_change, ] <- curr_row
   
-  temp_grade_sheet
+  grading_progress_log
   
 }
 

@@ -1,6 +1,6 @@
 #' Collects GitHub issue title and body
 #'
-#' @param curr_row a row extracted from the temp_grade_sheet data table within assist_grading().
+#' @param curr_row a row extracted from the grading_progress_log data table within assist_grading().
 #' @param curr_q name of current question
 #' 
 #' @return corresponding row of temporary grade sheet

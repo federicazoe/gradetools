@@ -7,7 +7,7 @@
 note_github_issues(curr_row, curr_q)
 }
 \arguments{
-\item{curr_row}{a row extracted from the temp_grade_sheet data table within assist_grading().}
+\item{curr_row}{a row extracted from the grading_progress_log data table within assist_grading().}
 
 \item{curr_q}{name of current question}
 }

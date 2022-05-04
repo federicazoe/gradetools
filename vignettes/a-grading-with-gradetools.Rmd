@@ -116,7 +116,7 @@ The gradetools `assist_grading()` function helps the user by opening assignments
   
   - `rubric_path`
   - `roster_path`
-  - `temp_grade_sheet_path`
+  - `grading_progress_log_path`
   - `final_grade_sheet_path`
   - `example_student_identifier`
   - `example_assignment_path`
@@ -140,7 +140,7 @@ We are now ready to begin grading with gradetools. This package should be used i
 assist_grading(
   rubric_path = "quiz-09-lin-reg-rubric.csv", 
   roster_path = "class-roster.csv", 
-  temp_grade_sheet_path = "quiz-09-lin-reg-temporary-grade-sheet.csv", 
+  grading_progress_log_path = "quiz-09-lin-reg-grading_progress_log.csv", 
   final_grade_sheet_path = "quiz-09-lin-reg-final-grade-sheet.csv", 
   example_student_identifier = "federicazoe",
   example_assignment_path = "quizzes/quiz-09a-lin-reg-federicazoe.Rmd", 

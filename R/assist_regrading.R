@@ -15,7 +15,7 @@
 #'
 assist_regrading <- function(
     rubric_path,
-    temp_grade_sheet_path,
+    grading_progress_log_path,
     final_grade_sheet_path,
     questions_to_regrade,
     students_to_regrade,
@@ -33,8 +33,8 @@ assist_regrading <- function(
   }
   
   # Check that paths are valid
-  if (!file.exists(temp_grade_sheet_path)) {
-    stop("Nothing was found at the temp_grade_sheet_path!")
+  if (!file.exists(grading_progress_log_path)) {
+    stop("Nothing was found at the grading_progress_log_path!")
     
   } else if (!file.exists(rubric_path)) {
     stop("Nothing was found at the rubric_path!")
@@ -42,13 +42,13 @@ assist_regrading <- function(
   }
   
   # Check temporary and final grade sheets paths differ
-  if (temp_grade_sheet_path == final_grade_sheet_path) {
-    stop("Inputs temp_grade_sheet_path and final_grade_sheet_path need to be different (otherwise one file would overwrite the other).")
+  if (grading_progress_log_path == final_grade_sheet_path) {
+    stop("Inputs grading_progress_log_path and final_grade_sheet_path need to be different (otherwise one file would overwrite the other).")
     
   } 
   
-  temp_grade_sheet <- readr::read_csv(
-    temp_grade_sheet_path,
+  grading_progress_log <- readr::read_csv(
+    grading_progress_log_path,
     show_col_types = FALSE,
     col_types = cols(
       .default = col_character(),
@@ -59,7 +59,7 @@ assist_regrading <- function(
   )
 
   # Determine if it is team grading
-  team_grading <- "students_in_team" %in% colnames(temp_grade_sheet)
+  team_grading <- "students_in_team" %in% colnames(grading_progress_log)
   
   if (is.null(teams_to_regrade) && team_grading) {
     stop(paste0(
@@ -73,11 +73,11 @@ assist_regrading <- function(
     ))
   }
   
-  identifier_valid <- students_to_regrade %in% temp_grade_sheet$student_identifier
+  identifier_valid <- students_to_regrade %in% grading_progress_log$student_identifier
   
   # Check if the students_to_regrade are valid
   if (all(students_to_regrade == "all")) {
-    students_to_regrade <- temp_grade_sheet$student_identifier
+    students_to_regrade <- grading_progress_log$student_identifier
     
   } else if (!all(identifier_valid) || length(students_to_regrade) == 0) {
     stop(
@@ -86,13 +86,13 @@ assist_regrading <- function(
     )
   }
   
-  temp_grade_sheet$grade_student <- temp_grade_sheet$student_identifier %in% students_to_regrade
+  grading_progress_log$grade_student <- grading_progress_log$student_identifier %in% students_to_regrade
   
-  id_ungraded <- temp_grade_sheet$grading_status == "ungraded"
-  id_ungraded_to_be_graded <- temp_grade_sheet$grade_student & id_ungraded
+  id_ungraded <- grading_progress_log$grading_status == "ungraded"
+  id_ungraded_to_be_graded <- grading_progress_log$grade_student & id_ungraded
   
   if (any(id_ungraded_to_be_graded)) {
-    ids_to_be_graded_short <- temp_grade_sheet$student_identifier[id_ungraded_to_be_graded]
+    ids_to_be_graded_short <- grading_progress_log$student_identifier[id_ungraded_to_be_graded]
     
     if (length(ids_to_be_graded_short) > 10) {
       ids_to_be_graded_short <- c(ids_to_be_graded_short[1:10], "...")
@@ -107,9 +107,9 @@ assist_regrading <- function(
     grade_ungraded <- dlg_message(ungraded_present_message, type = "yesno")$res
     
     if (grade_ungraded == "no") {
-      temp_grade_sheet$grade_student[id_ungraded_to_be_graded] <- FALSE
+      grading_progress_log$grade_student[id_ungraded_to_be_graded] <- FALSE
       
-      if (!any(temp_grade_sheet$grade_student)) {
+      if (!any(grading_progress_log$grade_student)) {
         return(
           message(
             "There are no students to be regraded. Regrading has been cancelled."
@@ -140,14 +140,14 @@ assist_regrading <- function(
   }
   
   rows_to_be_graded <- which(
-    temp_grade_sheet$grade_student & !temp_grade_sheet$assignment_missing
+    grading_progress_log$grade_student & !grading_progress_log$assignment_missing
   )
   
   continue_grading <- TRUE
   
   for (i in rows_to_be_graded) {
     if (continue_grading) {
-      curr_id <- temp_grade_sheet$student_identifier[i]
+      curr_id <- grading_progress_log$student_identifier[i]
       
       begin_message <- paste(
         paste0(
@@ -169,16 +169,16 @@ assist_regrading <- function(
         ))
         
       } else {
-        student_not_ungraded <- temp_grade_sheet$grading_status[i] != "ungraded"
+        student_not_ungraded <- grading_progress_log$grading_status[i] != "ungraded"
         
         graded_questions <- unlist(stringr::str_split(
-          temp_grade_sheet$graded_qs[i], 
+          grading_progress_log$graded_qs[i], 
           pattern = "&&&"
         ))
         
         # Get assignment_path
         assignment_path <- unlist(
-          str_split(temp_grade_sheet$assignment_path[i], ", ")
+          str_split(grading_progress_log$assignment_path[i], ", ")
         )
         
         doc_id <- NULL
@@ -192,11 +192,11 @@ assist_regrading <- function(
         
         for (q in questions_to_regrade) {
           if (continue_grading) {
-            curr_temp_grade_sheet <- temp_grade_sheet
+            curr_grading_progress_log <- grading_progress_log
             
             if (student_not_ungraded && q %in% graded_questions) {
-              temp_grade_sheet <- delete_student_grading_progress(
-                temp_grade_sheet_path = temp_grade_sheet_path, 
+              grading_progress_log <- delete_student_grading_progress(
+                grading_progress_log_path = grading_progress_log_path, 
                 rubric_path = rubric_path,
                 identifier = curr_id,
                 questions_to_delete = q,
@@ -206,9 +206,9 @@ assist_regrading <- function(
             }
             
             temp_obj <- grade_student(
-              row = which(temp_grade_sheet$student_identifier == curr_id),
-              temp_grade_sheet = temp_grade_sheet, 
-              temp_grade_sheet_path = temp_grade_sheet_path,
+              row = which(grading_progress_log$student_identifier == curr_id),
+              grading_progress_log = grading_progress_log, 
+              grading_progress_log_path = grading_progress_log_path,
               rubric_prompts = rubric_prompts,
               rubric_list = rubric_list,
               rubric_path = rubric_path,
@@ -225,9 +225,9 @@ assist_regrading <- function(
             )
             
             if (is.null(temp_obj)) {
-              temp_grade_sheet <- curr_temp_grade_sheet
+              grading_progress_log <- curr_grading_progress_log
               
-              write_csv(temp_grade_sheet, file = temp_grade_sheet_path)
+              write_csv(grading_progress_log, file = grading_progress_log_path)
               
               cat(paste0(
                 "\nGrading has been suspended.",
@@ -238,7 +238,7 @@ assist_regrading <- function(
               
             } else {
               
-              temp_grade_sheet <- temp_obj
+              grading_progress_log <- temp_obj
               
             } 
             
@@ -255,9 +255,9 @@ assist_regrading <- function(
     }
   }
   
-  if (file.exists(temp_grade_sheet_path)) {
-    temp_grade_sheet <- readr::read_csv(
-      temp_grade_sheet_path,
+  if (file.exists(grading_progress_log_path)) {
+    grading_progress_log <- readr::read_csv(
+      grading_progress_log_path,
       show_col_types = FALSE,
       col_types = cols(
         .default = col_character(),
@@ -270,7 +270,7 @@ assist_regrading <- function(
   }
   
   create_final_grade_sheet(
-    temp_grade_sheet = temp_grade_sheet, 
+    grading_progress_log = grading_progress_log, 
     final_grade_sheet_path = final_grade_sheet_path, 
     missing_assignment_grade = missing_assignment_grade, 
     rubric_list = rubric_list, 
@@ -279,7 +279,7 @@ assist_regrading <- function(
   )
   
   feedback_file_ext <- fs::path_ext(
-    temp_grade_sheet$feedback_path_to_be_knitted[1]
+    grading_progress_log$feedback_path_to_be_knitted[1]
   )
   
   # Let the user know that feedback is being knitted
@@ -296,17 +296,17 @@ assist_regrading <- function(
       expr = {              
         paths_returned <- mapply(
           render,
-          temp_grade_sheet$feedback_path_Rmd[temp_grade_sheet$grading_status != "ungraded"],
+          grading_progress_log$feedback_path_Rmd[grading_progress_log$grading_status != "ungraded"],
           MoreArgs = list(clean = TRUE, quiet = TRUE)  
         )
         
         cat(paste("\n...Succeeded!\n\n"))
         
-        unlink(temp_grade_sheet$feedback_path_Rmd)
+        unlink(grading_progress_log$feedback_path_Rmd)
         
         if (feedback_file_ext == "md") {
           unlink(fs::path_ext_set(
-            path = temp_grade_sheet$feedback_path_Rmd,
+            path = grading_progress_log$feedback_path_Rmd,
             ext = "html"
           ))
           

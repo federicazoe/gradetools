@@ -1,6 +1,6 @@
 #' Writes feedback, and returns grade, grade decomposition, and grading status
 #'
-#' @param temp_grade_sheet_row data frame with 1 row; The temp_grade_sheet is a data frame containing information for gradetools internal use. This row should correspond to the student that needs to be graded and have feedback written
+#' @param grading_progress_log_row data frame with 1 row; The grading_progress_log is a data frame containing information for gradetools internal use. This row should correspond to the student that needs to be graded and have feedback written
 #' @param rubric_list list of lists; each sub-list corresponds to a part of the assignment rubric and specifies the name of this part (e.g. "question_1"), the total points that can be earned for this part, the rubric etc. Rubric should be made using 'create_rubric_template()'.
 #' @param rubric_prompts list of prompts; One prompt for each question plus one for overall feedback. This is produced by create_rubric_prompts
 #'
@@ -16,19 +16,19 @@
 #' @keywords internal
 #'
 assign_grade_write_feedback <- function(
-    temp_grade_sheet_row,
+    grading_progress_log_row,
     rubric_list,
     rubric_prompts
   ) {
   
   # Get feedback and grade corresponding to entered code
   feedback_code <- unlist(str_split(
-    temp_grade_sheet_row$feedback_codes, 
+    grading_progress_log_row$feedback_codes, 
     pattern = "&&&"
   ))
   
   questions_graded <- unlist(str_split(
-    temp_grade_sheet_row$graded_qs, 
+    grading_progress_log_row$graded_qs, 
     pattern = "&&&"
   ))
   
@@ -93,14 +93,14 @@ assign_grade_write_feedback <- function(
     q_fbk <- paste("\n##", q)
     
     # Write question comment if present
-    if (!is.na(temp_grade_sheet_row$comments)) {
+    if (!is.na(grading_progress_log_row$comments)) {
       comments <- unlist(str_split(
-        temp_grade_sheet_row$comments, 
+        grading_progress_log_row$comments, 
         pattern = "&&&"
       ))
       
       comment_qs <- unlist(str_split(
-        temp_grade_sheet_row$comment_qs, 
+        grading_progress_log_row$comment_qs, 
         pattern = "&&&"
       ))
       
@@ -171,14 +171,14 @@ assign_grade_write_feedback <- function(
   if (gf_provided) {
     gf_comments <- NULL
     
-    if (!is.na(temp_grade_sheet_row$comments)) {
+    if (!is.na(grading_progress_log_row$comments)) {
       comments <- unlist(str_split(
-        temp_grade_sheet_row$comments, 
+        grading_progress_log_row$comments, 
         pattern = "&&&"
       ))
       
       comment_qs <- unlist(str_split(
-        temp_grade_sheet_row$comment_qs, 
+        grading_progress_log_row$comment_qs, 
         pattern = "&&&"
       ))
       
@@ -244,17 +244,17 @@ assign_grade_write_feedback <- function(
   
   # Delete student's old feedback if it exists and write a new one
   # This is important because the rubric could have changed
-  if(temp_grade_sheet_row$grading_status != "ungraded") {
-    unlink(temp_grade_sheet_row$feedback_path_Rmd)
-    unlink(temp_grade_sheet_row$feedback_path_to_be_knitted)
+  if(grading_progress_log_row$grading_status != "ungraded") {
+    unlink(grading_progress_log_row$feedback_path_Rmd)
+    unlink(grading_progress_log_row$feedback_path_to_be_knitted)
     
   }
   
-  fs::file_create(temp_grade_sheet_row$feedback_path_Rmd)
+  fs::file_create(grading_progress_log_row$feedback_path_Rmd)
   
   # Determing type of file to knit feedback to
   feedback_file_ext <- as.character(fs::path_ext(
-    temp_grade_sheet_row$feedback_path_to_be_knitted)[1]
+    grading_progress_log_row$feedback_path_to_be_knitted)[1]
   )
   
   feedback_knit_type <- case_when(
@@ -278,7 +278,7 @@ assign_grade_write_feedback <- function(
   # Write feedback in feedback file
   write_file(
     x = paste0(yaml, "\n", feedback , "\n\n"), 
-    file = temp_grade_sheet_row$feedback_path_Rmd, 
+    file = grading_progress_log_row$feedback_path_Rmd, 
     append = TRUE
   )
   
@@ -286,11 +286,11 @@ assign_grade_write_feedback <- function(
   if (length(questions_graded) == length(rubric_prompts)) {
     grading_status <- "all questions graded"
     
-  } else if (temp_grade_sheet_row$grading_status == "ungraded") {
+  } else if (grading_progress_log_row$grading_status == "ungraded") {
     grading_status <- "feedback created"
     
   } else {
-    grading_status <- temp_grade_sheet_row$grading_status
+    grading_status <- grading_progress_log_row$grading_status
   }
       
   list(

@@ -6,7 +6,7 @@
 \usage{
 assist_regrading(
   rubric_path,
-  temp_grade_sheet_path,
+  grading_progress_log_path,
   final_grade_sheet_path,
   questions_to_regrade,
   students_to_regrade,
@@ -20,7 +20,7 @@ assist_regrading(
 This rubric should be created using the function create_rubric_template, then filled in by the user. 
 The rubric file name and column names must not be changed.}
 
-\item{temp_grade_sheet_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+\item{grading_progress_log_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. 
 This is that path for that file. Must be a .csv}
 
 \item{final_grade_sheet_path}{string; path to save final grade sheet to. Must be a .csv}
