@@ -1,6 +1,6 @@
 #' Writes feedback, and returns grade, grade decomposition, and grading status
 #'
-#' @param temp_grade_sheet_row data frame with 1 row; The temp_grade_sheet is a data frame containing information for gradetools internal use. This row should correspond to the student that needs to be graded and have feedback written
+#' @param grading_progress_log_row data frame with 1 row; The grading_progress_log is a data frame containing information for gradetools internal use. This row should correspond to the student that needs to be graded and have feedback written
 #' @param rubric_list list of lists; each sub-list corresponds to a part of the assignment rubric and specifies the name of this part (e.g. "question_1"), the total points that can be earned for this part, the rubric etc. Rubric should be made using 'create_rubric_template()'.
 #' @param rubric_prompts list of prompts; One prompt for each question plus one for overall feedback. This is produced by create_rubric_prompts
 #'
@@ -9,25 +9,26 @@
 #'   \item{grade_decomposition}{A vector that shows how each part of the assignment contributed to the overall grade (e.g. c(1, 0, 2))}
 #'   \item{grading_status}{A string indicating the grading_status for this student}
 #' }
-#' @importFrom stringr str_count 
-#' @importFrom stringr str_split
+#' @import stringr
 #' @importFrom fs file_create
 #' @importFrom readr write_file
+#' 
+#' @keywords internal
 #'
 assign_grade_write_feedback <- function(
-    temp_grade_sheet_row,
+    grading_progress_log_row,
     rubric_list,
     rubric_prompts
   ) {
   
   # Get feedback and grade corresponding to entered code
   feedback_code <- unlist(str_split(
-    temp_grade_sheet_row$feedback_codes, 
+    grading_progress_log_row$feedback_codes, 
     pattern = "&&&"
   ))
   
   questions_graded <- unlist(str_split(
-    temp_grade_sheet_row$graded_qs, 
+    grading_progress_log_row$graded_qs, 
     pattern = "&&&"
   ))
   
@@ -35,7 +36,7 @@ assign_grade_write_feedback <- function(
   question_matches <- order(match(questions_graded, names(rubric_prompts)))
   
   num_questions <- sum(
-    stringr::str_count(names(rubric_list), "question_")
+    str_count(names(rubric_list), "question_")
   )
   
   if (!is.null(rubric_list[[1]]$points_to_remove)) {
@@ -83,7 +84,7 @@ assign_grade_write_feedback <- function(
     
     # Extract all codes given to this question
     # E.g. "2---77" into "2" and "77"
-    q_feedback_code <- stringr::str_split(
+    q_feedback_code <- str_split(
       feedback_code[questions_graded == q], 
       pattern = "---"
     )[[1]]
@@ -92,36 +93,33 @@ assign_grade_write_feedback <- function(
     q_fbk <- paste("\n##", q)
     
     # Write question comment if present
-    if (!is.na(temp_grade_sheet_row$comments)) {
+    if (!is.na(grading_progress_log_row$comments)) {
       comments <- unlist(str_split(
-        temp_grade_sheet_row$comments, 
-        pattern = " // "
+        grading_progress_log_row$comments, 
+        pattern = "&&&"
       ))
       
       comment_qs <- unlist(str_split(
-        temp_grade_sheet_row$comment_qs, 
-        pattern = " // "
+        grading_progress_log_row$comment_qs, 
+        pattern = "&&&"
       ))
       
       if (q %in% comment_qs) {
         q_fbk <- paste0(
           q_fbk, "\n", 
-          stringr::str_c(comments[which(comment_qs == q)], collapse = "\n"), "\n"
+          str_c(comments[which(comment_qs == q)], collapse = "\n"), "\n"
         )
       }
       
     }
     
     for (fbk_code in q_feedback_code){
-      
       if (fbk_code %in% q_prompt_code) {
-        
         prompt_number <- which(q_prompt_code == fbk_code)
         new_fbk <- q_feedback[prompt_number]
         new_change <- q_points_to_change[prompt_number]
         
       } else if (fbk_code %in% rubric_list$all_questions$prompt_code) {
-        
         prompt_number <- which(rubric_list$all_questions$prompt_code == fbk_code)
         new_fbk <- rubric_list$all_questions$feedback[prompt_number]
         
@@ -134,7 +132,6 @@ assign_grade_write_feedback <- function(
         
         
       } else {
-        
         error_message <- paste(
           "Error: feedback code assigned for ",
           q,
@@ -172,20 +169,52 @@ assign_grade_write_feedback <- function(
   gf_provided <- any(questions_graded == "general_feedback")
   
   if (gf_provided) {
+    gf_comments <- NULL
     
-    gf_separated <- stringr::str_split(
+    if (!is.na(grading_progress_log_row$comments)) {
+      comments <- unlist(str_split(
+        grading_progress_log_row$comments, 
+        pattern = "&&&"
+      ))
+      
+      comment_qs <- unlist(str_split(
+        grading_progress_log_row$comment_qs, 
+        pattern = "&&&"
+      ))
+      
+      if ("general_feedback" %in% comment_qs) {
+        gf_comments <- paste0(
+          str_c(
+            comments[which(comment_qs == "general_feedback")], 
+            collapse = "\n"
+          ), 
+          "\n"
+        )
+        
+      }
+      
+    }
+    
+    gf_separated <- str_split(
       feedback_code[questions_graded == "general_feedback"], 
       pattern = "---"
     )[[1]]
+    
+    if (!is.null(gf_comments)) {
+      if (length(gf_separated) == 1 && gf_separated[1] == "NA")
+        gf_separated <- gf_comments
+      
+      else {
+        gf_separated <- c(gf_comments, gf_separated) 
+      }
+      
+    }
 
     if (gf_separated[1] != "NA") {
-      
       general_feedback <- "\n## General feedback:"
       
       for (gf in gf_separated) {
-        
         if (gf %in% rubric_list$general_feedback$prompt_code) {
-          
           prompt_number <- which(
             rubric_list$general_feedback$prompt_code == gf
           )
@@ -215,17 +244,17 @@ assign_grade_write_feedback <- function(
   
   # Delete student's old feedback if it exists and write a new one
   # This is important because the rubric could have changed
-  if(temp_grade_sheet_row$grading_status != "ungraded") {
-    unlink(temp_grade_sheet_row$feedback_path_Rmd)
-    unlink(temp_grade_sheet_row$feedback_path_to_be_knitted)
+  if(grading_progress_log_row$grading_status != "ungraded") {
+    unlink(grading_progress_log_row$feedback_path_Rmd)
+    unlink(grading_progress_log_row$feedback_path_to_be_knitted)
     
   }
   
-  fs::file_create(temp_grade_sheet_row$feedback_path_Rmd)
+  fs::file_create(grading_progress_log_row$feedback_path_Rmd)
   
   # Determing type of file to knit feedback to
   feedback_file_ext <- as.character(fs::path_ext(
-    temp_grade_sheet_row$feedback_path_to_be_knitted)[1]
+    grading_progress_log_row$feedback_path_to_be_knitted)[1]
   )
   
   feedback_knit_type <- case_when(
@@ -233,6 +262,7 @@ assign_grade_write_feedback <- function(
     feedback_file_ext == "html" ~ "html_document",
     feedback_file_ext == "docx" ~ "word_document",
     feedback_file_ext == "pdf" ~ "pdf_document",
+    feedback_file_ext == "md" ~ "github_document",
     TRUE ~ "NA",
   )
   
@@ -248,7 +278,7 @@ assign_grade_write_feedback <- function(
   # Write feedback in feedback file
   write_file(
     x = paste0(yaml, "\n", feedback , "\n\n"), 
-    file = temp_grade_sheet_row$feedback_path_Rmd, 
+    file = grading_progress_log_row$feedback_path_Rmd, 
     append = TRUE
   )
   
@@ -256,11 +286,11 @@ assign_grade_write_feedback <- function(
   if (length(questions_graded) == length(rubric_prompts)) {
     grading_status <- "all questions graded"
     
-  } else if (temp_grade_sheet_row$grading_status == "ungraded") {
+  } else if (grading_progress_log_row$grading_status == "ungraded") {
     grading_status <- "feedback created"
     
   } else {
-    grading_status <- temp_grade_sheet_row$grading_status
+    grading_status <- grading_progress_log_row$grading_status
   }
       
   list(

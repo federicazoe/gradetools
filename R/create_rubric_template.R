@@ -42,10 +42,10 @@ create_rubric_template <- function(
   
   rubric_template <- data.frame(
     name = "", 
+    total_points = "", 
     prompt_code = "", 
     prompt_message = "", 
     feedback = "", 
-    total_points = "", 
     points_to_remove = ""
   )
   

@@ -3,9 +3,13 @@
 #' @param rubric_path string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.
 #'
 #' @return list whose format corresponds to rubric_list, which is used by most functions in this package
+#' 
 #' @import dplyr
 #' @importFrom readr read_csv
 #' @importFrom stringr str_detect
+#' 
+#' @keywords internal
+#' 
 import_rubric <- function(rubric_path) {
   col_names <- c(
     "name", "prompt_code", "prompt_message", 

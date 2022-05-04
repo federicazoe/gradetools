@@ -5,7 +5,7 @@
 \title{Writes final grade sheet csv}
 \usage{
 create_final_grade_sheet(
-  temp_grade_sheet,
+  grading_progress_log,
   final_grade_sheet_path,
   missing_assignment_grade,
   rubric_list,
@@ -14,7 +14,7 @@ create_final_grade_sheet(
 )
 }
 \arguments{
-\item{temp_grade_sheet}{data frame; The temp_grade_sheet is a data frame containing information for gradetools internal use}
+\item{grading_progress_log}{data frame; The grading_progress_log is a data frame containing information for gradetools internal use}
 
 \item{final_grade_sheet_path}{string; path to save final grade sheet to. Must be a .csv}
 
@@ -29,3 +29,4 @@ create_final_grade_sheet(
 \description{
 Writes final grade sheet csv
 }
+\keyword{internal}

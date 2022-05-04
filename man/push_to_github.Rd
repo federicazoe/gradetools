@@ -5,7 +5,7 @@
 \title{Push feedback and issues to GitHub}
 \usage{
 push_to_github(
-  temp_grade_sheet_path,
+  grading_progress_log_path,
   class_github_name,
   example_github_repo,
   example_identifier,
@@ -15,13 +15,14 @@ push_to_github(
 )
 }
 \arguments{
-\item{temp_grade_sheet_path}{data frame, The temp_grade_sheet is a data frame containing information for gradetools internal use}
+\item{grading_progress_log_path}{string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+This is that path for that file. Must be a .csv}
 
-\item{class_github_name}{string, GitHub name of the class. This input is only needed if github_issues is set to TRUE.}
+\item{class_github_name}{string, GitHub name of the class. This input is only needed if \code{github_issues} is set to TRUE.}
 
-\item{example_github_repo}{string; example of the name of a student's GitHub repo for this assignment (or team's repo, if team_grading = TRUE). The example_identifier must feature in the example_github_repo and must be the same as the roster identifier for the student (or for the team if team_grading = TRUE).}
+\item{example_github_repo}{string; example of the name of a student's GitHub repo for this assignment (or team's repo, if \code{team_grading} = TRUE). The \code{example_identifier} must feature in the \code{example_github_repo} and must be the same as the roster identifier for the student (or for the team if \code{team_grading} = TRUE).}
 
-\item{example_identifier}{string; the GitHub username of the student or the name of the team, if team_grading = TRUE. This needs to be present somewhere in example_github_repo.}
+\item{example_identifier}{string; the GitHub username of the student or the name of the team, if \code{team_grading} = TRUE. This needs to be present somewhere in \code{example_github_repo}.}
 
 \item{push_feedback}{logical, whether to push feedback files}
 

@@ -4,10 +4,14 @@
 \alias{assign_grade_write_feedback}
 \title{Writes feedback, and returns grade, grade decomposition, and grading status}
 \usage{
-assign_grade_write_feedback(temp_grade_sheet_row, rubric_list, rubric_prompts)
+assign_grade_write_feedback(
+  grading_progress_log_row,
+  rubric_list,
+  rubric_prompts
+)
 }
 \arguments{
-\item{temp_grade_sheet_row}{data frame with 1 row; The temp_grade_sheet is a data frame containing information for gradetools internal use. This row should correspond to the student that needs to be graded and have feedback written}
+\item{grading_progress_log_row}{data frame with 1 row; The grading_progress_log is a data frame containing information for gradetools internal use. This row should correspond to the student that needs to be graded and have feedback written}
 
 \item{rubric_list}{list of lists; each sub-list corresponds to a part of the assignment rubric and specifies the name of this part (e.g. "question_1"), the total points that can be earned for this part, the rubric etc. Rubric should be made using 'create_rubric_template()'.}
 
@@ -23,3 +27,4 @@ list with\describe{
 \description{
 Writes feedback, and returns grade, grade decomposition, and grading status
 }
+\keyword{internal}

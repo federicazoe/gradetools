@@ -19,3 +19,4 @@ rubric list
 \description{
 Prompts grader to add a rubric item for the current question
 }
+\keyword{internal}
