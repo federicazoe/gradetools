@@ -28,6 +28,7 @@ Throughout the vignettes we provide example grading scenarios that you can use t
 2. [How to regrade assignments with gradetools](https://federicazoe.github.io/gradetools/articles/b-regrading-with-gradetools.html): This vignette shows how to change previously assigned grades.
 3. [Extended gradetools Capability: Team Grading](https://federicazoe.github.io/gradetools/articles/c-extended-capability-teams.html): This vignette is only relevant for grading assignments that are team-based.
 4. [Extended gradetools Capability: Assignments on GitHub](https://federicazoe.github.io/gradetools/articles/d-extended-capability-github.html): This vignette is only relevant for assignments that are on GitHub.
+5. [Comprehensive example of grading with gradetools](https://federicazoe.github.io/gradetools/articles/e-comprehensive-example.html): This is a showcase of most of gradetools' capabilities.
 
 
 ## Installation
