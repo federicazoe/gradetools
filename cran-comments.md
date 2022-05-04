@@ -20,9 +20,3 @@
 Maintainer: 'Federica Zoe Ricci <federicazoericci@gmail.com>'
 
 New submission
-
-Possibly mis-spelled words in DESCRIPTION:
-  GitHub (12:212, 12:229)
-  
-GitHub is spelled correctly.
-  
