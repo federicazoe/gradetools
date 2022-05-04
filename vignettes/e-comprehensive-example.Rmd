@@ -61,7 +61,7 @@ Most typically, the roster would be downloaded from a school learning management
 ```{r, eval = TRUE, echo = FALSE}
 roster <- data.frame(
   student_identifier = c("federicazoe", "CatalinaMedina", "mdogucu"),
-  team_identifier = c("gamma", "poisson", "poisson")
+  team_identifier = c("gamma", "gamma", "poisson")
 )
 
 knitr::kable(roster, 'html', align = "l")
@@ -213,6 +213,27 @@ Because GitHub does not currently support multiple assignees for private reposit
 <!-- v5-issue-created.png -->
 <iframe src="https://drive.google.com/file/d/1oY0X97OZ5YNfwhjoULH46QbD7ZLrS1Z3/preview" width="640" height="480" allow="autoplay"></iframe>
 
+## Regrading a specified question, for a specified student
+
+Once the _gamma_ team has pushed their project proposal to their repo and closed the issue, we want to go ahead and regrade this part of their final project and give them partial credit. We can do so with `assist_regrading()`! Note that because we wish to regrade a team, then we need to set `students_to_regrade` to `NULL` and provide the argument `teams_to_regrade`:
+
+```{r}
+
+assist_regrading(
+  rubric_path = "rubric.csv",
+  grading_progress_log_path = "grading_progress_log.csv",
+  final_grade_sheet_path = "final-grade-sheet.csv",
+  questions_to_regrade = c("Proposal"),
+  students_to_regrade = NULL,
+  teams_to_regrade = c("gamma")
+)
+
+```
+
+We can create a new rubric item for giving them partial credit:
+
+<!-- v5-partial-credit.png -->
+<iframe src="https://drive.google.com/file/d/1HTOqqgYWFSlSeVpNf3FKQam1cXHgq53R/preview" width="640" height="480" allow="autoplay"></iframe>
 
 
 ## Credits
