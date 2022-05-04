@@ -1,12 +1,13 @@
 pandoc: 2.7.3
-pkgdown: 2.0.2
+pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   a-grading-with-gradetools: a-grading-with-gradetools.html
   b-regrading-with-gradetools: b-regrading-with-gradetools.html
   c-extended-capability-teams: c-extended-capability-teams.html
   d-extended-capability-github: d-extended-capability-github.html
-last_built: 2022-04-16T21:42Z
+  e-comprehensive-example: e-comprehensive-example.html
+last_built: 2022-05-04T05:41Z
 urls:
   reference: https://federicazoe.github.io/gradetools/reference
   article: https://federicazoe.github.io/gradetools/articles

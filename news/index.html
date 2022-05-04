@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,6 +28,7 @@
     <a class="dropdown-item" href="../articles/b-regrading-with-gradetools.html">How to regrade assignments with gradetools</a>
     <a class="dropdown-item" href="../articles/c-extended-capability-teams.html">Extended gradetools capability: Team Grading</a>
     <a class="dropdown-item" href="../articles/d-extended-capability-github.html">Extended gradetools capability: Assignments on GitHub</a>
+    <a class="dropdown-item" href="../articles/e-comprehensive-example.html">Comprehensive example of grading with gradetools</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -54,13 +55,25 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.0.9000" id="gradetools-0209000-development-version">gradetools 0.2.0.9000 (development version)<a class="anchor" aria-label="anchor" href="#gradetools-0209000-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.0" id="gradetools-020">gradetools 0.2.0<a class="anchor" aria-label="anchor" href="#gradetools-020"></a></h2>
 <div class="section level3">
-<h3 id="minor-changes-0-2-0-9000">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-2-0-9000"></a></h3>
-<ul><li>Moved <code>questions_to_grade</code> argument before <code>students_to_grade</code> in <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code>, and <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code>.</li>
+<h3 id="minor-changes-0-2-0">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-2-0"></a></h3>
+<ul><li>Added ability to leave a personalized feedback message in a student’s feedback file without any grade associated</li>
+<li>Prompting is neater<ul><li>prompt codes starting with digits are user made</li>
+<li>letter prompt options are options provided by gradetools (e.g. adding rubric items, noting issues, and providing personalized feedback)</li>
+</ul></li>
+<li>Feedback files can now have the following extensions:<ul><li>Rmd</li>
+<li>md (for GitHub documents)</li>
+<li>docx (for Word documents)</li>
+<li>html</li>
+<li>pdf</li>
+</ul></li>
+<li>Moved <code>questions_to_grade</code> argument before <code>students_to_grade</code> in <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code>, and <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code>.</li>
 <li>Moved <code>questions_to_regrade</code> argument before <code>students_to_regrade</code> in <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code>
 </li>
-<li>Added ability to comment in the student feedback on a question before grading the question</li>
+<li>temporary grade sheet is now called the grading progress log</li>
+<li>Can push feedback and create GitHub issues for partially graded assignments</li>
+<li>General feedback is not automatically regraded when regrading other assignment components</li>
 </ul></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -72,7 +85,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

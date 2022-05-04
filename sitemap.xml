@@ -19,6 +19,9 @@
     <loc>https://federicazoe.github.io/gradetools/articles/d-extended-capability-github.html</loc>
   </url>
   <url>
+    <loc>https://federicazoe.github.io/gradetools/articles/e-comprehensive-example.html</loc>
+  </url>
+  <url>
     <loc>https://federicazoe.github.io/gradetools/articles/index.html</loc>
   </url>
   <url>
@@ -49,6 +52,9 @@
     <loc>https://federicazoe.github.io/gradetools/reference/create_final_grade_sheet.html</loc>
   </url>
   <url>
+    <loc>https://federicazoe.github.io/gradetools/reference/create_grading_progress_log.html</loc>
+  </url>
+  <url>
     <loc>https://federicazoe.github.io/gradetools/reference/create_issues_github.html</loc>
   </url>
   <url>
@@ -58,10 +64,7 @@
     <loc>https://federicazoe.github.io/gradetools/reference/create_rubric_template.html</loc>
   </url>
   <url>
-    <loc>https://federicazoe.github.io/gradetools/reference/create_temp_grade_sheet.html</loc>
-  </url>
-  <url>
-    <loc>https://federicazoe.github.io/gradetools/reference/delete_feedback_grade.html</loc>
+    <loc>https://federicazoe.github.io/gradetools/reference/delete_student_grading_progress.html</loc>
   </url>
   <url>
     <loc>https://federicazoe.github.io/gradetools/reference/grade_student.html</loc>
@@ -73,12 +76,15 @@
     <loc>https://federicazoe.github.io/gradetools/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://federicazoe.github.io/gradetools/reference/note_github_issues.html</loc>
+  </url>
+  <url>
     <loc>https://federicazoe.github.io/gradetools/reference/push_feedback_github.html</loc>
   </url>
   <url>
     <loc>https://federicazoe.github.io/gradetools/reference/push_to_github.html</loc>
   </url>
   <url>
-    <loc>https://federicazoe.github.io/gradetools/reference/request_github_issues.html</loc>
+    <loc>https://federicazoe.github.io/gradetools/reference/remove_associated_info.html</loc>
   </url>
 </urlset>

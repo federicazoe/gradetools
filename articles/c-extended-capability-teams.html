@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,7 @@
     <a class="dropdown-item" href="../articles/b-regrading-with-gradetools.html">How to regrade assignments with gradetools</a>
     <a class="dropdown-item" href="../articles/c-extended-capability-teams.html">Extended gradetools capability: Team Grading</a>
     <a class="dropdown-item" href="../articles/d-extended-capability-github.html">Extended gradetools capability: Assignments on GitHub</a>
+    <a class="dropdown-item" href="../articles/e-comprehensive-example.html">Comprehensive example of grading with gradetools</a>
   </div>
 </li>
 <li class="nav-item">
@@ -101,9 +102,12 @@
 <div class="section level3">
 <h3 id="the-roster">The roster<a class="anchor" aria-label="anchor" href="#the-roster"></a>
 </h3>
-<p>The roster is also different from that in the example-directory-week09-regression. Team grading requires an additional column to be present in the roster, “team_identified”. This identified would be something shared among students in the same team.</p>
-<iframe src="https://drive.google.com/file/d/10tWlwQdwvBut7WMwlN8pFP_Ly2A5fQUw/preview" width="640" height="480" allow="autoplay">
+<p>The roster is also different from that in the example-directory-week09-regression. Team grading requires an additional column to be present in the roster, <code>team_identifier</code>. This identifier would be something shared among students in the same team.</p>
+<!-- v3-team-grading-roster.png -->
+<iframe src="https://drive.google.com/file/d/1O-TvMYk2z5fnp0RzIkhmqgVgZWODy5sA/preview" width="640" height="480" allow="autoplay">
 </iframe>
+<p>The team identifier should be unique enough that it does not unintentionally match to something else in the assignment file path. We know the <code>student_identifier</code> (<code>team_identifier</code> in this case) must be the only thing unique to the student (team) in the assignment file path and the feedback file path.</p>
+<p>An example of a bad <code>team_identifier</code> would be labeling a team “a” or “1”. <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code> would look for any instance of the <code>example_student_identifier</code> in the <code>example_assignment_path</code> and replace each instance with a <code>student_identifier</code> (<code>team_identifier</code>) from the roster. This is how all assignment file paths are determined. Similarly for feedback file paths. “a” and “1” are single characters that could easily be present in the file paths without intentionally being the <code>student_identifier</code> (<code>team_identifier</code>).</p>
 </div>
 </div>
 <div class="section level2">
@@ -114,7 +118,7 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/assist_grading_functions.html">assist_team_grading</a></span><span class="op">(</span>
   rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>, 
   roster_path <span class="op">=</span> <span class="st">"class-roster.csv"</span>, 
-  temp_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-temporary-grade-sheet.csv"</span>, 
+  grading_progress_log_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-grading_progress_log.csv"</span>, 
   final_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-final-grade-sheet.csv"</span>, 
   example_team_identifier <span class="op">=</span> <span class="st">"team1"</span>,
   example_assignment_path <span class="op">=</span> <span class="st">"quizzes/quiz-09a-lin-reg-team1.Rmd"</span>, 
@@ -122,11 +126,13 @@
 <span class="op">)</span></code></pre></div>
 <p>This exact function call assumes that example-team-grading-directory-week09-regression is the working directory.</p>
 <p>We will skip the process of grading because that is shown in the “how-to-grade-with-gradetools” vignette.</p>
+<p>When regrading with <code><a href="../reference/assist_regrading.html">assist_regrading()</a></code> the only difference when team grading is <code>teams_to_regrade</code> must be provided and <code>students_to_regrade</code> must be set to <code>NULL</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="final-notes">Final notes<a class="anchor" aria-label="anchor" href="#final-notes"></a>
 </h2>
-<p>The assist grading function handles teams as individual students in the temporary grade sheet. The final grade sheet will have a row per student but the temporary grade sheet will have one row per team. This internal difference does not change the process of grading but may have been confusing to a user who wanted to look through their temporary grade sheet.</p>
+<p>The assist grading function handles teams as individual students in the grading progress log. The final grade sheet will have a row per student but the grading progress log will have one row per team. This internal difference does not change the process of grading but may be confusing to a user who wanted to look through their grading progress log.</p>
+<p>The GitHub compatible functionalities discussed in the vignette “Extended gradetools capability: Assignments on GitHub” also work with <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code>. <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code> is essentially a wrapper of <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> specifically for team grading.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -141,7 +147,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer>

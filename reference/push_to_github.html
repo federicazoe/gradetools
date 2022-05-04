@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,6 +28,7 @@
     <a class="dropdown-item" href="../articles/b-regrading-with-gradetools.html">How to regrade assignments with gradetools</a>
     <a class="dropdown-item" href="../articles/c-extended-capability-teams.html">Extended gradetools capability: Team Grading</a>
     <a class="dropdown-item" href="../articles/d-extended-capability-github.html">Extended gradetools capability: Assignments on GitHub</a>
+    <a class="dropdown-item" href="../articles/e-comprehensive-example.html">Comprehensive example of grading with gradetools</a>
   </div>
 </li>
 <li class="nav-item">
@@ -61,7 +62,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">push_to_github</span><span class="op">(</span>
-  <span class="va">temp_grade_sheet_path</span>,
+  <span class="va">grading_progress_log_path</span>,
   <span class="va">class_github_name</span>,
   <span class="va">example_github_repo</span>,
   <span class="va">example_identifier</span>,
@@ -73,14 +74,15 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>temp_grade_sheet_path</dt>
-<dd><p>data frame, The temp_grade_sheet is a data frame containing information for gradetools internal use</p></dd>
+    <dl><dt>grading_progress_log_path</dt>
+<dd><p>string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+This is that path for that file. Must be a .csv</p></dd>
 <dt>class_github_name</dt>
-<dd><p>string, GitHub name of the class. This input is only needed if github_issues is set to TRUE.</p></dd>
+<dd><p>string, GitHub name of the class. This input is only needed if <code>github_issues</code> is set to TRUE.</p></dd>
 <dt>example_github_repo</dt>
-<dd><p>string; example of the name of a student's GitHub repo for this assignment (or team's repo, if team_grading = TRUE). The example_identifier must feature in the example_github_repo and must be the same as the roster identifier for the student (or for the team if team_grading = TRUE).</p></dd>
+<dd><p>string; example of the name of a student's GitHub repo for this assignment (or team's repo, if <code>team_grading</code> = TRUE). The <code>example_identifier</code> must feature in the <code>example_github_repo</code> and must be the same as the roster identifier for the student (or for the team if <code>team_grading</code> = TRUE).</p></dd>
 <dt>example_identifier</dt>
-<dd><p>string; the GitHub username of the student or the name of the team, if team_grading = TRUE. This needs to be present somewhere in example_github_repo.</p></dd>
+<dd><p>string; the GitHub username of the student or the name of the team, if <code>team_grading</code> = TRUE. This needs to be present somewhere in <code>example_github_repo</code>.</p></dd>
 <dt>push_feedback</dt>
 <dd><p>logical, whether to push feedback files</p></dd>
 <dt>create_issues</dt>
@@ -98,7 +100,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

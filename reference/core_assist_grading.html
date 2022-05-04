@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,6 +28,7 @@
     <a class="dropdown-item" href="../articles/b-regrading-with-gradetools.html">How to regrade assignments with gradetools</a>
     <a class="dropdown-item" href="../articles/c-extended-capability-teams.html">Extended gradetools capability: Team Grading</a>
     <a class="dropdown-item" href="../articles/d-extended-capability-github.html">Extended gradetools capability: Assignments on GitHub</a>
+    <a class="dropdown-item" href="../articles/e-comprehensive-example.html">Comprehensive example of grading with gradetools</a>
   </div>
 </li>
 <li class="nav-item">
@@ -63,7 +64,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">core_assist_grading</span><span class="op">(</span>
   <span class="va">rubric_path</span>,
   <span class="va">roster_path</span>,
-  <span class="va">temp_grade_sheet_path</span>,
+  <span class="va">grading_progress_log_path</span>,
   <span class="va">final_grade_sheet_path</span>,
   <span class="va">example_assignment_path</span>,
   <span class="va">example_feedback_path</span>,
@@ -72,39 +73,49 @@
   questions_to_grade <span class="op">=</span> <span class="st">"all"</span>,
   students_to_grade <span class="op">=</span> <span class="st">"all"</span>,
   team_grading <span class="op">=</span> <span class="cn">FALSE</span>,
-  github_issues <span class="op">=</span> <span class="cn">FALSE</span>,
-  issue_every_question <span class="op">=</span> <span class="cn">FALSE</span>
+  github_issues <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>rubric_path</dt>
-<dd><p>string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.</p></dd>
+<dd><p>string, path to assignment rubric. 
+This rubric should be created using the function create_rubric_template, then filled in by the user. 
+The rubric file name and column names must not be changed.</p></dd>
 <dt>roster_path</dt>
-<dd><p>string; file path to the class roster csv containing a column named student_identifier. If team_grading is set to TRUE then the class roster also needs to contain a column named team_identifier</p></dd>
-<dt>temp_grade_sheet_path</dt>
-<dd><p>string; assist-grading() functions save a file which includes information for gradetools's internal use. This is that path for that file. Must be a .csv</p></dd>
+<dd><p>string; file path to the class roster csv containing a column named student_identifier. 
+If team_grading is set to TRUE then the class roster also needs to contain a column named team_identifier</p></dd>
+<dt>grading_progress_log_path</dt>
+<dd><p>string; assist-grading() functions save a file which includes information for gradetools's internal use. 
+This is that path for that file. Must be a .csv</p></dd>
 <dt>final_grade_sheet_path</dt>
 <dd><p>string; path to save final grade sheet to. Must be a .csv</p></dd>
 <dt>example_assignment_path</dt>
-<dd><p>string; file path to one of the assignments to be graded. This file path structure will be used to determine where the other assignments to be graded are located. The student identifier has to be present somewhere in the file path</p></dd>
+<dd><p>string; file path to one of the assignments to be graded. 
+This file path structure will be used to determine where the other assignments to be graded are located. 
+The student identifier has to be present somewhere in the file path</p></dd>
 <dt>example_feedback_path</dt>
-<dd><p>string; file path to one of the assignment feedback files that will be generated as the user grades. This file path structure will be used to determine where the other feedback files will be stored. The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. The extension of the feedback file must be one of the following: "Rmd", "docx", "html", "pdf"</p></dd>
+<dd><p>string; file path to one of the assignment feedback files that will be generated as the user grades. 
+This file path structure will be used to determine where the other feedback files will be stored. 
+The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. 
+The extension of the feedback file must be one of the following: "Rmd", "md", "docx", "html", "pdf". 
+These file types (except the first) will be knitted to: GitHub, Word, html, and pdf documents respectively</p></dd>
 <dt>example_student_identifier</dt>
-<dd><p>string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later</p></dd>
+<dd><p>string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. 
+This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later</p></dd>
 <dt>missing_assignment_grade</dt>
 <dd><p>numeric; The grade to assign a student with no assignment submission</p></dd>
 <dt>questions_to_grade</dt>
-<dd><p>vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric</p></dd>
+<dd><p>vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. 
+All questions_to_grade must exactly match ones present in the rubric</p></dd>
 <dt>students_to_grade</dt>
-<dd><p>vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. All students_to_grade must be student_identifiers present in the roster</p></dd>
+<dd><p>vector of strings; student_identifiers corresponding to students to grade, or "all" to specify all students should be graded. 
+All students_to_grade must be student_identifiers present in the roster</p></dd>
 <dt>team_grading</dt>
 <dd><p>logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)</p></dd>
 <dt>github_issues</dt>
 <dd><p>logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)</p></dd>
-<dt>issue_every_question</dt>
-<dd><p>logical, whether the possibility to create issues should be given at every question or only at the end of the assignment</p></dd>
 </dl></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -116,7 +127,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>
