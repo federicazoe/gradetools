@@ -1,6 +1,6 @@
 utils::globalVariables(c(
   "student_identifier",          # colname in grading_progress_log
-  "students_in_team",             # colname in grading_progress_log
+  "students_in_team",            # colname in grading_progress_log
   "grading_status",              # colname in grading_progress_log
   "feedback_codes",              # colname in grading_progress_log
   "graded_qs",                   # colname in grading_progress_log
