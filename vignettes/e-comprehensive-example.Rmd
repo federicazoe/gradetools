@@ -34,7 +34,7 @@ The purpose of this vignette is to provide a comprehensive grading scenario invo
 
 ### Cloning project repos  
 
-This vignette uses two GitHub repositories (repos) from the [gradetools-test-course](https://github.com/gradetools-test-course) Github organization:
+This vignette uses two GitHub repositories (repos) from the [gradetools-test-course](https://github.com/gradetools-test-course) GitHub organization:
  
   - [final-project-team-poisson](https://github.com/gradetools-test-course/final-project-team-poisson) for one team submission.
   - [final-project-team-gamma](https://github.com/gradetools-test-course/final-project-team-gamma) for the second team submission.

@@ -110,7 +110,7 @@ Use prompt code "i" to note an issue with the title "Answer question for partial
 Once the issue details have been noted we can use "s" to stop grading at any point to proceed to push the issue to GitHub.
 
 
-## Pushing feedback files and issues to GitHub with push_to_github()
+## Pushing feedback files and issues to GitHub with `push_to_github()`
 
 After creation of feedback files and or noting of GitHub issue details, the `push_to_github()` function allows us to push what we want to GitHub.
 

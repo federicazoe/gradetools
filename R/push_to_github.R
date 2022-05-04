@@ -2,9 +2,9 @@
 #' Push feedback and issues to GitHub
 #'
 #' @inheritParams assist_grading_functions
-#' @param class_github_name string, GitHub name of the class. This input is only needed if github_issues is set to TRUE.
-#' @param example_github_repo string; example of the name of a student's GitHub repo for this assignment (or team's repo, if team_grading = TRUE). The example_identifier must feature in the example_github_repo and must be the same as the roster identifier for the student (or for the team if team_grading = TRUE).
-#' @param example_identifier string; the GitHub username of the student or the name of the team, if team_grading = TRUE. This needs to be present somewhere in example_github_repo.
+#' @param class_github_name string, GitHub name of the class. This input is only needed if \code{github_issues} is set to TRUE.
+#' @param example_github_repo string; example of the name of a student's GitHub repo for this assignment (or team's repo, if \code{team_grading} = TRUE). The \code{example_identifier} must feature in the \code{example_github_repo} and must be the same as the roster identifier for the student (or for the team if \code{team_grading} = TRUE).
+#' @param example_identifier string; the GitHub username of the student or the name of the team, if \code{team_grading} = TRUE. This needs to be present somewhere in \code{example_github_repo}.
 #' @param push_feedback logical, whether to push feedback files
 #' @param create_issues logical, whether to create issues
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
@@ -62,7 +62,7 @@ push_to_github <- function(
     # Initialize column that keeps track of which feedback files have been pushed
     grading_progress_log$feedback_pushed <- "FALSE"
     
-    # Use the example github identifier and github repos provided to guess
+    # Use the example GitHub identifier and GitHub repos provided to guess
     # the name of all student
     grading_progress_log$github_repo <- str_replace_all(
       example_github_repo, 

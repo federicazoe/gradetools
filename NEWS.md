@@ -8,7 +8,7 @@
     - letter prompt options are options provided by gradetools (e.g. adding rubric items, noting issues, and providing personalized feedback)
 - Feedback files can now have the following extensions: 
     - Rmd
-    - md (for Github documents)
+    - md (for GitHub documents)
     - docx (for Word documents)
     - html
     - pdf
