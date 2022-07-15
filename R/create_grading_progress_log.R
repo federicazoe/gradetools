@@ -25,8 +25,10 @@ create_grading_progress_log <- function(
     example_student_identifier,
     roster_path,
     github_issues,
-    team_grading
-  ) {
+    team_grading,
+    assignment_folder,
+    number_assignment 
+) {
   
   # Read in class roster
   grading_progress_log_new <- readr::read_csv(roster_path, show_col_types = FALSE) %>%
@@ -64,40 +66,88 @@ create_grading_progress_log <- function(
     mutate(assignment_path = NA) %>% 
     mutate(assignment_missing = FALSE)
   
-
-  assignment_path <- rep(NA, length(example_assignment_path))
+  
+  assignment_path <- rep(NA, number_assignment)
   
   # Check file exists at assignment file paths 
   no_assignment_file_paths_work <- TRUE
   
-  for(i in 1:length(grading_progress_log_new$student_identifier)) {
-    for (j in 1:length(example_assignment_path)) {
-      assignment_path[j] <- str_replace_all(
+  if(!is.na(assignment_folder)){ # if assignment_folder is defined, use it, and use the code to get all names
+    assignment_list <- list.files(assignment_folder)
+    
+    # match assignments with student identifiers
+    for(i in 1:length(grading_progress_log_new$student_identifier)) {
+      # get assignment name(s), incl enclosing folder
+      assignment_name <- paste(assignment_folder, assignment_list[str_which(string = assignment_list,
+                                                                            pattern = grading_progress_log_new$student_identifier[i])],
+                               sep = "/")
+      # if there is no assignment, assignment_name will become e.g. FOR4934/ which causes errors
+      # with opening files during grading. Replace with a word so it can be identified further on as missing 
+      # for multiple files, just take the first entry (if there is something there, the assignment is not missing anyway)
+      if(assignment_name[1] == paste(assignment_folder, "/", sep = "")){
+        assignment_name <- "missing"
+      }
+      
+      # check if there are enough assignments (if multiple are required)
+      if(length(assignment_name) < length(assignment_path)){ # if not, fill up with NAs
+        assignment_path <- c(assignment_name, rep(NA, (length(assignment_path) - length(assignment_name))))
+      } else {
+        assignment_path <- assignment_name
+      }
+      ####### maybe also add a message if there are more than the required assignments? #####
+      
+      for (j in 1:length(assignment_path)){
+        # double-check if the file exists
+        if(file.exists(assignment_path[j])) {
+          # We need to know if none of the assignment file paths work
+          no_assignment_file_paths_work <- FALSE
+          
+        } else {
+          # Note those without an assignment
+          grading_progress_log_new$assignment_missing[i] <- TRUE
+        }
+      }
+      
+      # Save assignment paths as one string per student
+      grading_progress_log_new$assignment_path[i] <- paste(
+        assignment_path, 
+        collapse = ", "
+      )
+      
+    }
+    
+  } else { # if the assignment folder is not defined, use original code that replaces student_identifier
+    
+    for(i in 1:length(grading_progress_log_new$student_identifier)) {
+      for (j in 1:length(example_assignment_path)) {
+        assignment_path[j] <- str_replace_all(
           example_assignment_path[j], 
           pattern = example_student_identifier, 
           replacement = grading_progress_log_new$student_identifier[i]
         )
-      
-      if(file.exists(assignment_path[j])) {
-        # We need to know if none of the assignment file paths work
-        no_assignment_file_paths_work <- FALSE
         
-      } else {
-        # Note those without an assignment
-        grading_progress_log_new$assignment_missing[i] <- TRUE
+        if(file.exists(assignment_path[j])) {
+          # We need to know if none of the assignment file paths work
+          no_assignment_file_paths_work <- FALSE
+          
+        } else {
+          # Note those without an assignment
+          grading_progress_log_new$assignment_missing[i] <- TRUE
+          
+        }
         
       }
       
+      # Save assignment paths as one string per student
+      grading_progress_log_new$assignment_path[i] <- paste(
+        assignment_path, 
+        collapse = ", "
+      )
+      
     }
     
-    # Save assignment paths as one string per student
-    grading_progress_log_new$assignment_path[i] <- paste(
-      assignment_path, 
-      collapse = ", "
-    )
-
   }
-  
+
   if (no_assignment_file_paths_work) {
     stop(
       "No assignment file paths matched to assignment files.\nPlease check that the student identifier matched those in the file paths."
@@ -171,7 +221,7 @@ create_grading_progress_log <- function(
       mutate(last_time_graded = as.POSIXlt(NA)) %>% 
       mutate(comments = NA) %>% 
       mutate(comment_qs = NA)
-
+    
     if (github_issues) {
       grading_progress_log <- grading_progress_log %>% 
         mutate(issue_qs = NA) %>% 
