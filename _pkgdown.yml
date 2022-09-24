@@ -1,4 +1,5 @@
 url: https://federicazoe.github.io/gradetools/
 template:
   bootstrap: 5
-
+development:
+  mode: auto

@@ -30,6 +30,9 @@ Throughout the vignettes we provide example grading scenarios that you can use t
 4. [Extended gradetools Capability: Assignments on GitHub](https://federicazoe.github.io/gradetools/articles/d-extended-capability-github.html): This vignette is only relevant for assignments that are on GitHub.
 5. [Comprehensive example of grading with gradetools](https://federicazoe.github.io/gradetools/articles/e-comprehensive-example.html): This is a showcase of most of gradetools' capabilities.
 
+## Workshop
+
+You can watch <a href="https://www.youtube.com/watch?v=ECI4CzkUqak" target="_blank"> this tutorial </a> to learn more about what gradetools was created for and how to use it.
 
 ## Installation
 
@@ -50,6 +53,6 @@ devtools::install_github("federicazoe/gradetools")
   <tr></tr>
   <tr style="text-align: left"> 
     <td> <img src="man/figures/hpi-logo.jpeg" align="center" alt="NSF logo" width="120" /> </td>
-    <td style="text-align: left"> This work was also supported by the HPI Research Center in Machine Learning and Data Science at UC Irvine. </td>
+    <td style="text-align: left"> This work is also supported by the HPI Research Center in Machine Learning and Data Science at UC Irvine. </td>
   </tr>   
 </table>
