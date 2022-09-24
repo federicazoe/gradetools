@@ -8,8 +8,8 @@
 <meta name="description" content="gradetools">
 <title>Comprehensive example of grading with gradetools • gradetools</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Comprehensive example of grading with gradetools">
 <meta property="og:description" content="gradetools">
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
 
 
 <script src="e-comprehensive-example_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Comprehensive example of grading with gradetools</h1>
             
       
@@ -84,7 +84,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://federicazoe.github.io/gradetools/">gradetools</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://federicazoe.github.io/gradetools/">gradetools</a></span><span class="op">)</span></span></code></pre></div>
 <p>For this vignette we assume that you have already familiarized yourself with the various functionalities of gradetools (<a href="https://federicazoe.github.io/gradetools/articles/a-grading-with-gradetools.html">individual</a>, <a href="https://federicazoe.github.io/gradetools/articles/c-extended-capability-teams.html">team</a> and <a href="https://federicazoe.github.io/gradetools/articles/d-extended-capability-github.html">GitHub</a> grading).</p>
 <p>The purpose of this vignette is to provide a comprehensive grading scenario involving:</p>
 <ul>
@@ -107,14 +107,14 @@
 </ul>
 <p>These repos can be cloned by running:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">class_github_name</span> <span class="op">&lt;-</span> <span class="st">"gradetools-test-course"</span>
-<span class="va">repo_template_name</span> <span class="op">&lt;-</span> <span class="st">"final-project-team"</span>
-<span class="va">repos_local_path</span> <span class="op">&lt;-</span> <span class="st">"final-project-team-repos"</span>
-
-<span class="fu">ghclass</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ghclass/man/local_repo.html" class="external-link">local_repo_clone</a></span><span class="op">(</span>
-  repo <span class="op">=</span> <span class="fu">ghclass</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ghclass/man/org_details.html" class="external-link">org_repos</a></span><span class="op">(</span><span class="va">class_github_name</span>, <span class="va">repo_template_name</span><span class="op">)</span>,
-  local_path <span class="op">=</span> <span class="va">repos_local_path</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">class_github_name</span> <span class="op">&lt;-</span> <span class="st">"gradetools-test-course"</span></span>
+<span><span class="va">repo_template_name</span> <span class="op">&lt;-</span> <span class="st">"final-project-team"</span></span>
+<span><span class="va">repos_local_path</span> <span class="op">&lt;-</span> <span class="st">"final-project-team-repos"</span></span>
+<span></span>
+<span><span class="fu">ghclass</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ghclass/man/local_repo.html" class="external-link">local_repo_clone</a></span><span class="op">(</span></span>
+<span>  repo <span class="op">=</span> <span class="fu">ghclass</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ghclass/man/org_details.html" class="external-link">org_repos</a></span><span class="op">(</span><span class="va">class_github_name</span>, <span class="va">repo_template_name</span><span class="op">)</span>,</span>
+<span>  local_path <span class="op">=</span> <span class="va">repos_local_path</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The final project submissions were adapted from the <a href="https://github.com/mine-cetinkaya-rundel/ds-final-project" class="external-link">GitHub repository template</a> accompanying “The 5Ws and 1H of Term Projects in the Introductory Data Science Classroom” by Çetinkaya-Rundel, Dogucu, and Rummerfield (2022).</p>
 </div>
 </div>
@@ -164,9 +164,9 @@ poisson
 </h2>
 <p>To make sure the rubric has the correct formatting, we should always create it by using <code><a href="../reference/create_rubric_template.html">create_rubric_template()</a></code> and then fill it in.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/create_rubric_template.html">create_rubric_template</a></span><span class="op">(</span>
-  rubric_path <span class="op">=</span> <span class="st">"rubric.csv"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_rubric_template.html">create_rubric_template</a></span><span class="op">(</span></span>
+<span>  rubric_path <span class="op">=</span> <span class="st">"rubric.csv"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>We would like to grade three files for each team: - <code>README.md</code> - <code>proposal.md</code> - <code>presentation.Rmd</code> We will consider each file as a component of the final project and have a one rubric item per component to begin grading (further items can be added while grading).</p>
 <table class="table">
 <thead><tr>
@@ -287,20 +287,20 @@ The template for the file was unchanged. Did you miss this part or forget to pus
 </h2>
 <p>For grading, we are going to use <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code>. Note that <code>example_assignment_path</code> is a vector in this case, since we want to look at three files for each team.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/assist_grading_functions.html">assist_team_grading</a></span><span class="op">(</span>
-  rubric_path <span class="op">=</span> <span class="st">"rubric.csv"</span>,
-  roster_path <span class="op">=</span> <span class="st">"roster.csv"</span>,
-  grading_progress_log_path  <span class="op">=</span> <span class="st">"grading_progress_log.csv"</span>,
-  final_grade_sheet_path <span class="op">=</span> <span class="st">"final-grade-sheet.csv"</span>,
-  example_assignment_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-    <span class="st">"final-project-team-repos/final-project-team-gamma/README.md"</span>,
-    <span class="st">"final-project-team-repos/final-project-team-gamma/proposal/proposal.md"</span>,
-    <span class="st">"final-project-team-repos/final-project-team-gamma/presentation/presentation.Rmd"</span>
-  <span class="op">)</span> ,
-  example_feedback_path <span class="op">=</span> <span class="st">"final-project-team-repos/final-project-team-gamma/feedback.md"</span>,
-  example_team_identifier <span class="op">=</span> <span class="st">"gamma"</span>,
-  github_issues <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/assist_grading_functions.html">assist_team_grading</a></span><span class="op">(</span></span>
+<span>  rubric_path <span class="op">=</span> <span class="st">"rubric.csv"</span>,</span>
+<span>  roster_path <span class="op">=</span> <span class="st">"roster.csv"</span>,</span>
+<span>  grading_progress_log_path  <span class="op">=</span> <span class="st">"grading_progress_log.csv"</span>,</span>
+<span>  final_grade_sheet_path <span class="op">=</span> <span class="st">"final-grade-sheet.csv"</span>,</span>
+<span>  example_assignment_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"final-project-team-repos/final-project-team-gamma/README.md"</span>,</span>
+<span>    <span class="st">"final-project-team-repos/final-project-team-gamma/proposal/proposal.md"</span>,</span>
+<span>    <span class="st">"final-project-team-repos/final-project-team-gamma/presentation/presentation.Rmd"</span></span>
+<span>  <span class="op">)</span> ,</span>
+<span>  example_feedback_path <span class="op">=</span> <span class="st">"final-project-team-repos/final-project-team-gamma/feedback.md"</span>,</span>
+<span>  example_team_identifier <span class="op">=</span> <span class="st">"gamma"</span>,</span>
+<span>  github_issues <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Once we run the above call, all files associated to the first team in the roster will be open. When reviewing the README, we see that the summary needs to be expanded upon and that the data source was not cited. We do not have a rubric item yet for the second mistake, so we first enter ‘r’ to add a new rubric item:</p>
 <!-- v5-new-rubric-item.png -->
 <iframe src="https://drive.google.com/file/d/1lYmVUBefqKD-1pifYePqv9Re4A4ov-3i/preview" width="640" height="480" allow="autoplay">
@@ -337,15 +337,15 @@ The template for the file was unchanged. Did you miss this part or forget to pus
 </h2>
 <p>Once we have finished grading one or multiple students, we can push the feedback file(s) and/or create the issue(s) that we have noted while grading by using <code><a href="../reference/push_to_github.html">push_to_github()</a></code> and specifying the logical arguments <code>push_feedback</code> and <code>create_issues</code>. Because this project involves teams, we also need to set the logical argument <code>team_grading</code> to <code>TRUE</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/push_to_github.html">push_to_github</a></span><span class="op">(</span>
-  grading_progress_log_path <span class="op">=</span> <span class="st">"grading_progress_log.csv"</span>,
-  class_github_name <span class="op">=</span> <span class="st">"gradetools-test-course"</span>,
-  example_identifier <span class="op">=</span> <span class="st">"gamma"</span>,
-  example_github_repo <span class="op">=</span> <span class="st">"final-project-team-gamma"</span>,
-  push_feedback <span class="op">=</span> <span class="cn">TRUE</span>,
-  create_issues <span class="op">=</span> <span class="cn">TRUE</span>,
-  team_grading <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/push_to_github.html">push_to_github</a></span><span class="op">(</span></span>
+<span>  grading_progress_log_path <span class="op">=</span> <span class="st">"grading_progress_log.csv"</span>,</span>
+<span>  class_github_name <span class="op">=</span> <span class="st">"gradetools-test-course"</span>,</span>
+<span>  example_identifier <span class="op">=</span> <span class="st">"gamma"</span>,</span>
+<span>  example_github_repo <span class="op">=</span> <span class="st">"final-project-team-gamma"</span>,</span>
+<span>  push_feedback <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  create_issues <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  team_grading <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>When calling this function, we will be asked whether we want to perform this actions only for assignments who have been fully graded or also for partially graded assignments.</p>
 <p>Here is an example of team <em>gamma</em>’s pushed feedback file:</p>
 <!-- v5-feedback-pushed.png -->
@@ -365,16 +365,16 @@ The template for the file was unchanged. Did you miss this part or forget to pus
 </h2>
 <p>Once the <em>gamma</em> team has pushed their project proposal to their repo and closed the issue, we want to go ahead and regrade this part of their final project and give them partial credit. We can do so with <code><a href="../reference/assist_regrading.html">assist_regrading()</a></code>! Note that because we wish to regrade a team, then we need to set <code>students_to_regrade</code> to <code>NULL</code> and provide the argument <code>teams_to_regrade</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="../reference/assist_regrading.html">assist_regrading</a></span><span class="op">(</span>
-  rubric_path <span class="op">=</span> <span class="st">"rubric.csv"</span>,
-  grading_progress_log_path <span class="op">=</span> <span class="st">"grading_progress_log.csv"</span>,
-  final_grade_sheet_path <span class="op">=</span> <span class="st">"final-grade-sheet.csv"</span>,
-  questions_to_regrade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Proposal"</span><span class="op">)</span>,
-  students_to_regrade <span class="op">=</span> <span class="cn">NULL</span>,
-  teams_to_regrade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gamma"</span><span class="op">)</span>,
-  github_issues <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/assist_regrading.html">assist_regrading</a></span><span class="op">(</span></span>
+<span>  rubric_path <span class="op">=</span> <span class="st">"rubric.csv"</span>,</span>
+<span>  grading_progress_log_path <span class="op">=</span> <span class="st">"grading_progress_log.csv"</span>,</span>
+<span>  final_grade_sheet_path <span class="op">=</span> <span class="st">"final-grade-sheet.csv"</span>,</span>
+<span>  questions_to_regrade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Proposal"</span><span class="op">)</span>,</span>
+<span>  students_to_regrade <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  teams_to_regrade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gamma"</span><span class="op">)</span>,</span>
+<span>  github_issues <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>We can create a new rubric item for giving them partial credit:</p>
 <!-- v5-partial-credit.png -->
 <iframe src="https://drive.google.com/file/d/1HTOqqgYWFSlSeVpNf3FKQam1cXHgq53R/preview" width="640" height="480" allow="autoplay">
@@ -399,7 +399,7 @@ The template for the file was unchanged. Did you miss this part or forget to pus
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

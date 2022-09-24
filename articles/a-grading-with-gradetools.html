@@ -8,8 +8,8 @@
 <meta name="description" content="gradetools">
 <title>How to grade with gradetools • gradetools</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="How to grade with gradetools">
 <meta property="og:description" content="gradetools">
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
 
 
 <script src="a-grading-with-gradetools_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>How to grade with gradetools</h1>
             
       
@@ -84,7 +84,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://federicazoe.github.io/gradetools/">gradetools</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://federicazoe.github.io/gradetools/">gradetools</a></span><span class="op">)</span></span></code></pre></div>
 <p>The goal of this vignette is to introduce users to the gradetools package using a practice example.</p>
 <p>Note gradetools has three grading functions:</p>
 <ul>
@@ -131,10 +131,10 @@
 <p>The rubric for an assignment graded with gradetools has specific requirements. The function <code><a href="../reference/create_rubric_template.html">create_rubric_template()</a></code> creates a rubric template for the grader to fill in.</p>
 <p>This function requires the user to specify (1) the path where they want to write the rubric template and (2) whether the rubric will list possible errors along with the points to be removed for each error (negative_grading = TRUE) or expected components of a correct answer along with the points to be added for each component (negative_grading = FALSE).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/create_rubric_template.html">create_rubric_template</a></span><span class="op">(</span>
-  rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>,
-  negative_grading <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_rubric_template.html">create_rubric_template</a></span><span class="op">(</span></span>
+<span>  rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>,</span>
+<span>  negative_grading <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>After the above call a .csv file will be created which will only contain headers.</p>
 <!-- v1-rubric-blank.png -->
 <iframe src="https://drive.google.com/file/d/1o-qU2FNzLC9TcGVLbtQ7mXCvG9lJiKdV/preview" width="640" height="480" allow="autoplay">
@@ -152,12 +152,12 @@
 <p>Once the user has began grading, question names and prompt codes cannot be changed. However, in any moment, the grader can modify the prompt messages that they want to see while grading as well as the total points for a specific part and the feedback and the points that should be associated to a rubric item.</p>
 <p>To see another example of a valid rubric one can run <code><a href="../reference/create_rubric_template.html">create_rubric_template()</a></code> with additional arguments:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/create_rubric_template.html">create_rubric_template</a></span><span class="op">(</span>
-  rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>,
-  negative_grading <span class="op">=</span> <span class="cn">TRUE</span>, 
-  create_example_rubric <span class="op">=</span> <span class="cn">TRUE</span>,
-  example_rubric_path <span class="op">=</span> <span class="st">"example-rubric.csv"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_rubric_template.html">create_rubric_template</a></span><span class="op">(</span></span>
+<span>  rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>,</span>
+<span>  negative_grading <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>  create_example_rubric <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  example_rubric_path <span class="op">=</span> <span class="st">"example-rubric.csv"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>This would write an example filled-in rubric as well as the rubric template at the specified paths.</p>
 </div>
 <div class="section level3">
@@ -185,15 +185,15 @@
 </h2>
 <p>We are now ready to begin grading with gradetools. This package should be used in RStudio since it opens files. To begin grading, the user would call the <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/assist_grading_functions.html">assist_grading</a></span><span class="op">(</span>
-  rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>, 
-  roster_path <span class="op">=</span> <span class="st">"class-roster.csv"</span>, 
-  grading_progress_log_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-grading_progress_log.csv"</span>, 
-  final_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-final-grade-sheet.csv"</span>, 
-  example_student_identifier <span class="op">=</span> <span class="st">"federicazoe"</span>,
-  example_assignment_path <span class="op">=</span> <span class="st">"quizzes/quiz-09a-lin-reg-federicazoe.Rmd"</span>, 
-  example_feedback_path <span class="op">=</span> <span class="st">"quizzes/feedback-quiz-09a-lin-reg-federicazoe.html"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/assist_grading_functions.html">assist_grading</a></span><span class="op">(</span></span>
+<span>  rubric_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-rubric.csv"</span>, </span>
+<span>  roster_path <span class="op">=</span> <span class="st">"class-roster.csv"</span>, </span>
+<span>  grading_progress_log_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-grading_progress_log.csv"</span>, </span>
+<span>  final_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-final-grade-sheet.csv"</span>, </span>
+<span>  example_student_identifier <span class="op">=</span> <span class="st">"federicazoe"</span>,</span>
+<span>  example_assignment_path <span class="op">=</span> <span class="st">"quizzes/quiz-09a-lin-reg-federicazoe.Rmd"</span>, </span>
+<span>  example_feedback_path <span class="op">=</span> <span class="st">"quizzes/feedback-quiz-09a-lin-reg-federicazoe.html"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The above function call assumes that example-directory-week09-regression is the working directory.</p>
 <p>When a user begins grading an assignment for the first time, a message will be displayed informing the user that a grading progress log is begin created, which must not be deleted.</p>
 <p>Next, the user will be informed which student they are going to begin grading and if there is any previous grading progress. All assignments associated with this student in this grading session will then be opened for the grader to view while grading. The grader will be prompted in the console to grade the first ungraded question for this student.</p>
@@ -321,7 +321,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

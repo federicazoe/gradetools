@@ -8,8 +8,8 @@
 <meta name="description" content="gradetools">
 <title>Extended gradetools capability: Assignments on GitHub • gradetools</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Extended gradetools capability: Assignments on GitHub">
 <meta property="og:description" content="gradetools">
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gradetools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
 
 
 <script src="d-extended-capability-github_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Extended gradetools capability: Assignments on GitHub</h1>
             
       
@@ -84,7 +84,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://federicazoe.github.io/gradetools/">gradetools</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://federicazoe.github.io/gradetools/">gradetools</a></span><span class="op">)</span></span></code></pre></div>
 <p>For this vignette we assume that you have already familiarized yourself with the basic functionalities of gradetools (see the vignette “how-to-grade-with-gradetools”). <code><a href="../reference/assist_grading_functions.html">assist_grading()</a></code> and <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code> are essentially wrappers for <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code>, so all functionalities available in those functions are also available in this function.</p>
 <p>Here we illustrate gradetools’s functionalities specific to classes that are managed using GitHub organizations. These extended functionalities involve:</p>
 <ul>
@@ -106,14 +106,14 @@
 <p>Before using gradetools functionalities, the user needs to clone from GitHub all the repos where students have pushed their assignments. This can be done easily and quickly using the function <a href="https://rundel.github.io/ghclass/reference/local_repo.html" class="external-link"><code>local_repo_clone()</code></a> from the ghclass package.</p>
 <p>The code below shows how to clone from the GitHub organization <em>gradetools-test-course</em> all the repos whose name contains <em>week09-regression-</em>. The repos are pulled into a local folder <em>week09-regression</em> that we have created in the folder <em>students-repos</em> in our current working directory.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">class_github_name</span> <span class="op">&lt;-</span> <span class="st">"gradetools-test-course"</span>
-<span class="va">repo_template_name</span> <span class="op">&lt;-</span> <span class="st">"week09-regression-"</span>
-<span class="va">repos_local_path</span> <span class="op">&lt;-</span> <span class="st">"students-repos/week09-regression"</span>
-
-<span class="fu">ghclass</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ghclass/man/local_repo.html" class="external-link">local_repo_clone</a></span><span class="op">(</span>
-  repo <span class="op">=</span> <span class="fu">ghclass</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ghclass/man/org_details.html" class="external-link">org_repos</a></span><span class="op">(</span><span class="va">class_github_name</span>, <span class="va">repo_template_name</span><span class="op">)</span>,
-  local_path <span class="op">=</span> <span class="va">repos_local_path</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">class_github_name</span> <span class="op">&lt;-</span> <span class="st">"gradetools-test-course"</span></span>
+<span><span class="va">repo_template_name</span> <span class="op">&lt;-</span> <span class="st">"week09-regression-"</span></span>
+<span><span class="va">repos_local_path</span> <span class="op">&lt;-</span> <span class="st">"students-repos/week09-regression"</span></span>
+<span></span>
+<span><span class="fu">ghclass</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ghclass/man/local_repo.html" class="external-link">local_repo_clone</a></span><span class="op">(</span></span>
+<span>  repo <span class="op">=</span> <span class="fu">ghclass</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ghclass/man/org_details.html" class="external-link">org_repos</a></span><span class="op">(</span><span class="va">class_github_name</span>, <span class="va">repo_template_name</span><span class="op">)</span>,</span>
+<span>  local_path <span class="op">=</span> <span class="va">repos_local_path</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>A message will be shown to confirm which repos have been cloned (bottom-left screenshot) and the cloned repos will appear in the path specified (bottom-right screenshot).</p>
 <!-- v4-cloned-repos-messages.png -->
 <iframe src="https://drive.google.com/file/d/16HxGW59t2j0ooqhEyMOFdPZb9xDesUJZ/preview" width="640" height="480" allow="autoplay">
@@ -129,22 +129,22 @@
 <p>While we are grading, gradetools can give us the option to take note of some GitHub issues that we would like to create in students’ or teams’ GitHub repos. To be given this option, we need to grade using <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> with the input <code>github_issues</code> set to TRUE.<br>
 Noting and pushing issues are separated across two functions. While grading a user can make note of issues and gradetools stores this information to be easily pushed later using <code><a href="../reference/push_to_github.html">push_to_github()</a></code>. First we will take note of an issue while grading.</p>
 <p>The function call below assumes the working directory is a directory with 4 cloned repositories from the gradetools -test-course organization on GitHub:</p>
-<pre><code><span class="op">-</span> <span class="va">quizzes</span><span class="op">-</span><span class="va">collected</span><span class="op">-</span><span class="va">week09</span><span class="op">-</span><span class="va">regression</span>
-<span class="op">-</span> <span class="va">week09</span><span class="op">-</span><span class="va">regression</span><span class="op">-</span><span class="va">federicazoe</span>
-<span class="op">-</span> <span class="va">week09</span><span class="op">-</span><span class="va">regression</span><span class="op">-</span><span class="va">CatalinaMedina</span>
-<span class="op">-</span> <span class="va">week09</span><span class="op">-</span><span class="va">regression</span><span class="op">-</span><span class="va">mdogucu</span></code></pre>
+<pre><code><span><span class="op">-</span> <span class="va">quizzes</span><span class="op">-</span><span class="va">collected</span><span class="op">-</span><span class="va">week09</span><span class="op">-</span><span class="va">regression</span></span>
+<span><span class="op">-</span> <span class="va">week09</span><span class="op">-</span><span class="va">regression</span><span class="op">-</span><span class="va">federicazoe</span></span>
+<span><span class="op">-</span> <span class="va">week09</span><span class="op">-</span><span class="va">regression</span><span class="op">-</span><span class="va">CatalinaMedina</span></span>
+<span><span class="op">-</span> <span class="va">week09</span><span class="op">-</span><span class="va">regression</span><span class="op">-</span><span class="va">mdogucu</span></span></code></pre>
 <p>Both <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> and <code><a href="../reference/assist_grading_functions.html">assist_team_grading()</a></code> allow for the creation of GitHub issues. These functions have similar arguments except the second uses team identifiers instead of just student identifiers. Here we will work with <code><a href="../reference/assist_grading_functions.html">assist_advanced_grading()</a></code> and the same assignments from the “how-to-grade-with-gradetools” vignette. Run the following code to begin.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/assist_grading_functions.html">assist_advanced_grading</a></span><span class="op">(</span>
-  rubric_path <span class="op">=</span> <span class="st">"quizzes-collected-week09-regression/example-directory-week09-regression/quiz-09-lin-reg-rubric.csv"</span>,
-  roster_path <span class="op">=</span> <span class="st">"quizzes-collected-week09-regression/example-directory-week09-regression/class-roster.csv"</span>,
-  grading_progress_log_path  <span class="op">=</span> <span class="st">"quiz-09-lin-reg-grading_progress_log.csv"</span>,
-  final_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-final-grade-sheet.csv"</span>,
-  example_assignment_path <span class="op">=</span> <span class="st">"week09-regression-CatalinaMedina/quiz-09a-lin-reg-CatalinaMedina.Rmd"</span>,
-  example_feedback_path <span class="op">=</span> <span class="st">"week09-regression-CatalinaMedina/quiz-09a-lin-reg-CatalinaMedina-feedback.html"</span>,
-  example_student_identifier <span class="op">=</span> <span class="st">"CatalinaMedina"</span>,
-  github_issues <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/assist_grading_functions.html">assist_advanced_grading</a></span><span class="op">(</span></span>
+<span>  rubric_path <span class="op">=</span> <span class="st">"quizzes-collected-week09-regression/example-directory-week09-regression/quiz-09-lin-reg-rubric.csv"</span>,</span>
+<span>  roster_path <span class="op">=</span> <span class="st">"quizzes-collected-week09-regression/example-directory-week09-regression/class-roster.csv"</span>,</span>
+<span>  grading_progress_log_path  <span class="op">=</span> <span class="st">"quiz-09-lin-reg-grading_progress_log.csv"</span>,</span>
+<span>  final_grade_sheet_path <span class="op">=</span> <span class="st">"quiz-09-lin-reg-final-grade-sheet.csv"</span>,</span>
+<span>  example_assignment_path <span class="op">=</span> <span class="st">"week09-regression-CatalinaMedina/quiz-09a-lin-reg-CatalinaMedina.Rmd"</span>,</span>
+<span>  example_feedback_path <span class="op">=</span> <span class="st">"week09-regression-CatalinaMedina/quiz-09a-lin-reg-CatalinaMedina-feedback.html"</span>,</span>
+<span>  example_student_identifier <span class="op">=</span> <span class="st">"CatalinaMedina"</span>,</span>
+<span>  github_issues <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Note the new prompt code “i” for taking note of a GitHub issue while grading.</p>
 <!-- v4-begin-grading-with-issues.png -->
 <iframe src="https://drive.google.com/file/d/1lANLmQ4xOhQfvbr4h_XBAYhxAiecb9KI/preview" width="640" height="480" allow="autoplay">
@@ -166,13 +166,13 @@ Noting and pushing issues are separated across two functions. While grading a us
 <p>After creation of feedback files and or noting of GitHub issue details, the <code><a href="../reference/push_to_github.html">push_to_github()</a></code> function allows us to push what we want to GitHub.</p>
 <p>Here is what a call to <code><a href="../reference/push_to_github.html">push_to_github()</a></code> could look like to push feedback files:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/push_to_github.html">push_to_github</a></span> <span class="op">(</span>
-  grading_progress_log_path <span class="op">=</span>  <span class="st">"quiz-09-lin-reg-grading_progress_log.csv"</span>,
-  class_github_name <span class="op">=</span> <span class="st">"gradetools-test-course"</span>,
-  example_github_repo <span class="op">=</span> <span class="st">"week09-regression-federicazoe"</span>,
-  example_identifier <span class="op">=</span> <span class="st">"federicazoe"</span>,
-  push_feedback <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/push_to_github.html">push_to_github</a></span> <span class="op">(</span></span>
+<span>  grading_progress_log_path <span class="op">=</span>  <span class="st">"quiz-09-lin-reg-grading_progress_log.csv"</span>,</span>
+<span>  class_github_name <span class="op">=</span> <span class="st">"gradetools-test-course"</span>,</span>
+<span>  example_github_repo <span class="op">=</span> <span class="st">"week09-regression-federicazoe"</span>,</span>
+<span>  example_identifier <span class="op">=</span> <span class="st">"federicazoe"</span>,</span>
+<span>  push_feedback <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Here is a description of the specified inputs that are new to us:</p>
 <ul>
 <li>
@@ -208,7 +208,7 @@ Noting and pushing issues are separated across two functions. While grading a us
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
