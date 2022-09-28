@@ -46,7 +46,9 @@ assist_grading <- function(
     example_assignment_path,
     example_feedback_path,
     example_student_identifier,
-    missing_assignment_grade = NA
+    missing_assignment_grade = NA,
+    assignment_folder = NA,
+    number_assignment = 1 # default is that there is 1 assignment (that makes sense...)
 ) {
   
   core_assist_grading(
@@ -61,7 +63,9 @@ assist_grading <- function(
     questions_to_grade = "all",
     students_to_grade = "all",
     team_grading = FALSE,
-    github_issues = FALSE
+    github_issues = FALSE,
+    assignment_folder = assignment_folder,
+    number_assignment = number_assignment
   )
   
 }
@@ -71,17 +75,19 @@ assist_grading <- function(
 #' @title Team assisted grading
 #' @export
 assist_team_grading <- function(
-  rubric_path,
-  roster_path,
-  grading_progress_log_path,
-  final_grade_sheet_path,
-  example_assignment_path,
-  example_feedback_path,
-  example_team_identifier,
-  missing_assignment_grade = NA,
-  questions_to_grade = "all",
-  teams_to_grade = "all",
-  github_issues = FALSE
+    rubric_path,
+    roster_path,
+    grading_progress_log_path,
+    final_grade_sheet_path,
+    example_assignment_path,
+    example_feedback_path,
+    example_team_identifier,
+    missing_assignment_grade = NA,
+    questions_to_grade = "all",
+    teams_to_grade = "all",
+    github_issues = FALSE,
+    assignment_folder = NA,
+    number_assignment = 1 # default is that there is 1 assignment (that makes sense...)
 ) {
   
   core_assist_grading(
@@ -96,7 +102,9 @@ assist_team_grading <- function(
     questions_to_grade = questions_to_grade,
     students_to_grade = teams_to_grade,
     team_grading = TRUE,
-    github_issues = github_issues
+    github_issues = github_issues,
+    assignment_folder = assignment_folder,
+    number_assignment = number_assignment
   )
 }
 
@@ -105,17 +113,19 @@ assist_team_grading <- function(
 #' @title Advanced assisted grading
 #' @export
 assist_advanced_grading <- function(
-  rubric_path,
-  roster_path,
-  grading_progress_log_path,
-  final_grade_sheet_path,
-  example_assignment_path,
-  example_feedback_path,
-  example_student_identifier,
-  missing_assignment_grade = NA,
-  questions_to_grade = "all",
-  students_to_grade = "all",
-  github_issues = FALSE
+    rubric_path,
+    roster_path,
+    grading_progress_log_path,
+    final_grade_sheet_path,
+    example_assignment_path,
+    example_feedback_path,
+    example_student_identifier,
+    missing_assignment_grade = NA,
+    questions_to_grade = "all",
+    students_to_grade = "all",
+    github_issues = FALSE,
+    assignment_folder = NA,
+    number_assignment = 1 # default is that there is 1 assignment (that makes sense...)
 ) {
   
   core_assist_grading(
@@ -130,7 +140,9 @@ assist_advanced_grading <- function(
     questions_to_grade = questions_to_grade,
     students_to_grade = students_to_grade,
     team_grading = FALSE,
-    github_issues = github_issues
+    github_issues = github_issues,
+    assignment_folder = assignment_folder,
+    number_assignment = number_assignment
   )
   
 }

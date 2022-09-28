@@ -25,7 +25,9 @@ core_assist_grading <- function(
     questions_to_grade = "all",
     students_to_grade = "all",
     team_grading = FALSE,
-    github_issues = FALSE
+    github_issues = FALSE,
+    assignment_folder,
+    number_assignment
   ) {
   
   # Check example_assignment_path is valid
@@ -150,7 +152,9 @@ core_assist_grading <- function(
     example_student_identifier = example_student_identifier, 
     roster_path = roster_path,
     github_issues = github_issues,
-    team_grading = team_grading
+    team_grading = team_grading,
+    assignment_folder = assignment_folder,
+    number_assignment = number_assignment
   )
   
   # Specify which students to grade
