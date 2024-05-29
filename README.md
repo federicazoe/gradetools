@@ -47,7 +47,7 @@ devtools::install_github("federicazoe/gradetools")
 
 <table>
   <tr style="text-align: left"> 
-    <td> <img src="man/figures/nsf-logo.png" align="center" alt="NSF logo" width="120" /> </td>
+    <td> <img src="man/figures/nsf-logo.png" align="center" alt="HPI logo" width="120" /> </td>
     <td style="text-align: left"> <br> <br> Part of this work is supported by NSF HDR DSC award #2123366. </td>
   </tr> 
   <tr></tr>
