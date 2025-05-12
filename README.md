@@ -56,3 +56,5 @@ devtools::install_github("federicazoe/gradetools")
     <td style="text-align: left"> This work is also supported by the HPI Research Center in Machine Learning and Data Science at UC Irvine. </td>
   </tr>   
 </table>
+
+Typo was fixed
