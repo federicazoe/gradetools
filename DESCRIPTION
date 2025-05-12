@@ -1,7 +1,7 @@
 Package: gradetools
 Type: Package
 Title: Tools to Assist with Providing Grades and Personalized Feedback to Students 
-Version: 0.3.0.9000
+Version: 0.2.0.9000
 Authors@R: c(
         person(given = "Federica Zoe", family = "Ricci", email = "federicazoericci@gmail.com", role = c("cre", "aut"), comment = c(ORCID = "0000-0002-2560-4543")),
         person(given = "Catalina", family = "Medina",  role = c("aut"), comment = c(ORCID = "0000-0003-2847-8180")),
