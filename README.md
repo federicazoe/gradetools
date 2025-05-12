@@ -57,4 +57,4 @@ devtools::install_github("federicazoe/gradetools")
   </tr>   
 </table>
 
-Typo was fixed
+Typo was fixed.
