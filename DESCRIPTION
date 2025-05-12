@@ -11,7 +11,7 @@ Description: Provides functions to assist with grading and providing feedback to
     This package has functions to help create an assignment rubric, assist with grading students' assignments and writing feedback to a file, regrade specified students and assignments, and push feedback and or GitHub issues to GitHub.
 License: GPL (>= 3)
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Imports:
     stringr,
     readr (>= 2.1.2),
@@ -21,7 +21,7 @@ Imports:
     fs,
     utils,
     svDialogs,
-    rmarkdown
+    quarto
 Suggests: 
     knitr,
     testthat (>= 3.0.0)

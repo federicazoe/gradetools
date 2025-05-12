@@ -22,12 +22,12 @@ assign_grade_write_feedback <- function(
   ) {
   
   # Get feedback and grade corresponding to entered code
-  feedback_code <- unlist(str_split(
+  feedback_code <- unlist(stringr::str_split(
     grading_progress_log_row$feedback_codes, 
     pattern = "&&&"
   ))
   
-  questions_graded <- unlist(str_split(
+  questions_graded <- unlist(stringr::str_split(
     grading_progress_log_row$graded_qs, 
     pattern = "&&&"
   ))
@@ -36,7 +36,7 @@ assign_grade_write_feedback <- function(
   question_matches <- order(match(questions_graded, names(rubric_prompts)))
   
   num_questions <- sum(
-    str_count(names(rubric_list), "question_")
+    stringr::str_count(names(rubric_list), "question_")
   )
   
   if (!is.null(rubric_list[[1]]$points_to_remove)) {
@@ -84,7 +84,7 @@ assign_grade_write_feedback <- function(
     
     # Extract all codes given to this question
     # E.g. "2---77" into "2" and "77"
-    q_feedback_code <- str_split(
+    q_feedback_code <- stringr::str_split(
       feedback_code[questions_graded == q], 
       pattern = "---"
     )[[1]]
@@ -94,12 +94,12 @@ assign_grade_write_feedback <- function(
     
     # Write question comment if present
     if (!is.na(grading_progress_log_row$comments)) {
-      comments <- unlist(str_split(
+      comments <- unlist(stringr::str_split(
         grading_progress_log_row$comments, 
         pattern = "&&&"
       ))
       
-      comment_qs <- unlist(str_split(
+      comment_qs <- unlist(stringr::str_split(
         grading_progress_log_row$comment_qs, 
         pattern = "&&&"
       ))
@@ -107,7 +107,7 @@ assign_grade_write_feedback <- function(
       if (q %in% comment_qs) {
         q_fbk <- paste0(
           q_fbk, "\n", 
-          str_c(comments[which(comment_qs == q)], collapse = "\n"), "\n"
+          stringr::str_c(comments[which(comment_qs == q)], collapse = "\n"), "\n"
         )
       }
       
@@ -172,19 +172,19 @@ assign_grade_write_feedback <- function(
     gf_comments <- NULL
     
     if (!is.na(grading_progress_log_row$comments)) {
-      comments <- unlist(str_split(
+      comments <- unlist(stringr::str_split(
         grading_progress_log_row$comments, 
         pattern = "&&&"
       ))
       
-      comment_qs <- unlist(str_split(
+      comment_qs <- unlist(stringr::str_split(
         grading_progress_log_row$comment_qs, 
         pattern = "&&&"
       ))
       
       if ("general_feedback" %in% comment_qs) {
         gf_comments <- paste0(
-          str_c(
+          stringr::str_c(
             comments[which(comment_qs == "general_feedback")], 
             collapse = "\n"
           ), 
@@ -195,7 +195,7 @@ assign_grade_write_feedback <- function(
       
     }
     
-    gf_separated <- str_split(
+    gf_separated <- stringr::str_split(
       feedback_code[questions_graded == "general_feedback"], 
       pattern = "---"
     )[[1]]
@@ -245,40 +245,51 @@ assign_grade_write_feedback <- function(
   # Delete student's old feedback if it exists and write a new one
   # This is important because the rubric could have changed
   if(grading_progress_log_row$grading_status != "ungraded") {
-    unlink(grading_progress_log_row$feedback_path_Rmd)
-    unlink(grading_progress_log_row$feedback_path_to_be_knitted)
+    unlink(grading_progress_log_row$feedback_path_qmd)
+    unlink(grading_progress_log_row$feedback_path_to_be_rendered)
     
   }
   
-  fs::file_create(grading_progress_log_row$feedback_path_Rmd)
+  fs::file_create(grading_progress_log_row$feedback_path_qmd)
   
-  # Determing type of file to knit feedback to
+  # Determining type of file to knit feedback to
   feedback_file_ext <- as.character(fs::path_ext(
-    grading_progress_log_row$feedback_path_to_be_knitted)[1]
+    grading_progress_log_row$feedback_path_to_be_rendered)[1]
   )
   
-  feedback_knit_type <- case_when(
-    feedback_file_ext == "Rmd" ~ "html_document",
-    feedback_file_ext == "html" ~ "html_document",
-    feedback_file_ext == "docx" ~ "word_document",
-    feedback_file_ext == "pdf" ~ "pdf_document",
-    feedback_file_ext == "md" ~ "github_document",
-    TRUE ~ "NA",
-  )
+  if(feedback_file_ext == "qmd") {
+    feedback_file_ext <- "html"
+  }
   
-  # Create YAML section in feedback file
-  yaml <- paste(
-    "---",
-    'title: "Feedback"',
-    paste0('output: ', feedback_knit_type), 
-    "---\n",
-    sep = "\n"
-  )
+  if (feedback_file_ext == "Rmd") {
+    grading_progress_log_row$feedback_path_qmd <- fs::path_ext_set(
+      grading_progress_log_row$feedback_path_qmd, 
+      "Rmd"
+    )
+    
+    yaml <- paste(
+      "---",
+      "title: 'Feedback'",
+      "output: html_document", 
+      "---\n",
+      sep = "\n"
+    )
+    
+  } else {
+    yaml <- paste(
+      "---",
+      "title: 'Feedback'",
+      paste0("format: ", feedback_file_ext), 
+      "---\n",
+      sep = "\n"
+    )
+    
+  }
   
   # Write feedback in feedback file
-  write_file(
+  readr::write_file(
     x = paste0(yaml, "\n", feedback , "\n\n"), 
-    file = grading_progress_log_row$feedback_path_Rmd, 
+    file = grading_progress_log_row$feedback_path_qmd, 
     append = TRUE
   )
   
