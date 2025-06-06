@@ -89,7 +89,11 @@ create_grading_progress_log <- function(
   # Make feedback file paths, saved as .Rmd and the one to be knitted to
   grading_progress_log_new <- grading_progress_log_new %>% 
     mutate(feedback_path_qmd = stringr::str_replace_all(
-      as.character(fs::path_ext_set(example_feedback_path, ext = "qmd")), 
+      ifelse(
+        fs::path_ext(example_feedback_path) == "Rmd",
+        as.character(example_feedback_path), # Keep Rmd if that is the requested feedback format
+        as.character(fs::path_ext_set(example_feedback_path, ext = "qmd")) # Defaults to qmd for all other feedback formats
+        ), 
       pattern = example_student_identifier, 
       replacement = grading_progress_log_new$student_identifier
     )) %>% 
