@@ -117,8 +117,7 @@ grade_student <- function(
       } else if (question_fbk == "d" && curr_q == "general_feedback") {
         question_fbk <- "NA"
         store_feedback_codes <- TRUE
-        curr_row$updated_info <- TRUE
-        
+
       } else { 
         question_fbk <- stringr::str_replace_all(question_fbk, c(" " = "", "--" = "---"))
         q_fbk_separated <- unlist(stringr::str_split(question_fbk, "---"))
