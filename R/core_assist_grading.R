@@ -28,13 +28,15 @@ core_assist_grading <- function(
   ) {
   
   # Check example_assignment_path is valid input
-  if (example_assignment_path != "no_submissions") {
-    if (!is.vector(example_assignment_path)) {
-      stop("example_assignment_path must be a single string or a vector of strings")
-    } else if (!all(stringr::str_detect(example_assignment_path, example_student_identifier))) {
+  if (!is.vector(example_assignment_path)) {
+    stop("example_assignment_path must be one of: a single string or a vector of strings (if path);
+         or 'no_submissions'.")
+  } 
+  if (example_assignment_path[1] != "no_submission") {
+    if (!all(stringr::str_detect(example_assignment_path, example_student_identifier))) {
       stop("The example_student_identifier must be present in the example_assignment_path.")
     }
-  } 
+  }
 
   # Check that feedback, grading progress log and final grade sheets paths 
   # include correct directories
