@@ -34,7 +34,6 @@ grade_student <- function(
   
   invalid_fbk_message <- 'Please enter a valid prompt code, or enter "s" to stop.'
   
-  qs_to_grade_wo_gf <- questions_to_grade[questions_to_grade != "general_feedback"]
   previously_graded_qs <- unlist(stringr::str_split(curr_row$graded_qs, pattern = "&&&"))
   
   # Start at the first ungraded question and go through all rubric prompts
