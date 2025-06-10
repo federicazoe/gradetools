@@ -109,7 +109,7 @@ create_grading_progress_log <- function(
     mutate(assignment_missing = FALSE) %>% 
     mutate(feedback_info_updated = FALSE)
   
-  if (example_assignment_path == "no_submissions") {
+  if (example_assignment_path[1] == "no_submissions") {
     grading_progress_log_new$assignment_path <- example_assignment_path
     
   } else {
