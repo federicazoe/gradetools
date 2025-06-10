@@ -180,10 +180,12 @@ assist_regrading <- function(
           
           doc_id <- NULL
           
-          for(j in 1:length(assignment_path)) {
-            # Opens file
-            rstudioapi::navigateToFile(assignment_path[j])
+          for (j in 1:length(assignment_path)) {
             
+            if (file.exists(assignment_path[j])) {
+              # Opens file
+              rstudioapi::navigateToFile(assignment_path[j])
+            }
             # Need short pause so documentId grabs the correct document
             Sys.sleep(1)
             doc_id[j] <- rstudioapi::documentId()
@@ -249,8 +251,10 @@ assist_regrading <- function(
         
         if (grading_progress_log$assignment_path[i] != "no_submissions") {
           for(j in 1:length(assignment_path)) {
-            # Close assignment
-            invisible(rstudioapi::documentClose(id = doc_id[j], save = FALSE))
+            if (file.exists(assignment_path[j])) {
+              # Close assignment
+              invisible(rstudioapi::documentClose(id = doc_id[j], save = FALSE))              
+            }
           }
         }
         

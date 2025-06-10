@@ -187,12 +187,15 @@ core_assist_grading <- function(
             doc_id <- NULL
             
             for(j in 1:length(assignment_path)) {
-              # Open file
-              rstudioapi::navigateToFile(assignment_path[j], moveCursor = FALSE)
               
+              if (file.exists(assignment_path[j])) {
+                # Opens file
+                rstudioapi::navigateToFile(assignment_path[j], moveCursor = FALSE)
+              }
               # Need short pause so documentId() grabs the correct document
               Sys.sleep(1)
               doc_id[j] <- rstudioapi::documentId()
+              
             }
             
           }
@@ -208,10 +211,12 @@ core_assist_grading <- function(
             questions_to_grade = questions_to_grade
           )
           
-          if (example_assignment_path != "no_submissions") {
+          if (example_assignment_path[1] != "no_submissions") {
             for(j in 1:length(assignment_path)) {
-              # Close assignment
-              invisible(rstudioapi::documentClose(id = doc_id[j], save = FALSE))
+              if (file.exists(assignment_path[j])) {
+                # Close assignment
+                invisible(rstudioapi::documentClose(id = doc_id[j], save = FALSE))
+              }
             }
           }
           
