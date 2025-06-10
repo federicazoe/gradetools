@@ -2,10 +2,11 @@
 #'
 #' @param grading_progress_log_path string; assist-grading() functions save a file which includes information for gradetools's internal use. 
 #'     This is that path for that file. Must be a .csv
-#' @param example_assignment_path string; file path to one of the assignments to be graded. 
-#'     This file path structure will be used to determine where the other assignments to be graded are located. 
-#'     The student identifier has to be present somewhere in the file path.
+#' @param example_assignment_path string; file path(s) to the file(s) constituting one of the submissions to be graded. 
+#'     This file path structure will be used to determine where the other submissions to be graded are located. 
+#'     The student identifier has to be present somewhere in each file path(s).
 #'     If specified as "no_submissions", grading will proceed without automatic interaction with assignments (i.e opening and closing assignments).
+#'     If example_assignment_path is a vector of multiple file paths, gradetools will look for each of these files when grading a submission, and open all files it successfully finds for the given student or team.
 #' @param example_feedback_path string; file path to one of the assignment feedback files that will be generated as the user grades. 
 #'     This file path structure will be used to determine where the other feedback files will be stored. 
 #'     The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. 
@@ -106,11 +107,11 @@ create_grading_progress_log <- function(
   # Make assignment file paths
   grading_progress_log_new <- grading_progress_log_new %>% 
     mutate(assignment_path = NA) %>% 
-    mutate(assignment_missing = FALSE) %>% 
+    mutate(assignment_missing = TRUE) %>% 
     mutate(feedback_info_updated = FALSE)
   
   if (example_assignment_path[1] == "no_submissions") {
-    grading_progress_log_new$assignment_path <- example_assignment_path
+    grading_progress_log_new$assignment_path <- "no_submissions"
     
   } else {
     assignment_path <- rep(NA, length(example_assignment_path))
@@ -119,6 +120,7 @@ create_grading_progress_log <- function(
     no_assignment_file_paths_work <- TRUE
     
     for(i in 1:length(grading_progress_log_new$student_identifier)) {
+      
       for (j in 1:length(example_assignment_path)) {
         assignment_path[j] <- stringr::str_replace_all(
           example_assignment_path[j], 
@@ -126,15 +128,15 @@ create_grading_progress_log <- function(
           replacement = grading_progress_log_new$student_identifier[i]
         )
         
-        if(file.exists(assignment_path[j])) {
+        if (file.exists(assignment_path[j])) {
           # We need to know if none of the assignment file paths work
           no_assignment_file_paths_work <- FALSE
           
-        } else {
-          # Note those without an assignment
-          grading_progress_log_new$assignment_missing[i] <- TRUE
+          # If any file that is part of the assignment is found,
+          # the submission is labeled as not missing
+          grading_progress_log_new$assignment_missing[i] <- FALSE
           
-        }
+        } 
         
       }
       
