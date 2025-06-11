@@ -32,7 +32,7 @@ core_assist_grading <- function(
     stop("example_assignment_path must be one of: a single string or a vector of strings (if path);
          or 'no_submissions'.")
   } 
-  if (example_assignment_path[1] != "no_submission") {
+  if (example_assignment_path[1] != "no_submissions") {
     if (!all(stringr::str_detect(example_assignment_path, example_student_identifier))) {
       stop("The example_student_identifier must be present in the example_assignment_path.")
     }
@@ -136,7 +136,7 @@ core_assist_grading <- function(
         # All questions have not already been graded for this student
         !all_qs_graded
       )
-        
+      
       if (assignment_should_be_graded) {
         if (grading_progress_log$grading_status[i] == "feedback created") {
           # Print message

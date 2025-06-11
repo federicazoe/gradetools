@@ -112,6 +112,7 @@ create_grading_progress_log <- function(
   
   if (example_assignment_path[1] == "no_submissions") {
     grading_progress_log_new$assignment_path <- "no_submissions"
+    grading_progress_log_new$assignment_missing <- FALSE
     
   } else {
     assignment_path <- rep(NA, length(example_assignment_path))
