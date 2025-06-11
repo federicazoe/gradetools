@@ -165,6 +165,7 @@ create_grading_progress_log <- function(
         .default = readr::col_character(),
         assignment_missing = readr::col_logical(),
         grade_student = readr::col_logical(),
+        feedback_info_updated = readr::col_logical(),
         last_time_graded = readr::col_datetime()
       )
     )
