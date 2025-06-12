@@ -71,8 +71,7 @@ create_grading_progress_log <- function(
   
   # Read in class roster
   grading_progress_log_new <- readr::read_csv(roster_path, show_col_types = FALSE) %>%
-    mutate(across(everything(), as.character)) %>% 
-    mutate(student_identifier = as.character(student_identifier))
+    mutate(across(everything(), as.character))
   
   # Save team to student identifier; save team members
   if (team_grading) {
