@@ -120,7 +120,11 @@ Note: for simplicity, the figure above does not include files and folders presen
 
 ## Grading
 
-For grading, we are going to use `assist_team_grading()`. Note that `example_assignment_path` is a vector in this case, since we want to look at three files for each team.
+For grading, we are going to use `assist_team_grading()`. 
+Note that `example_assignment_path` is a vector in this case, since we want to look at three files for each team.
+When we grade a team, gradetools will look for each of these files and open all files it successfully finds for the given team.
+If gradetools cannot find one of the files (e.g., the team did not submit a proposal), then gradetools will not open that file. 
+In this case, the grader may want to look for whether the file is present but with an inconsistent naming style, and include a rubric item to mark whether an assignment's component (i.e., file) was submitted.
 
 ```{r}
 assist_team_grading(

@@ -10,6 +10,7 @@
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
 #' 
 #' @export
+#' 
 #' @import readr
 #' @import dplyr
 #' @import stringr
@@ -32,15 +33,15 @@ push_to_github <- function(
     stop("No file found at the specified grading_progress_log_path. Please provide a valid path.")
   }
   
-  if (!org_exists(class_github_name)) {
+  if (!ghclass::org_exists(class_github_name)) {
     stop("The specified class_github_name does not correspond to the name of an existing organization on GitHub.")
   }
   
-  if (!repo_exists(paste(class_github_name, example_github_repo, sep = "/"))) {
+  if (!ghclass::repo_exists(paste(class_github_name, example_github_repo, sep = "/"))) {
     stop(paste(example_github_repo, "does not correspond to a repository in the GitHub organization", class_github_name))
   }
   
-  if (!str_detect(example_github_repo, example_identifier)) {
+  if (!stringr::str_detect(example_github_repo, example_identifier)) {
     stop("Input example_github_repo does not contain input example_identifier. Make sure repos are distinguished by their identifiers.")
   }
   
@@ -48,10 +49,10 @@ push_to_github <- function(
     grading_progress_log_path,
     show_col_types = FALSE,
     col_types = cols(
-      .default = col_character(),
-      assignment_missing = col_logical(),
-      grade_student = col_logical(),
-      last_time_graded = col_datetime()
+      .default = readr::col_character(),
+      assignment_missing = readr::col_logical(),
+      grade_student = readr::col_logical(),
+      last_time_graded = readr::col_datetime()
     )
   )
   
@@ -64,13 +65,13 @@ push_to_github <- function(
     
     # Use the example GitHub identifier and GitHub repos provided to guess
     # the name of all student
-    grading_progress_log$github_repo <- str_replace_all(
+    grading_progress_log$github_repo <- stringr::str_replace_all(
       example_github_repo, 
       pattern = example_identifier, 
       replacement = grading_progress_log$student_identifier
     )
     
-    write_csv(grading_progress_log, file = grading_progress_log_path) 
+    readr::write_csv(grading_progress_log, file = grading_progress_log_path) 
     
   }
 
@@ -106,6 +107,7 @@ push_to_github <- function(
 #' @import dplyr
 #' @import stringr
 #' @import ghclass
+#' @importFrom svDialogs dlg_message
 #' 
 #' @keywords internal
 #'
@@ -126,7 +128,7 @@ push_feedback_github <- function(
       )))
   }
   
-  partially_graded <- dlg_message(
+  partially_graded <- svDialogs::dlg_message(
     c("Would you like to push feedback also for assignments that have been partially graded?",
       "If you select 'no', then feedback will only be pushed for fully graded assignments"),
     type = "yesno"
@@ -181,10 +183,10 @@ push_feedback_github <- function(
       
       if (repo_exists(paste(class_github_name, github_repo, sep = "/"))) {
         ghclass::repo_add_file(
-          repo = ghclass::org_repos(class_github_name, 
-                                    paste0("\\b",
-                                           github_repo,
-                                           "$")),
+          repo = ghclass::org_repos(
+            class_github_name, 
+            paste0("\\b", github_repo, "$")
+          ),
           message = "Feedback",
           file = feedback_path,
           overwrite = TRUE
@@ -193,16 +195,16 @@ push_feedback_github <- function(
         grading_progress_log$feedback_pushed[i] <- "TRUE"
         
         # Update grading progress log (feedback_pushed for this row has changed)
-        write_csv(grading_progress_log, file = grading_progress_log_path) 
+        readr::write_csv(grading_progress_log, file = grading_progress_log_path) 
     
       } else {
         
-        warning(paste(github_repo,
-                      "is not a repo in",
-                      class_github_name,
-                      "so the corresponding feedback file could not be pushed."
-          )
-        )
+        warning(paste(
+          github_repo,
+          "is not a repo in",
+          class_github_name,
+          "so the corresponding feedback file could not be pushed."
+        ))
         
       }
       
@@ -226,6 +228,7 @@ push_feedback_github <- function(
 #' @import dplyr
 #' @import stringr
 #' @import ghclass
+#' @import svDialogs 
 #' 
 #' @keywords internal
 #' 
@@ -252,7 +255,7 @@ create_issues_github <- function(
     )
   }
   
-  all_push_statuses <- str_split(
+  all_push_statuses <- stringr::str_split(
     string = grading_progress_log$issue_pushed, 
     pattern = "&&&"
   ) %>% 
@@ -267,7 +270,7 @@ create_issues_github <- function(
       )))
   }
   
-  partially_graded <- dlg_message(
+  partially_graded <- svDialogs::dlg_message(
     c("Would you like to create issues also for assignments that have been partially graded?",
       "If you select 'no', then issues will only be created for fully graded assignments"),
     type = "yesno"
@@ -279,7 +282,7 @@ create_issues_github <- function(
     relevant_rows <- grading_progress_log$grading_status == "all questions graded"
   }
   
-  relevant_push_statuses <- str_split(
+  relevant_push_statuses <- stringr::str_split(
     string = grading_progress_log$issue_pushed[relevant_rows], 
     pattern = "&&&"
   ) %>% 
@@ -302,7 +305,7 @@ create_issues_github <- function(
       )))
   }
   
-  show_issue_summary <- dlg_message(
+  show_issue_summary <- svDialogs::dlg_message(
     c("Would you like to see and confirm each issue before creating it?",
     "Creating issues on GitHub cannot be undone with gradetools."),
     type = "yesno"
@@ -319,33 +322,33 @@ create_issues_github <- function(
       
       github_repo <- grading_progress_log$github_repo[i]
       
-      if (repo_exists(paste(class_github_name, github_repo, sep = "/"))) {
+      if (ghclass::repo_exists(paste(class_github_name, github_repo, sep = "/"))) {
         
         issue_titles <- grading_progress_log$issue_titles[i] %>% 
-          str_split(pattern = "&&&") %>%
+          stringr::str_split(pattern = "&&&") %>%
           unlist()
         
         issue_bodies <- grading_progress_log$issue_bodies[i] %>% 
-          str_split(pattern = "&&&") %>%
+          stringr::str_split(pattern = "&&&") %>%
           unlist()
         
         num_issues <- length(issue_titles)
         
-        current_push_status <-  str_split(
+        current_push_status <-  stringr::str_split(
           string = grading_progress_log$issue_pushed[i], 
           pattern = "&&&"
         ) %>% 
           unlist()
         
         if (team_grading) {
-          assignees <- str_split(
+          assignees <- stringr::str_split(
             string = grading_progress_log$students_in_team[i], 
             pattern = "&&&"
           ) %>% 
             unlist()
           
           assignees <- paste0("@", assignees) %>% 
-            str_c(collapse = " ")
+            stringr::str_c(collapse = " ")
           
         }
         
@@ -363,19 +366,25 @@ create_issues_github <- function(
                 "You are about to create the following issue: \n",
                 paste0("Issue title: ", issue_titles[j]),
                 paste0("Issue body: ", issue_bodies[j]),
-                paste0("Assignees: ", 
-                       ifelse(!team_grading,
-                              grading_progress_log$student_identifier[i],
-                              assignees)),
-                       sep = "\n"
+                paste0(
+                  "Assignees: ", 
+                  ifelse(
+                    !team_grading,
+                    grading_progress_log$student_identifier[i],
+                    assignees
+                  )
+                ),
+                sep = "\n"
               )
+              
               proceed_message <-  paste(
                 new_issue,
                 "\nTo create this issue, press [ok]",
                 "To skip this issue, press [cancel].",
                 sep = "\n"
               )
-              proceed_with_issue <- ok_cancel_box(proceed_message)
+              
+              proceed_with_issue <- svDialogs::ok_cancel_box(proceed_message)
             }
             
             if (proceed_with_issue) {
@@ -419,12 +428,12 @@ create_issues_github <- function(
               
               current_push_status[j] <- "TRUE"
               
-              grading_progress_log$issue_pushed[i] <- str_c(
+              grading_progress_log$issue_pushed[i] <- stringr::str_c(
                 string = current_push_status, 
                 collapse = "&&&"
               )
               
-              write_csv(grading_progress_log, file = grading_progress_log_path) 
+              readr::write_csv(grading_progress_log, file = grading_progress_log_path) 
               
             }
             
@@ -434,11 +443,13 @@ create_issues_github <- function(
         
       } else {
         
-        warning(paste(github_repo,
-                      "is not a repo in",
-                      class_github_name,
-                      "so the corresponding issues could not be created.")
-        )
+        warning(paste(
+          github_repo,
+          "is not a repo in",
+          class_github_name,
+          "so the corresponding issues could not be created."
+        ))
+        
       }
       
     }

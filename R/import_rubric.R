@@ -11,6 +11,15 @@
 #' @keywords internal
 #' 
 import_rubric <- function(rubric_path) {
+  
+  if (!file.exists(rubric_path)) {
+    stop(paste0(
+      "No file exists at ", rubric_path, ". ",
+      "Are you sure that this path is correct?"
+    ))  
+    
+  }
+  
   col_names <- c(
     "name", "prompt_code", "prompt_message", 
     "feedback", "total_points"
@@ -20,11 +29,11 @@ import_rubric <- function(rubric_path) {
     rubric_path, 
     show_col_types = FALSE, 
     col_types = readr::cols(
-      name = col_character(),
-      prompt_code = col_character(),
-      prompt_message = col_character(),
-      feedback = col_character(),
-      .default = col_double()
+      name = readr::col_character(),
+      prompt_code = readr::col_character(),
+      prompt_message = readr::col_character(),
+      feedback = readr::col_character(),
+      .default = readr::col_double()
     ), 
     skip_empty_rows = TRUE
   )
@@ -83,7 +92,7 @@ import_rubric <- function(rubric_path) {
   }
   
   # Check if any prompt codes have spaces
-  if (any(str_detect(rubric$prompt_code, pattern = " "))) {
+  if (any(stringr::str_detect(rubric$prompt_code, pattern = " "))) {
     stop(paste0(
       "\nPrompt codes in the rubric cannot contain spaces."
     ))
@@ -124,7 +133,7 @@ import_rubric <- function(rubric_path) {
     q_rubric <- rubric[rubric$name %in% question_names[q], ]
     
     q_list$name <- q_rubric$name[1]
-    q_list$prompt_code <- str_replace_all(
+    q_list$prompt_code <- stringr::str_replace_all(
       as.character(q_rubric$prompt_code),
       pattern = " ", 
       replacement = ""
