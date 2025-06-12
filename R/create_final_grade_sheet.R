@@ -59,8 +59,9 @@ create_final_grade_sheet <- function(
   }
   
   all_cols_to_remove <- c(
-    "feedback_path_Rmd", 
-    "feedback_path_to_be_knitted",
+    "feedback_path_qmd", 
+    "feedback_path_to_be_rendered",
+    "feedback_info_updated",
     "assignment_path",
     "assignment_missing",
     "grading_status", 
@@ -83,10 +84,9 @@ create_final_grade_sheet <- function(
   final_grade_sheet <- final_grade_sheet %>% 
     select(!any_of(which_cols_to_remove)) %>%
     relocate(
-      student_identifier, grade, grade_decomposition, 
+      grade, grade_decomposition, 
       .after = last_col()
     )
-  
   
   if (team_grading) {
     brief_roster <- final_grade_sheet %>% 
