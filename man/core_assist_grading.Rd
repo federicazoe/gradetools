@@ -32,10 +32,11 @@ This is that path for that file. Must be a .csv}
 
 \item{final_grade_sheet_path}{string; path to save final grade sheet to. Must be a .csv}
 
-\item{example_assignment_path}{string; file path to one of the assignments to be graded. 
-This file path structure will be used to determine where the other assignments to be graded are located. 
-The student identifier has to be present somewhere in the file path.
-If specified as "no_submissions", grading will proceed without automatic interaction with assignments (i.e opening and closing assignments).}
+\item{example_assignment_path}{string; file path(s) to the file(s) constituting one of the submissions to be graded. 
+This file path structure will be used to determine where the other submissions to be graded are located. 
+The student identifier has to be present somewhere in each file path(s).
+If specified as "no_submissions", grading will proceed without automatic interaction with assignments (i.e opening and closing assignments).
+If example_assignment_path is a vector of multiple file paths, gradetools will look for each of these files when grading a submission, and open all files it successfully finds for the given student or team.}
 
 \item{example_feedback_path}{string; file path to one of the assignment feedback files that will be generated as the user grades. 
 This file path structure will be used to determine where the other feedback files will be stored. 
