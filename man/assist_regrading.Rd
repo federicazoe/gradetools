@@ -35,6 +35,8 @@ This is that path for that file. Must be a .csv}
 \item{missing_assignment_grade}{numeric; The grade to assign a student with no assignment submission}
 
 \item{github_issues}{logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)}
+
+\item{write_grades_into_feedback}{logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).}
 }
 \description{
 Assists with regrading, given an assist grading function was previously used. Deletes previously specified grades, feedback, comments and issues for each regraded question.

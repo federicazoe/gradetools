@@ -32,6 +32,8 @@ grade_student(
 \item{github_issues}{Boolean; indicates if grader wants to be able to create GitHub issues}
 
 \item{questions_to_grade}{vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric}
+
+\item{write_grades_into_feedback}{logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).}
 }
 \value{
 grading progress log data frame

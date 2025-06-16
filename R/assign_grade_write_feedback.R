@@ -3,6 +3,7 @@
 #' @param grading_progress_log_row data frame with 1 row; The grading_progress_log is a data frame containing information for gradetools internal use. This row should correspond to the student that needs to be graded and have feedback written
 #' @param rubric_list list of lists; each sub-list corresponds to a part of the assignment rubric and specifies the name of this part (e.g. "question_1"), the total points that can be earned for this part, the rubric etc. Rubric should be made using 'create_rubric_template()'.
 #' @param rubric_prompts list of prompts; One prompt for each question plus one for overall feedback. This is produced by create_rubric_prompts
+#' @param write_grades_into_feedback logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).
 #'
 #' @return list with\describe{
 #'   \item{grade}{A number, the total grade scored for this assignment by the student being graded (e.g. 3)}

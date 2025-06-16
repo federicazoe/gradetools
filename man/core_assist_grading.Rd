@@ -59,6 +59,8 @@ All students_to_grade must be student_identifiers present in the roster}
 \item{team_grading}{logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)}
 
 \item{github_issues}{logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)}
+
+\item{write_grades_into_feedback}{logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).}
 }
 \description{
 Core function that assists with grading, creates feedback and grade book files

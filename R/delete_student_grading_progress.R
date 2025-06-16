@@ -6,6 +6,7 @@
 #' @param questions_to_delete string; vector of assignment question 'names' to have grade and feedback deleted. 
 #'     This can be specified as "all" to apply to all questions.
 #' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
+#' @param write_grades_into_feedback logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).
 #'
 #' @import readr
 #' @import stringr

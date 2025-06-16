@@ -26,6 +26,8 @@ create_final_grade_sheet(
 \item{rubric_prompts}{list of prompts; One prompt for each question plus one for overall feedback. This is produced by create_rubric_prompts}
 
 \item{team_grading}{logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)}
+
+\item{write_grades_into_feedback}{logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).}
 }
 \description{
 Writes final grade sheet csv

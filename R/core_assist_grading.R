@@ -2,6 +2,7 @@
 #'
 #' @inheritParams assist_grading_functions
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
+#' @param write_grades_into_feedback logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).
 #' 
 #' @import readr
 #' @import dplyr

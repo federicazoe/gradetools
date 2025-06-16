@@ -24,6 +24,8 @@ delete_student_grading_progress(
 This can be specified as "all" to apply to all questions.}
 
 \item{github_issues}{logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)}
+
+\item{write_grades_into_feedback}{logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).}
 }
 \description{
 Delete feedback and grades for specified students and questions

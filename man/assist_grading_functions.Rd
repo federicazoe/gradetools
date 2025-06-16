@@ -79,6 +79,8 @@ This needs to be present somewhere in the example_assignment_path. The student_i
 
 \item{missing_assignment_grade}{numeric; The grade to assign a student with no assignment submission}
 
+\item{write_grades_into_feedback}{logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).}
+
 \item{example_team_identifier}{string; Used instead of example_student_identifier when grading team assignments with assist_team_grading(). 
 A team identifier (e.g. "team1", "team2", etc.) that is used to identify what team the student on the roster is in. 
 This needs to be present somewhere in the example_assignment_path.}

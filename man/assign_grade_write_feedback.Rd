@@ -17,6 +17,8 @@ assign_grade_write_feedback(
 \item{rubric_list}{list of lists; each sub-list corresponds to a part of the assignment rubric and specifies the name of this part (e.g. "question_1"), the total points that can be earned for this part, the rubric etc. Rubric should be made using 'create_rubric_template()'.}
 
 \item{rubric_prompts}{list of prompts; One prompt for each question plus one for overall feedback. This is produced by create_rubric_prompts}
+
+\item{write_grades_into_feedback}{logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).}
 }
 \value{
 list with\describe{

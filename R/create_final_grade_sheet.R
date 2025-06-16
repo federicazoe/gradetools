@@ -6,6 +6,7 @@
 #' @param rubric_prompts list of prompts; One prompt for each question plus one for overall feedback. This is produced by create_rubric_prompts
 #' @param rubric_list list whose format corresponds to rubric_list, which is used by most functions in this package. This is produced by import_rubric
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
+#' @param write_grades_into_feedback logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).
 #' 
 #' @import dplyr
 #' @importFrom stringr str_split
