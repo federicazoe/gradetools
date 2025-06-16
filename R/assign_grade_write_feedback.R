@@ -146,6 +146,10 @@ assign_grade_write_feedback <- function(
       
       q_fbk <- paste(q_fbk, new_fbk, sep = "\n\n")
       
+      if (write_grades_into_feedback == TRUE & new_change != 0) {
+        q_fbk <- paste(q_fbk, paste0("(", new_change, " points)"), sep = "\n")
+      }      
+      
       q_grade <- q_grade + new_change
 
     }
@@ -162,7 +166,11 @@ assign_grade_write_feedback <- function(
     
     # Store question feedback, grade, and grade decomposition
     if (write_grades_into_feedback == TRUE) {
-      q_fbk <- paste(q_fbk, paste("Grade:", q_grade), sep = "\n\n")
+      q_fbk <- paste(
+        q_fbk, 
+        paste0("Grade: ", q_grade, " (of ", q_info$total_points, ")"), 
+        sep = "\n\n"
+      )
     }
     feedback <- paste(feedback, q_fbk, sep = "\n\n")
     overall_grade <- overall_grade + q_grade
