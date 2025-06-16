@@ -160,6 +160,9 @@ assign_grade_write_feedback <- function(
     }
     
     # Store question feedback, grade, and grade decomposition
+    if (write_grades_into_feedback == TRUE) {
+      q_fbk <- paste(q_fbk, paste("Grade:", q_grade), sep = "\n\n")
+    }
     feedback <- paste(feedback, q_fbk, sep = "\n\n")
     overall_grade <- overall_grade + q_grade
     grade_decomposition <- c(grade_decomposition, q_grade)

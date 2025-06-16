@@ -16,7 +16,8 @@ core_assist_grading(
   questions_to_grade = "all",
   students_to_grade = "all",
   team_grading = FALSE,
-  github_issues = FALSE
+  github_issues = FALSE,
+  write_grades_into_feedback = FALSE
 )
 }
 \arguments{

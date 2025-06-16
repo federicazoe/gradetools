@@ -31,6 +31,9 @@ grade_student <- function(
   write_grades_into_feedback
 ){
   
+  print(paste("assign_grade_write_feedback()"))
+  print(paste("write_grades_into_feedback =", write_grades_into_feedback))  
+  
   curr_row <- grading_progress_log[row, ]
   
   invalid_fbk_message <- 'Please enter a valid prompt code, or enter "s" to stop.'

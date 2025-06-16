@@ -12,7 +12,8 @@ grade_student(
   rubric_list,
   rubric_path,
   github_issues,
-  questions_to_grade
+  questions_to_grade,
+  write_grades_into_feedback
 )
 }
 \arguments{

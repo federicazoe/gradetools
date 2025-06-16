@@ -7,7 +7,8 @@
 assign_grade_write_feedback(
   grading_progress_log_row,
   rubric_list,
-  rubric_prompts
+  rubric_prompts,
+  write_grades_into_feedback = FALSE
 )
 }
 \arguments{

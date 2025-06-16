@@ -10,7 +10,8 @@ create_final_grade_sheet(
   missing_assignment_grade,
   rubric_list,
   rubric_prompts,
-  team_grading
+  team_grading,
+  write_grades_into_feedback
 )
 }
 \arguments{

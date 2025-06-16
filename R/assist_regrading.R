@@ -205,7 +205,8 @@ assist_regrading <- function(
                 rubric_path = rubric_path,
                 identifier = curr_id,
                 questions_to_delete = q,
-                github_issues = github_issues
+                github_issues = github_issues,
+                write_grades_into_feedback = write_grades_into_feedback
               )
               
             }
@@ -285,7 +286,8 @@ assist_regrading <- function(
     missing_assignment_grade = missing_assignment_grade, 
     rubric_list = rubric_list, 
     rubric_prompts = rubric_prompts, 
-    team_grading = team_grading
+    team_grading = team_grading,
+    write_grades_into_feedback = write_grades_into_feedback
   )
   
   feedback_file_ext <- as.character(fs::path_ext(

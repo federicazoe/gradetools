@@ -15,7 +15,8 @@ assist_grading(
   example_assignment_path,
   example_feedback_path,
   example_student_identifier,
-  missing_assignment_grade = NA
+  missing_assignment_grade = NA,
+  write_grades_into_feedback = FALSE
 )
 
 assist_team_grading(
@@ -29,7 +30,8 @@ assist_team_grading(
   missing_assignment_grade = NA,
   questions_to_grade = "all",
   teams_to_grade = "all",
-  github_issues = FALSE
+  github_issues = FALSE,
+  write_grades_into_feedback = FALSE
 )
 
 assist_advanced_grading(
@@ -43,7 +45,8 @@ assist_advanced_grading(
   missing_assignment_grade = NA,
   questions_to_grade = "all",
   students_to_grade = "all",
-  github_issues = FALSE
+  github_issues = FALSE,
+  write_grades_into_feedback = FALSE
 )
 }
 \arguments{

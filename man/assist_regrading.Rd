@@ -12,7 +12,8 @@ assist_regrading(
   students_to_regrade,
   teams_to_regrade = NULL,
   missing_assignment_grade = NA,
-  github_issues = FALSE
+  github_issues = FALSE,
+  write_grades_into_feedback = FALSE
 )
 }
 \arguments{

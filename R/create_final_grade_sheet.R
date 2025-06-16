@@ -18,7 +18,8 @@ create_final_grade_sheet <- function(
     missing_assignment_grade,
     rubric_list,
     rubric_prompts,
-    team_grading
+    team_grading,
+    write_grades_into_feedback
   ) {
   
   final_grade_sheet <- grading_progress_log %>% 
@@ -39,7 +40,8 @@ create_final_grade_sheet <- function(
       grade_info <- assign_grade_write_feedback(
         grading_progress_log[j, ],
         rubric_list = rubric_list,
-        rubric_prompts = rubric_prompts
+        rubric_prompts = rubric_prompts,
+        write_grades_into_feedback = write_grades_into_feedback
       )
     }
     

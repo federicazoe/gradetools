@@ -9,7 +9,8 @@ delete_student_grading_progress(
   rubric_path,
   identifier,
   questions_to_delete,
-  github_issues
+  github_issues,
+  write_grades_into_feedback
 )
 }
 \arguments{

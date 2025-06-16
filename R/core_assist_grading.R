@@ -277,7 +277,8 @@ core_assist_grading <- function(
       missing_assignment_grade = missing_assignment_grade,
       rubric_list = rubric_list,
       rubric_prompts = rubric_prompts,
-      team_grading = team_grading
+      team_grading = team_grading,
+      write_grades_into_feedback = write_grades_into_feedback
     )
   }
   
