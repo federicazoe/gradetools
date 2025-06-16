@@ -24,7 +24,8 @@ core_assist_grading <- function(
     questions_to_grade = "all",
     students_to_grade = "all",
     team_grading = FALSE,
-    github_issues = FALSE
+    github_issues = FALSE,
+    write_grades_into_feedback = FALSE
   ) {
   
   # Check example_assignment_path is valid input
@@ -208,7 +209,8 @@ core_assist_grading <- function(
             rubric_list = rubric_list,
             rubric_path = rubric_path,
             github_issues = github_issues,
-            questions_to_grade = questions_to_grade
+            questions_to_grade = questions_to_grade,
+            write_grades_into_feedback = write_grades_into_feedback
           )
           
           if (example_assignment_path[1] != "no_submissions") {

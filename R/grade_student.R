@@ -27,7 +27,8 @@ grade_student <- function(
   rubric_list,
   rubric_path,
   github_issues,
-  questions_to_grade
+  questions_to_grade,
+  write_grades_into_feedback
 ){
   
   curr_row <- grading_progress_log[row, ]
@@ -165,7 +166,8 @@ grade_student <- function(
       grade_info <- assign_grade_write_feedback(
         grading_progress_log_row = curr_row, 
         rubric_list = rubric_list,
-        rubric_prompts = rubric_prompts
+        rubric_prompts = rubric_prompts,
+        write_grades_into_feedback = write_grades_into_feedback    
       )
       
       # Update feedback_pushed, if it exists

@@ -21,7 +21,8 @@ assist_regrading <- function(
     students_to_regrade,
     teams_to_regrade = NULL,
     missing_assignment_grade = NA,
-    github_issues = FALSE
+    github_issues = FALSE,
+    write_grades_into_feedback = FALSE
   ) {
   
   if (is.null(students_to_regrade) && is.null(teams_to_regrade)) {
@@ -217,7 +218,8 @@ assist_regrading <- function(
               rubric_list = rubric_list,
               rubric_path = rubric_path,
               questions_to_grade = q,
-              github_issues = github_issues
+              github_issues = github_issues,
+              write_grades_into_feedback = write_grades_into_feedback
             )
             
             # Recreate rubric list and prompts, in case they have been modified

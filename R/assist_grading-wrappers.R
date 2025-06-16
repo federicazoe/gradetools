@@ -48,7 +48,8 @@ assist_grading <- function(
     example_assignment_path,
     example_feedback_path,
     example_student_identifier,
-    missing_assignment_grade = NA
+    missing_assignment_grade = NA,
+    write_grades_into_feedback = FALSE
 ) {
   
   core_assist_grading(
@@ -63,7 +64,8 @@ assist_grading <- function(
     questions_to_grade = "all",
     students_to_grade = "all",
     team_grading = FALSE,
-    github_issues = FALSE
+    github_issues = FALSE,
+    write_grades_into_feedback = write_grades_into_feedback
   )
   
 }
@@ -83,7 +85,8 @@ assist_team_grading <- function(
   missing_assignment_grade = NA,
   questions_to_grade = "all",
   teams_to_grade = "all",
-  github_issues = FALSE
+  github_issues = FALSE,
+  write_grades_into_feedback = FALSE
 ) {
   
   core_assist_grading(
@@ -98,7 +101,8 @@ assist_team_grading <- function(
     questions_to_grade = questions_to_grade,
     students_to_grade = teams_to_grade,
     team_grading = TRUE,
-    github_issues = github_issues
+    github_issues = github_issues,
+    write_grades_into_feedback = write_grades_into_feedback
   )
 }
 
@@ -117,7 +121,8 @@ assist_advanced_grading <- function(
   missing_assignment_grade = NA,
   questions_to_grade = "all",
   students_to_grade = "all",
-  github_issues = FALSE
+  github_issues = FALSE,
+  write_grades_into_feedback = FALSE
 ) {
   
   core_assist_grading(
@@ -132,7 +137,8 @@ assist_advanced_grading <- function(
     questions_to_grade = questions_to_grade,
     students_to_grade = students_to_grade,
     team_grading = FALSE,
-    github_issues = github_issues
+    github_issues = github_issues,
+    write_grades_into_feedback = write_grades_into_feedback    
   )
   
 }

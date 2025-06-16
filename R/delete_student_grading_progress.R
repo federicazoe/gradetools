@@ -17,7 +17,8 @@ delete_student_grading_progress <- function(
     rubric_path,
     identifier,
     questions_to_delete,
-    github_issues
+    github_issues,
+    write_grades_into_feedback
   ) {
   
   grading_progress_log <- readr::read_csv(
@@ -82,7 +83,8 @@ delete_student_grading_progress <- function(
   grade_info <- assign_grade_write_feedback(
     grading_progress_log_row = curr_row, 
     rubric_list = rubric_list,
-    rubric_prompts = rubric_prompts
+    rubric_prompts = rubric_prompts,
+    write_grades_into_feedback = write_grades_into_feedback
   )
   
   curr_row$grading_status <- grade_info$grading_status
