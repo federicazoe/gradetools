@@ -28,7 +28,7 @@ If example_assignment_path is a vector of multiple file paths, gradetools will l
 This file path structure will be used to determine where the other feedback files will be stored. 
 The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. 
 The extension of the feedback file must be one of the following: "Rmd", "md", "docx", "html", "pdf". 
-These file types (except the first) will be knitted to: GitHub, Word, html, and pdf documents respectively}
+For extensions "md", "docx", "html", "pdf", a "qmd" file will be created first and then rendered to the desired format.}
 
 \item{example_student_identifier}{string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. 
 This needs to be present somewhere in the example_assignment_path. Currently, if team_grading is set to TRUE the team_identifier needs to be present in this path instead of the student_identifier.}
