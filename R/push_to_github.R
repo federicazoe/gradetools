@@ -128,12 +128,17 @@ push_feedback_github <- function(
       )))
   }
   
-  partially_graded <- svDialogs::dlg_message(
-    c("Would you like to push feedback also for assignments that have been partially graded?",
-      "If you select 'no', then feedback will only be pushed for fully graded assignments"),
-    type = "yesno"
-  )$res 
-  
+  # Check if there are partially graded assignments
+  if (any(grading_progress_log$grading_status == "feedback created")) {
+    partially_graded <- svDialogs::dlg_message(
+      c("Would you like to push feedback also for assignments that have been partially graded?",
+        "If you select 'no', then feedback will only be pushed for fully graded assignments"),
+      type = "yesno"
+    )$res 
+  } else {
+    partially_graded <- "no"
+  }
+
   if (partially_graded == "yes") {
     relevant_rows <- grading_progress_log$grading_status %in% 
                         c("all questions graded", "feedback created")
