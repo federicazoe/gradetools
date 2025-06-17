@@ -275,11 +275,16 @@ create_issues_github <- function(
       )))
   }
   
-  partially_graded <- svDialogs::dlg_message(
-    c("Would you like to create issues also for assignments that have been partially graded?",
-      "If you select 'no', then issues will only be created for fully graded assignments"),
-    type = "yesno"
-  )$res 
+  # Check if there are partially graded assignments
+  if (any(grading_progress_log$grading_status == "feedback created")) {
+    partially_graded <- svDialogs::dlg_message(
+      c("Would you like to create issues also for assignments that have been partially graded?",
+        "If you select 'no', then issues will only be created for fully graded assignments"),
+      type = "yesno"
+    )$res 
+  } else {
+    partially_graded <- "no"
+  }  
   
   if (partially_graded == "yes") {
     relevant_rows <- c(1:nrow(grading_progress_log))
