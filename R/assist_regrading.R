@@ -312,6 +312,7 @@ assist_regrading <- function(
   cat("\nGrading progress:")   
   cat(paste0("\nTotal submissions: ", n_submissions))
   cat(paste0("\nFully graded: ", n_graded))
-  cat(paste0("\nMissing: ", n_missing))  
+  cat(paste0("\nTo be graded: ", (n_submissions - n_graded - n_missing)))
+  cat(paste0("\nMissing or not found: ", n_missing))  
   
 }
