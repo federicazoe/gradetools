@@ -60,12 +60,12 @@ create_rubric_template <- function(
         "general_feedback"
       ),
       prompt_code = c(
-        "a",
-        "a",
+        "1",
+        "1",
         "1", "1a", "1b",
         "1", "2",
         "0",
-        "*"
+        "111"
       ),
       prompt_message = c(
         "Incorrect multiple choice option",

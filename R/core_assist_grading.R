@@ -2,13 +2,13 @@
 #'
 #' @inheritParams assist_grading_functions
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
+#' @param write_grades_into_feedback logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).
 #' 
 #' @import readr
 #' @import dplyr
 #' @import stringr
 #' @import rstudioapi
 #' @import svDialogs
-#' @import rmarkdown
 #' @import fs
 #' 
 #' @keywords internal
@@ -25,29 +25,21 @@ core_assist_grading <- function(
     questions_to_grade = "all",
     students_to_grade = "all",
     team_grading = FALSE,
-    github_issues = FALSE
+    github_issues = FALSE,
+    write_grades_into_feedback = FALSE
   ) {
   
-  # Check example_assignment_path is valid
+  # Check example_assignment_path is valid input
   if (!is.vector(example_assignment_path)) {
-    stop("example_assignment_path must be a single string or a vector of strings")
-  } else if (!all(str_detect(example_assignment_path, example_student_identifier))) {
-    stop("The example_student_identifier must be present in the example_assignment_path.")
-  }
-  
-  # Check that rubric_path, roster_path and example_assignment_path 
-  # point to a file 
-  paths_to_files <- c(rubric_path, roster_path, example_assignment_path)
-  for (p in paths_to_files) {
-    if (!file.exists(p)) {
-      stop(paste0(
-        "No file exists at ", p, ". ",
-        "Are you sure that this path is correct?"
-      ))  
-      
+    stop("example_assignment_path must be one of: a single string or a vector of strings (if path);
+         or 'no_submissions'.")
+  } 
+  if (example_assignment_path[1] != "no_submissions") {
+    if (!all(stringr::str_detect(example_assignment_path, example_student_identifier))) {
+      stop("The example_student_identifier must be present in the example_assignment_path.")
     }
   }
-  
+
   # Check that feedback, grading progress log and final grade sheets paths 
   # include correct directories
   paths_to_write_to <- c(
@@ -57,8 +49,8 @@ core_assist_grading <- function(
   )
   
   for (p in paths_to_write_to) {
-    if (str_detect(p, "/")) {
-      if (!dir.exists(path_dir(p))) {
+    if (stringr::str_detect(p, "/")) {
+      if (!dir.exists(fs::path_dir(p))) {
        stop(paste("This directory seems to be incorrect:", p))
          
       }
@@ -66,8 +58,8 @@ core_assist_grading <- function(
   }
   
   # Check that grading progress log and final grade sheet paths are to .csv files
-  temp_file_ext <- path_ext(grading_progress_log_path)
-  final_file_ext <- path_ext(final_grade_sheet_path)
+  temp_file_ext <- fs::path_ext(grading_progress_log_path)
+  final_file_ext <- fs::path_ext(final_grade_sheet_path)
   if (!all(c(temp_file_ext, final_file_ext) %in% c("csv"))) {
     stop("The extension of grading_progress_log_path and final_grade_sheet_path must be .csv")
     
@@ -80,44 +72,13 @@ core_assist_grading <- function(
   } 
     
   # Check example_feedback_path is valid
-  feedback_file_ext <- path_ext(example_feedback_path)
+  feedback_file_ext <- fs::path_ext(example_feedback_path)
   
-  if (!(feedback_file_ext %in% c("Rmd", "docx", "html", "pdf", "md"))) {
-    stop("The extension of the example_feedback_path must be one of the following: '.Rmd', '.docx', '.html', '.pdf'.")
-  } else if (!str_detect(example_feedback_path, example_student_identifier)) {
+  if (!(feedback_file_ext %in% c("md", "Rmd", "qmd", "html", "pdf", "docx"))) {
+    stop("The extension of the example_feedback_path must be one of the following: '.md', '.Rmd', '.qmd', '.html', '.pdf', '.docx'.")
+  } else if (!stringr::str_detect(example_feedback_path, example_student_identifier)) {
     stop("The example_student_identifier must be present in the example_feedback_path file name.")
   } 
-  
-  
-  roster <- read_csv(roster_path, show_col_types = FALSE) %>%
-    mutate(across(everything(), as.character))
-  
-  if (sum(colnames(roster) == "student_identifier") != 1) {
-    stop("\nThe class roster must only have a column named student_identifier")
-    
-  } else if (any(duplicated(roster$student_identifier))) {
-    stop(paste0(
-      "\nThere is at least one student identifier repeated in the class roster.", 
-      "\nPlease make sure that the student_identifier is unique to the student."
-    ))
-    
-  } else if (any(is.na(roster$student_identifier))) {
-    stop("\nA student_identifier must be provided for every row of the roster.")
-    
-  }
-  
-  if (team_grading){
-    if(sum(colnames(roster) == "team_identifier") != 1) {
-      stop(paste0(
-        "\nteam_grading is set to TRUE so there must be a column in the class roster called team_identifier.",
-        "\nThis specified which team each student belongs to.",
-        "\nThe team_identifier must also be present in the example_assignment_path."
-      ))
-    } else if (any(is.na(roster$team_identifier))) {
-      stop("\nA team_identifier must be provided for every row of the roster.")
-      
-    }
-  }
   
   # Import rubric and create rubric prompts
   rubric_list <- import_rubric(rubric_path)
@@ -160,7 +121,14 @@ core_assist_grading <- function(
   
   grading_progress_log <- grading_progress_log %>% 
     mutate(grade_student = student_identifier %in% students_to_grade)
-
+  
+  # Write new grading progress log file. This ensures that, even if all 
+  # submissions have grading status "all questions graded", 
+  # the grading progress log has the most-recently specified feedback paths 
+  # (allows to, e.g., change the format that the grader wants the feedback to
+  # be in)
+  readr::write_csv(grading_progress_log, file = grading_progress_log_path)
+  
   continue_grading <- TRUE
   
   # Loop through students, grading each
@@ -177,7 +145,7 @@ core_assist_grading <- function(
         # All questions have not already been graded for this student
         !all_qs_graded
       )
-        
+      
       if (assignment_should_be_graded) {
         if (grading_progress_log$grading_status[i] == "feedback created") {
           # Print message
@@ -189,7 +157,7 @@ core_assist_grading <- function(
               ".\n This assignment was previously partially graded, with the last edit performed at: ",
               grading_progress_log$last_time_graded[i],
               ".\n The following questions were already graded: ",
-              str_replace_all(
+              stringr::str_replace_all(
                 grading_progress_log$graded_qs[i], 
                 pattern = "&&&", 
                 replacement = ", "
@@ -214,23 +182,31 @@ core_assist_grading <- function(
           
         }
         
-        continue_grading <- ok_cancel_box(begin_message)
+        continue_grading <- svDialogs::ok_cancel_box(begin_message)
         
         cat("\n")
         
         if (continue_grading) {
-          # Get assignment_path
-          assignment_path <- unlist(
-            str_split(grading_progress_log$assignment_path[i], ", ")
-          )
           
-          doc_id <- NULL
-          
-          for(j in 1:length(assignment_path)) {
-            navigateToFile(assignment_path[j], moveCursor = FALSE)
-            # Need short pause so documentId grabs the correct document
-            Sys.sleep(1)
-            doc_id[j] <- documentId()
+          if (grading_progress_log$assignment_path[i] != "no_submissions") {
+            assignment_path <- unlist(
+              stringr::str_split(grading_progress_log$assignment_path[i], ", ")
+            )
+            
+            doc_id <- NULL
+            
+            for(j in 1:length(assignment_path)) {
+              
+              if (file.exists(assignment_path[j])) {
+                # Opens file
+                rstudioapi::navigateToFile(assignment_path[j], moveCursor = FALSE)
+              }
+              # Need short pause so documentId() grabs the correct document
+              Sys.sleep(1)
+              doc_id[j] <- rstudioapi::documentId()
+              
+            }
+            
           }
           
           temp_obj <- grade_student(
@@ -241,12 +217,17 @@ core_assist_grading <- function(
             rubric_list = rubric_list,
             rubric_path = rubric_path,
             github_issues = github_issues,
-            questions_to_grade = questions_to_grade
+            questions_to_grade = questions_to_grade,
+            write_grades_into_feedback = write_grades_into_feedback
           )
           
-          # Close assignment
-          for(j in 1:length(assignment_path)) {
-            invisible(documentClose(id = doc_id[j], save = FALSE))
+          if (example_assignment_path[1] != "no_submissions") {
+            for (j in 1:length(assignment_path)) {
+              if (file.exists(assignment_path[j])) {
+                # Close assignment
+                invisible(rstudioapi::documentClose(id = doc_id[j], save = FALSE))
+              }
+            }
           }
           
           # Check if grading has been suspended
@@ -287,11 +268,11 @@ core_assist_grading <- function(
     grading_progress_log <- readr::read_csv(
       grading_progress_log_path,
       show_col_types = FALSE,
-      col_types = cols(
-        .default = col_character(),
-        assignment_missing = col_logical(),
-        grade_student = col_logical(),
-        last_time_graded = col_datetime()
+      col_types = readr::cols(
+        .default = readr::col_character(),
+        assignment_missing = readr::col_logical(),
+        grade_student = readr::col_logical(),
+        last_time_graded = readr::col_datetime()
       )
     )
     
@@ -304,56 +285,31 @@ core_assist_grading <- function(
       missing_assignment_grade = missing_assignment_grade,
       rubric_list = rubric_list,
       rubric_prompts = rubric_prompts,
-      team_grading = team_grading
+      team_grading = team_grading,
+      write_grades_into_feedback = write_grades_into_feedback
     )
   }
   
-  some_students_graded <- any(grading_progress_log$grading_status != "ungraded")
-   
-  if (feedback_file_ext %in% c("docx", "html", "pdf", "md") && some_students_graded) {
+  if(!(feedback_file_ext %in% c("Rmd", "qmd"))) {
+    render_feedback_now <- svDialogs::dlg_message(
+      "Would you like the feedback files to be rendered now?",
+      type = "yesno"
+    )$res
     
-    # Let the user know that feedback is being knitted
-    cat(paste0(
-      "\nTrying to knit feedback files to ", 
-      feedback_file_ext, " format...\n"
-    ))
-    
-    # Try to render feedback files
-    tryCatch(               
-      # Specifying expression
-      expr = {              
-        paths_returned <- mapply(
-          render,
-          grading_progress_log$feedback_path_Rmd[grading_progress_log$grading_status != "ungraded"],
-          MoreArgs = list(clean = TRUE, quiet = TRUE)  
-        )
-        
-        cat(paste("\n...Succeeded!\n\n"))
-        
-        unlink(grading_progress_log$feedback_path_Rmd)
-        
-        if (feedback_file_ext == "md") {
-          unlink(fs::path_ext_set(
-            path = grading_progress_log$feedback_path_Rmd,
-            ext = "html"
-          ))
-          
-        }
-        
-      },
+    if (render_feedback_now == "yes") {
+      render_feedback(grading_progress_log = grading_progress_log) 
+    }
+  }
+  
+  # Print information to summarize grading progress
+  n_submissions <- nrow(grading_progress_log)
+  n_missing <- sum(grading_progress_log$assignment_missing)
+  n_graded <- sum(grading_progress_log$grading_status == "all questions graded")
+  cat("\nGrading progress:")   
+  cat(paste0("\nTotal submissions: ", n_submissions))
+  cat(paste0("\nFully graded: ", n_graded))
+  cat(paste0("\nTo be graded: ", (n_submissions - n_graded - n_missing)))
+  cat(paste0("\nMissing or not found: ", n_missing))  
       
-      # Specifying error message
-      error = function(e){         
-        cat(paste(
-          "There was an error when trying to render the feedback file in the specified format.",
-          "\nCompiling pdf's in R requires additional software.",
-          "We suggest you rerun the assist grading function with a different feedback_file_format.",
-          "All of your progressed will be saved in the grading progress log.",
-         sep = "\n"
-        ))
-      }
-    )
-    
-  }
-  
+
 }

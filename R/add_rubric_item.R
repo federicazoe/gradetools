@@ -20,11 +20,11 @@ add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
     rubric_path, 
     show_col_types = FALSE, 
     col_types = readr::cols(
-      name = col_character(),
-      prompt_code = col_character(),
-      prompt_message = col_character(),
-      feedback = col_character(),
-      .default = col_double()
+      name = readr::col_character(),
+      prompt_code = readr::col_character(),
+      prompt_message = readr::col_character(),
+      feedback = readr::col_character(),
+      .default = readr::col_double()
     ), 
     skip_empty_rows = TRUE
   )
@@ -45,7 +45,7 @@ add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
     existing_prompt_codes_message <- paste(
       "You are about to choose a prompt code.",
       "Prompt codes", 
-      str_c(existing_prompt_codes, collapse = ", "),
+      stringr::str_c(existing_prompt_codes, collapse = ", "),
       "already exist.",
       "Valid prompt codes must begin with a digit and cannot include spaces."
     )
@@ -70,10 +70,10 @@ add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
   # (verify it differs from current prompt codes)
   prompt_code_assigned <- FALSE
   
-  dlg_message(existing_prompt_codes_message, type = "ok")
+  svDialogs::dlg_message(existing_prompt_codes_message, type = "ok")
   
   while (prompt_code_assigned == FALSE) {
-    prompt_code <- dlg_input(
+    prompt_code <- svDialogs::dlg_input(
       paste(
         "Type the new PROMPT CODE and press [ok].",
         "To undo adding a rubric item,  press [cancel].",
@@ -91,26 +91,26 @@ add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
         "Please enter a new prompt code."
       )
       
-      dlg_message(prompt_code_must_start_with_a_digit, type = "ok")
+      svDialogs::dlg_message(prompt_code_must_start_with_a_digit, type = "ok")
       
     } else if (prompt_code %in% as.character(existing_prompt_codes)) { 
       # Check for validity of prompt code
       type_different_prompt_code <- paste(
         "Prompt codes", 
-        str_c(existing_prompt_codes, collapse = ", "),
+        stringr::str_c(existing_prompt_codes, collapse = ", "),
         "already exist and cannot be reset.",
         "To reset an existing prompt code, please interrupt grading and modify your rubric."
       )
       
-      dlg_message(type_different_prompt_code, type = "ok")
+      svDialogs::dlg_message(type_different_prompt_code, type = "ok")
       
-    } else if (str_detect(prompt_code, " ")) {
+    } else if (stringr::str_detect(prompt_code, " ")) {
       no_spaces_in_prompt_code <- paste(
         "Prompt codes cannot include spaces.",
         "Please enter a new prompt code."
       )
       
-      dlg_message(no_spaces_in_prompt_code, type = "ok")      
+      svDialogs::dlg_message(no_spaces_in_prompt_code, type = "ok")      
       
     } else {
       prompt_code_assigned <- TRUE
@@ -118,7 +118,7 @@ add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
   }
   
   # Obtain prompt_message from user
-  prompt_message <- dlg_input(
+  prompt_message <- svDialogs::dlg_input(
     paste(
       "Type the new PROMPT MESSAGE and press [ok].",
       "To undo adding a rubric item,  press [cancel].",
@@ -131,7 +131,7 @@ add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
   }
   
   # Obtain feedback from user
-  feedback <- dlg_input(
+  feedback <- svDialogs::dlg_input(
     paste(
       "Type the new FEEDBACK and press [ok].",
       "To undo adding a rubric item,  press [cancel].",
@@ -161,11 +161,11 @@ add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
       paste0("The total points for this question are: ", total_points)
     )
     
-    dlg_message(message_points, type = "ok")
+    svDialogs::dlg_message(message_points, type = "ok")
     
     while (points_assigned == FALSE) {
       
-      points_for_item <- dlg_input(
+      points_for_item <- svDialogs::dlg_input(
         paste(
           paste("Type", points_type ,"and press [okay]."),
           "To undo adding a rubric item,  press [cancel].",
@@ -184,7 +184,7 @@ add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
           paste0("Recall that the total points for this question are: ", total_points)
         )
         
-        dlg_message(need_numeric_points, type = "ok")      
+        svDialogs::dlg_message(need_numeric_points, type = "ok")      
         
       } else {
         points_assigned <- TRUE
@@ -228,7 +228,7 @@ add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
     sep = "\n"
   )
   
-  proceed <- ok_cancel_box(proceed_message)
+  proceed <- svDialogs::ok_cancel_box(proceed_message)
   
   if (proceed == TRUE) {
     if (negative_grading == TRUE) {
@@ -256,7 +256,7 @@ add_rubric_item <- function(curr_q, rubric_path, rubric_list) {
         )     
     }
     
-    write_csv(rubric, rubric_path)
+    readr::write_csv(rubric, rubric_path)
 
     rubric_list <- import_rubric(rubric_path = rubric_path)
     

@@ -3,13 +3,15 @@
 #' @param curr_row a row extracted from the grading_progress_log data table within assist_grading().
 #' @param curr_q name of current question
 #' 
+#' @importFrom svDialogs dlg_input
+#' 
 #' @return corresponding row of grading progress log
 #' 
 #' @keywords internal
 #' 
 note_github_issues <- function(curr_row, curr_q) {
 
-  issue_title <- dlg_input(
+  issue_title <- svDialogs::dlg_input(
     paste(
       "Type title of the issue and press [ok].",
       "To cancel taking note of an issue,  press [cancel].",
@@ -18,7 +20,7 @@ note_github_issues <- function(curr_row, curr_q) {
   )$res
   
   if (length(issue_title) > 0) {
-    issue_body <- dlg_input(
+    issue_body <- svDialogs::dlg_input(
       paste(
         "Type body of the issue and press [enter].",
         "To undo taking note an issue,  press [cancel].",
@@ -55,8 +57,9 @@ note_github_issues <- function(curr_row, curr_q) {
         "After grading use push_to_github() to push issues.",
         sep = "\n"
       ))
-      
+    
     }
+    
   }
   
   curr_row

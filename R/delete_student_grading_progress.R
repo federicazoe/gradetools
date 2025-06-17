@@ -6,6 +6,7 @@
 #' @param questions_to_delete string; vector of assignment question 'names' to have grade and feedback deleted. 
 #'     This can be specified as "all" to apply to all questions.
 #' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
+#' @param write_grades_into_feedback logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).
 #'
 #' @import readr
 #' @import stringr
@@ -17,17 +18,19 @@ delete_student_grading_progress <- function(
     rubric_path,
     identifier,
     questions_to_delete,
-    github_issues
+    github_issues,
+    write_grades_into_feedback
   ) {
   
   grading_progress_log <- readr::read_csv(
     grading_progress_log_path,
     show_col_types = FALSE,
     col_types = cols(
-      .default = col_character(),
-      assignment_missing = col_logical(),
-      grade_student = col_logical(),
-      last_time_graded = col_datetime()
+      .default = readr::col_character(),
+      assignment_missing = readr::col_logical(),
+      grade_student = readr::col_logical(),
+      feedback_info_updated = readr::col_logical(),
+      last_time_graded = readr::col_datetime()
     )
   )
 
@@ -36,9 +39,9 @@ delete_student_grading_progress <- function(
   curr_row <- grading_progress_log[row_to_change, ]
   
   # Delete old feedback file
-  unlink(curr_row$feedback_path_Rmd)
+  unlink(curr_row$feedback_path_qmd)
   # Delete knitted feedback if present
-  unlink(curr_row$feedback_path_to_be_knitted)
+  unlink(curr_row$feedback_path_to_be_rendered)
   
   # Set feedback_pushed = FALSE if column is present
   if ("feedback_pushed" %in% colnames(curr_row)){
@@ -81,7 +84,8 @@ delete_student_grading_progress <- function(
   grade_info <- assign_grade_write_feedback(
     grading_progress_log_row = curr_row, 
     rubric_list = rubric_list,
-    rubric_prompts = rubric_prompts
+    rubric_prompts = rubric_prompts,
+    write_grades_into_feedback = write_grades_into_feedback
   )
   
   curr_row$grading_status <- grade_info$grading_status
@@ -106,6 +110,8 @@ delete_student_grading_progress <- function(
 #' @param question_col string; name of column containing question names for associated info
 #' @param info_cols vector of strings; names of columns containing info to be deleted
 #' 
+#' @import stringr
+#' 
 #' @keywords internal
 #' 
 remove_associated_info <- function(
@@ -115,7 +121,7 @@ remove_associated_info <- function(
     info_cols
   ){
   
-  info_qs <- unlist(str_split(curr_row[, question_col], pattern = "&&&"))
+  info_qs <- unlist(stringr::str_split(curr_row[, question_col], pattern = "&&&"))
   
   issue_pushing_present <- question_col == "issue_qs" && 
     "issue_pushed" %in% colnames(curr_row)
@@ -124,7 +130,7 @@ remove_associated_info <- function(
     if (is.na(curr_row$issue_pushed)) {
       issue_pushed_vec <- FALSE
     } else {
-      issue_pushed_vec <-as.logical(unlist(str_split(
+      issue_pushed_vec <-as.logical(unlist(stringr::str_split(
         curr_row$issue_pushed, 
         pattern = "&&&"
       )))
@@ -132,7 +138,7 @@ remove_associated_info <- function(
   }
   
   for (col in info_cols) {
-    info <- unlist(str_split(curr_row[, col], pattern = "&&&"))
+    info <- unlist(stringr::str_split(curr_row[, col], pattern = "&&&"))
     
     keep_info <- !(info_qs %in% questions_to_delete)
     
@@ -142,13 +148,13 @@ remove_associated_info <- function(
     
     curr_row[, col] <- ifelse(
       any(keep_info),
-      yes = str_c(info[keep_info], collapse = "&&&"),
+      yes = stringr::str_c(info[keep_info], collapse = "&&&"),
       no = NA
     )
     
     curr_row[, question_col] <- ifelse(
       any(keep_info),
-      str_c(info_qs[keep_info], collapse = "&&&"),
+      stringr::str_c(info_qs[keep_info], collapse = "&&&"),
       no = NA
     )
     
@@ -157,7 +163,7 @@ remove_associated_info <- function(
   if (issue_pushing_present) {
     curr_row$issue_pushed <- ifelse(
       any(keep_info),
-      yes = str_c(issue_pushed_vec[keep_info], collapse = "&&&"),
+      yes = stringr::str_c(issue_pushed_vec[keep_info], collapse = "&&&"),
       no = NA
     )
   }

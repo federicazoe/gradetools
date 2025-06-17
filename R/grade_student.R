@@ -8,6 +8,7 @@
 #' @param rubric_path string, path to assignment rubric. This rubric should be created using the function create_rubric_template, then filled in by the user. The rubric file name and column names must not be changed.
 #' @param github_issues Boolean; indicates if grader wants to be able to create GitHub issues
 #' @param questions_to_grade vector of strings; names of assignment questions to grade, or "all" to specify all questions should be graded. All questions_to_grade must exactly match ones present in the rubric
+#' @param write_grades_into_feedback logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).
 #' 
 #' @import readr
 #' @import dplyr
@@ -27,15 +28,15 @@ grade_student <- function(
   rubric_list,
   rubric_path,
   github_issues,
-  questions_to_grade
+  questions_to_grade,
+  write_grades_into_feedback
 ){
-  
+
   curr_row <- grading_progress_log[row, ]
   
   invalid_fbk_message <- 'Please enter a valid prompt code, or enter "s" to stop.'
   
-  qs_to_grade_wo_gf <- questions_to_grade[questions_to_grade != "general_feedback"]
-  previously_graded_qs <- unlist(str_split(curr_row$graded_qs, pattern = "&&&"))
+  previously_graded_qs <- unlist(stringr::str_split(curr_row$graded_qs, pattern = "&&&"))
   
   # Start at the first ungraded question and go through all rubric prompts
   q <- 1
@@ -62,7 +63,7 @@ grade_student <- function(
         display_prompt_again <- TRUE
         
       } else if (question_fbk == "p") { 
-        question_comment <- dlg_input(
+        question_comment <- svDialogs::dlg_input(
           paste(
             "Type personalized feedback and press [ok].",
             "To cancel typing personalized feedback, press [cancel].",
@@ -81,12 +82,14 @@ grade_student <- function(
             
           }
           
+          curr_row$feedback_info_updated
+          
         } 
         
         display_prompt_again <- TRUE
         
         if (curr_q == "general_feedback") {
-          move_to_next_q <- ok_cancel_box(paste(
+          move_to_next_q <- svDialogs::ok_cancel_box(paste(
             "Press [ok] to move on to grade the next submission.",
             "Press [cancel] to continue providing general feedback.",
             sep = "\n"
@@ -115,10 +118,10 @@ grade_student <- function(
       } else if (question_fbk == "d" && curr_q == "general_feedback") {
         question_fbk <- "NA"
         store_feedback_codes <- TRUE
-        
+
       } else { 
-        question_fbk <- str_replace_all(question_fbk, c(" " = "", "--" = "---"))
-        q_fbk_separated <- unlist(str_split(question_fbk, "---"))
+        question_fbk <- stringr::str_replace_all(question_fbk, c(" " = "", "--" = "---"))
+        q_fbk_separated <- unlist(stringr::str_split(question_fbk, "---"))
         
         if (curr_q != "general_feedback") {
           valid_fbk_codes <- c(
@@ -138,7 +141,7 @@ grade_student <- function(
           store_feedback_codes <- TRUE
           
         } else {
-          dlg_message(invalid_fbk_message, type = "ok")
+          svDialogs::dlg_message(invalid_fbk_message, type = "ok")
           display_prompt_again <- TRUE
           
         }
@@ -158,10 +161,14 @@ grade_student <- function(
         
       }
       
+      # Update grading_status
+      curr_row$feedback_info_updated <- TRUE
+      
       grade_info <- assign_grade_write_feedback(
         grading_progress_log_row = curr_row, 
         rubric_list = rubric_list,
-        rubric_prompts = rubric_prompts
+        rubric_prompts = rubric_prompts,
+        write_grades_into_feedback = write_grades_into_feedback    
       )
       
       # Update feedback_pushed, if it exists
@@ -169,7 +176,6 @@ grade_student <- function(
         curr_row$feedback_pushed <- "FALSE"
       }
       
-      # Update grading_status
       curr_row$grading_status <- grade_info$grading_status
       curr_row$last_time_graded <- Sys.time()
       
@@ -181,7 +187,7 @@ grade_student <- function(
     } # End storing question feedback
     
     grading_progress_log[row, ] <- curr_row
-    write_csv(grading_progress_log, file = grading_progress_log_path)
+    readr::write_csv(grading_progress_log, file = grading_progress_log_path)
     
     # Move onto next question if valid feedback codes were provided
     if (!display_prompt_again) {
