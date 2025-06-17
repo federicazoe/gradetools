@@ -121,7 +121,14 @@ core_assist_grading <- function(
   
   grading_progress_log <- grading_progress_log %>% 
     mutate(grade_student = student_identifier %in% students_to_grade)
-
+  
+  # Write new grading progress log file. This ensures that, even if all 
+  # submissions have grading status "all questions graded", 
+  # the grading progress log has the most-recently specified feedback paths 
+  # (allows to, e.g., change the format that the grader wants the feedback to
+  # be in)
+  readr::write_csv(grading_progress_log, file = grading_progress_log_path)
+  
   continue_grading <- TRUE
   
   # Loop through students, grading each
@@ -215,7 +222,7 @@ core_assist_grading <- function(
           )
           
           if (example_assignment_path[1] != "no_submissions") {
-            for(j in 1:length(assignment_path)) {
+            for (j in 1:length(assignment_path)) {
               if (file.exists(assignment_path[j])) {
                 # Close assignment
                 invisible(rstudioapi::documentClose(id = doc_id[j], save = FALSE))
