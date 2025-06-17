@@ -301,4 +301,13 @@ core_assist_grading <- function(
     }
   }
   
+  # Print information to summarize grading progress
+  n_submissions <- nrow(grading_progress_log)
+  n_missing <- sum(grading_progress_log$assignment_missing)
+  n_graded <- sum(grading_progress_log$grading_status == "all questions graded")
+  cat("\nGrading progress:")   
+  cat(paste0("\nTotal submissions: ", n_submissions))
+  cat(paste0("\nFully graded: ", n_graded))
+  cat(paste0("\nMissing: ", n_missing))
+
 }

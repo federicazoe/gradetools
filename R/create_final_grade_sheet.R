@@ -125,12 +125,12 @@ create_final_grade_sheet <- function(
   
   readr::write_csv(final_grade_sheet, final_grade_sheet_path)
   
-  ungraded_message <- paste(
-    "\nNot all questions have been graded,", 
-    "or some students have an assignment missing!",
-    "To finish grading just rerun the assist grading function.",
-    sep = "\n"
-  )
+  # ungraded_message <- paste(
+  #   "\nNot all questions have been graded,", 
+  #   "or some students have an assignment missing!",
+  #   "To finish grading just rerun the assist grading function.",
+  #   sep = "\n"
+  # )
   
   finished_message <- paste(
     "\nA final grade sheet has been created,",
@@ -140,9 +140,9 @@ create_final_grade_sheet <- function(
     sep = "\n"
   )
   
-  if (!no_assignment_missing || !all_assignments_fully_graded) {
-    finished_message <- paste(ungraded_message, finished_message, sep = "\n")
-  }
+  # if (!no_assignment_missing || !all_assignments_fully_graded) {
+  #   finished_message <- paste(ungraded_message, finished_message, sep = "\n")
+  # }
   
   cat(paste0(finished_message))
   
