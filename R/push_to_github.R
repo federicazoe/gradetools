@@ -179,7 +179,7 @@ push_feedback_github <- function(
     if (feedback_to_push) {
       
       github_repo <- grading_progress_log$github_repo[i]
-      feedback_path <- grading_progress_log$feedback_path_to_be_knitted[i]
+      feedback_path <- grading_progress_log$feedback_path_to_be_rendered[i]
       
       if (repo_exists(paste(class_github_name, github_repo, sep = "/"))) {
         ghclass::repo_add_file(
