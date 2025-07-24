@@ -1,0 +1,15 @@
+bibentry(bibtype = "Article",
+  title        = "Automated grading workflows for providing personalized feedback to open-ended data science assignments",
+  author       = c(person(given = "Federica Zoe",
+                          family = "Ricci"),
+                   person(given = "Catalina Mari",
+                          family = "Medina"),
+                   person(given = "Mine",
+                          family = "Dogucu")),
+  year         = "2024",
+  url = "https://federicazoe.github.io/gradetools/",
+  header       = "To cite the gradetools package in publications use:",
+  textVersion  =
+  paste("Ricci, Federica Zoe and Medina, Catalina Mari and Dogucu, Mine (2024).",
+        "Automated grading workflows for providing personalized feedback to open-ended data science assignments")
+)

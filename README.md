@@ -57,4 +57,15 @@ devtools::install_github("federicazoe/gradetools")
   </tr>   
 </table>
 
-Typo was fixed.
+## Citation
+
+Ricci, Federica Zoe, Catalina Mari Medina, and Mine Dogucu. "Automated grading workflows for providing personalized feedback to open-ended data science assignments." Technology Innovations in Statistics Education (2024).
+
+``` latex
+@article{,
+  title = {Automated grading workflows for providing personalized feedback to open-ended data science assignments},
+  author = {Ricci, Federica Zoe and Medina, Catalina Mari and Dogucu, Mine},
+  journal = {Technology Innovations in Statistics Education},
+  year = {2024}
+}
+```
