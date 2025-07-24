@@ -133,7 +133,7 @@ Here is a description of the specified inputs that are new to us:
   - `example_identifier` is a student_identifier (or team_identifier) from the class roster. For compatibility with GitHub the identifiers need to be student identifiers
   - `push_feedback = TRUE` asks the function to push the feedback files (the same function could be used to only create issues, see below).
 
-To push issues the additional argument would be setting `push_issues` to TRUE. The two push arguments can be set to true on the same function call.
+To create issues, set the argument `create_issues` to TRUE. The arguments `push_feedback` and `create_issues` can be set to TRUE on the same function call.
 
 Running the above function call will push each feedback file to the respective repo, if the repo is found:
 

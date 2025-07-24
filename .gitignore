@@ -45,3 +45,7 @@ vignettes/*.pdf
 inst/doc
 
 docs
+
+# Folder with scripts to assist with package development
+develop-ignore/*
+

@@ -21,7 +21,8 @@ assist_regrading <- function(
     students_to_regrade,
     teams_to_regrade = NULL,
     missing_assignment_grade = NA,
-    github_issues = FALSE
+    github_issues = FALSE,
+    write_grades_into_feedback = FALSE
   ) {
   
   if (is.null(students_to_regrade) && is.null(teams_to_regrade)) {
@@ -35,10 +36,6 @@ assist_regrading <- function(
   # Check that paths are valid
   if (!file.exists(grading_progress_log_path)) {
     stop("Nothing was found at the grading_progress_log_path!")
-    
-  } else if (!file.exists(rubric_path)) {
-    stop("Nothing was found at the rubric_path!")
-    
   }
   
   # Check grading_progress_log and final grade sheets paths differ
@@ -51,10 +48,11 @@ assist_regrading <- function(
     grading_progress_log_path,
     show_col_types = FALSE,
     col_types = cols(
-      .default = col_character(),
-      assignment_missing = col_logical(),
-      grade_student = col_logical(),
-      last_time_graded = col_datetime(),
+      .default = readr::col_character(),
+      assignment_missing = readr::col_logical(),
+      grade_student = readr::col_logical(),
+      feedback_info_updated = readr::col_logical(),
+      last_time_graded = readr::col_datetime(),
     )
   )
 
@@ -100,11 +98,11 @@ assist_regrading <- function(
     
     ungraded_present_message <- paste0(
       "The following students_to_regrade were not previously graded: \n",
-      str_c(ids_to_be_graded_short, collapse = ",\n"), 
+      stringr::str_c(ids_to_be_graded_short, collapse = ",\n"), 
       "\nWould you still like to grade the previously ungraded students?"
     )
     
-    grade_ungraded <- dlg_message(ungraded_present_message, type = "yesno")$res
+    grade_ungraded <- svDialogs::dlg_message(ungraded_present_message, type = "yesno")$res
     
     if (grade_ungraded == "no") {
       grading_progress_log$grade_student[id_ungraded_to_be_graded] <- FALSE
@@ -160,7 +158,7 @@ assist_regrading <- function(
         sep = "\n"
       )
       
-      continue_grading <- ok_cancel_box(begin_message)
+      continue_grading <- svDialogs::ok_cancel_box(begin_message)
       
       if (!continue_grading) {
         cat(paste0(
@@ -176,18 +174,25 @@ assist_regrading <- function(
           pattern = "&&&"
         ))
         
-        # Get assignment_path
-        assignment_path <- unlist(
-          str_split(grading_progress_log$assignment_path[i], ", ")
-        )
+        if (grading_progress_log$assignment_path[i] != "no_submissions") {
+          # Get assignment_path
+          assignment_path <- unlist(
+            stringr::str_split(grading_progress_log$assignment_path[i], ", ")
+          )
+          
+          doc_id <- NULL
+          
+          for (j in 1:length(assignment_path)) {
+            
+            if (file.exists(assignment_path[j])) {
+              # Opens file
+              rstudioapi::navigateToFile(assignment_path[j])
+            }
+            # Need short pause so documentId grabs the correct document
+            Sys.sleep(1)
+            doc_id[j] <- rstudioapi::documentId()
+          }
         
-        doc_id <- NULL
-        
-        for(j in 1:length(assignment_path)) {
-          navigateToFile(assignment_path[j])
-          # Need short pause so documentId grabs the correct document
-          Sys.sleep(1)
-          doc_id[j] <- documentId()
         }
         
         for (q in questions_to_regrade) {
@@ -200,7 +205,8 @@ assist_regrading <- function(
                 rubric_path = rubric_path,
                 identifier = curr_id,
                 questions_to_delete = q,
-                github_issues = github_issues
+                github_issues = github_issues,
+                write_grades_into_feedback = write_grades_into_feedback
               )
               
             }
@@ -213,7 +219,8 @@ assist_regrading <- function(
               rubric_list = rubric_list,
               rubric_path = rubric_path,
               questions_to_grade = q,
-              github_issues = github_issues
+              github_issues = github_issues,
+              write_grades_into_feedback = write_grades_into_feedback
             )
             
             # Recreate rubric list and prompts, in case they have been modified
@@ -227,7 +234,7 @@ assist_regrading <- function(
             if (is.null(temp_obj)) {
               grading_progress_log <- curr_grading_progress_log
               
-              write_csv(grading_progress_log, file = grading_progress_log_path)
+              readr::write_csv(grading_progress_log, file = grading_progress_log_path)
               
               cat(paste0(
                 "\nGrading has been suspended.",
@@ -246,11 +253,14 @@ assist_regrading <- function(
           
         }
         
-        # Close assignment
-        for(j in 1:length(assignment_path)) {
-          invisible(documentClose(id = doc_id[j], save = FALSE))
+        if (grading_progress_log$assignment_path[i] != "no_submissions") {
+          for(j in 1:length(assignment_path)) {
+            if (file.exists(assignment_path[j])) {
+              # Close assignment
+              invisible(rstudioapi::documentClose(id = doc_id[j], save = FALSE))              
+            }
+          }
         }
-        
       }
     }
   }
@@ -259,11 +269,12 @@ assist_regrading <- function(
     grading_progress_log <- readr::read_csv(
       grading_progress_log_path,
       show_col_types = FALSE,
-      col_types = cols(
-        .default = col_character(),
-        assignment_missing = col_logical(),
-        grade_student = col_logical(),
-        last_time_graded = col_datetime()
+      col_types = readr::cols(
+        .default = readr::col_character(),
+        assignment_missing = readr::col_logical(),
+        grade_student = readr::col_logical(),
+        feedback_info_updated = readr::col_logical(),
+        last_time_graded = readr::col_datetime()
       )
     )
     
@@ -275,56 +286,33 @@ assist_regrading <- function(
     missing_assignment_grade = missing_assignment_grade, 
     rubric_list = rubric_list, 
     rubric_prompts = rubric_prompts, 
-    team_grading = team_grading
+    team_grading = team_grading,
+    write_grades_into_feedback = write_grades_into_feedback
   )
   
-  feedback_file_ext <- fs::path_ext(
-    grading_progress_log$feedback_path_to_be_knitted[1]
-  )
-  
-  # Let the user know that feedback is being knitted
-  cat(paste(
-    "\nTrying to knit feedback files to", 
-    feedback_file_ext, "format...\n"
+  feedback_file_ext <- as.character(fs::path_ext(
+    grading_progress_log$feedback_path_to_be_rendered[1]
   ))
   
-  # Knit feedback
-  if (feedback_file_ext %in% c("docx", "html", "pdf", "md")) {
-    #Try to render feedback files
-    tryCatch(               
-      # Specifying expression
-      expr = {              
-        paths_returned <- mapply(
-          render,
-          grading_progress_log$feedback_path_Rmd[grading_progress_log$grading_status != "ungraded"],
-          MoreArgs = list(clean = TRUE, quiet = TRUE)  
-        )
-        
-        cat(paste("\n...Succeeded!\n\n"))
-        
-        unlink(grading_progress_log$feedback_path_Rmd)
-        
-        if (feedback_file_ext == "md") {
-          unlink(fs::path_ext_set(
-            path = grading_progress_log$feedback_path_Rmd,
-            ext = "html"
-          ))
-          
-        }
-        
-      },
-      
-      # Specifying error message
-      error = function(e){         
-        cat(paste(
-          "There was an error when trying to render the feedback file in the specified format.",
-          "\nCompiling pdf's in R requires additional software.",
-          "We suggest you rerun the assist grading function with a different feedback_file_format.",
-          "All of your progressed will be saved in the grading progress log.",
-          sep = "\n"
-        ))
-      }
-    )
+  if(!(feedback_file_ext %in% c("Rmd", "qmd"))) {
+    render_feedback_now <- svDialogs::dlg_message(
+      "Would you like the feedback files to be rendered now?",
+      type = "yesno"
+    )$res
+    
+    if (render_feedback_now == "yes") {
+      render_feedback(grading_progress_log = grading_progress_log) 
+    }
   }
+  
+  # Print information to summarize grading progress
+  n_submissions <- nrow(grading_progress_log)
+  n_missing <- sum(grading_progress_log$assignment_missing)
+  n_graded <- sum(grading_progress_log$grading_status == "all questions graded")
+  cat("\nGrading progress:")   
+  cat(paste0("\nTotal submissions: ", n_submissions))
+  cat(paste0("\nFully graded: ", n_graded))
+  cat(paste0("\nTo be graded: ", (n_submissions - n_graded - n_missing)))
+  cat(paste0("\nMissing or not found: ", n_missing))  
   
 }

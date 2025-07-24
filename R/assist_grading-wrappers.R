@@ -7,14 +7,17 @@
 #' @param grading_progress_log_path string; assist-grading() functions save a file which includes information for gradetools's internal use. 
 #'     This is that path for that file. Must be a .csv
 #' @param final_grade_sheet_path string; path to save final grade sheet to. Must be a .csv
-#' @param example_assignment_path string; file path to one of the assignments to be graded. 
-#'     This file path structure will be used to determine where the other assignments to be graded are located. 
-#'     The student identifier has to be present somewhere in the file path
+#' @param example_assignment_path string; file path(s) to the file(s) constituting one of the submissions to be graded. 
+#'     This file(s) must have a format that can be opened by rstudioapi::navigateToFile(). 
+#'     This file path(s) structure will be used to determine where the other submissions to be graded are located. 
+#'     The student identifier has to be present somewhere in each file path(s).
+#'     If specified as "no_submissions", grading will proceed without automatic interaction with assignments (i.e opening and closing assignments).
+#'     If example_assignment_path is a vector of multiple file paths, gradetools will look for each of these files when grading a submission, and open all files it successfully finds for the given student or team.
 #' @param example_feedback_path string; file path to one of the assignment feedback files that will be generated as the user grades. 
 #'     This file path structure will be used to determine where the other feedback files will be stored. 
 #'     The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. 
-#'     The extension of the feedback file must be one of the following: "Rmd", "md", "docx", "html", "pdf". 
-#'     These file types (except the first) will be knitted to: GitHub, Word, html, and pdf documents respectively
+#'     The extension of the feedback file must be one of the following: "Rmd", "qmd", "md", "docx", "html", "pdf". 
+#'     For extensions "md", "docx", "html", "pdf", a "qmd" file will be created first and then rendered to the desired format.
 #' @param example_student_identifier string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. 
 #'     This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later
 #' @param example_team_identifier string; Used instead of example_student_identifier when grading team assignments with assist_team_grading(). 
@@ -29,6 +32,7 @@
 #'     Team grading is when the grade of an assignment is share among multiple students. 
 #'     All teams_to_grade must be team_identifiers present in the roster
 #' @param github_issues logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)
+#' @param write_grades_into_feedback logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).
 #'
 #' @name assist_grading_functions
 #' @description Functions to assist with grading and providing personalized feedback to students. \code{assist_grading()} requires minimal user input, while \code{assist_team_grading()} and \code{assist_advanced_grading()} offer more user control and allow for team grading and grading assignments from GitHub
@@ -46,7 +50,8 @@ assist_grading <- function(
     example_assignment_path,
     example_feedback_path,
     example_student_identifier,
-    missing_assignment_grade = NA
+    missing_assignment_grade = NA,
+    write_grades_into_feedback = FALSE
 ) {
   
   core_assist_grading(
@@ -61,7 +66,8 @@ assist_grading <- function(
     questions_to_grade = "all",
     students_to_grade = "all",
     team_grading = FALSE,
-    github_issues = FALSE
+    github_issues = FALSE,
+    write_grades_into_feedback = write_grades_into_feedback
   )
   
 }
@@ -81,7 +87,8 @@ assist_team_grading <- function(
   missing_assignment_grade = NA,
   questions_to_grade = "all",
   teams_to_grade = "all",
-  github_issues = FALSE
+  github_issues = FALSE,
+  write_grades_into_feedback = FALSE
 ) {
   
   core_assist_grading(
@@ -96,7 +103,8 @@ assist_team_grading <- function(
     questions_to_grade = questions_to_grade,
     students_to_grade = teams_to_grade,
     team_grading = TRUE,
-    github_issues = github_issues
+    github_issues = github_issues,
+    write_grades_into_feedback = write_grades_into_feedback
   )
 }
 
@@ -115,7 +123,8 @@ assist_advanced_grading <- function(
   missing_assignment_grade = NA,
   questions_to_grade = "all",
   students_to_grade = "all",
-  github_issues = FALSE
+  github_issues = FALSE,
+  write_grades_into_feedback = FALSE
 ) {
   
   core_assist_grading(
@@ -130,7 +139,8 @@ assist_advanced_grading <- function(
     questions_to_grade = questions_to_grade,
     students_to_grade = students_to_grade,
     team_grading = FALSE,
-    github_issues = github_issues
+    github_issues = github_issues,
+    write_grades_into_feedback = write_grades_into_feedback    
   )
   
 }

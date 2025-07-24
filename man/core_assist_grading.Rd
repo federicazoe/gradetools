@@ -16,7 +16,8 @@ core_assist_grading(
   questions_to_grade = "all",
   students_to_grade = "all",
   team_grading = FALSE,
-  github_issues = FALSE
+  github_issues = FALSE,
+  write_grades_into_feedback = FALSE
 )
 }
 \arguments{
@@ -32,15 +33,17 @@ This is that path for that file. Must be a .csv}
 
 \item{final_grade_sheet_path}{string; path to save final grade sheet to. Must be a .csv}
 
-\item{example_assignment_path}{string; file path to one of the assignments to be graded. 
-This file path structure will be used to determine where the other assignments to be graded are located. 
-The student identifier has to be present somewhere in the file path}
+\item{example_assignment_path}{string; file path(s) to the file(s) constituting one of the submissions to be graded. 
+This file path structure will be used to determine where the other submissions to be graded are located. 
+The student identifier has to be present somewhere in each file path(s).
+If specified as "no_submissions", grading will proceed without automatic interaction with assignments (i.e opening and closing assignments).
+If example_assignment_path is a vector of multiple file paths, gradetools will look for each of these files when grading a submission, and open all files it successfully finds for the given student or team.}
 
 \item{example_feedback_path}{string; file path to one of the assignment feedback files that will be generated as the user grades. 
 This file path structure will be used to determine where the other feedback files will be stored. 
 The student identifier must be present somewhere in the file name and must be the only part of the file path unique to the student. 
-The extension of the feedback file must be one of the following: "Rmd", "md", "docx", "html", "pdf". 
-These file types (except the first) will be knitted to: GitHub, Word, html, and pdf documents respectively}
+The extension of the feedback file must be one of the following: "Rmd", "qmd", "md", "docx", "html", "pdf". 
+For extensions "md", "docx", "html", "pdf", a "qmd" file will be created first and then rendered to the desired format.}
 
 \item{example_student_identifier}{string; a student identifier (e.g. name, id, id number, GitHub user name) that is used to identify the student on the roster. 
 This needs to be present somewhere in the example_assignment_path. The student_identifier needs to be the GitHub user name if the user wishes to push issues or feedback to GitHub later}
@@ -56,6 +59,8 @@ All students_to_grade must be student_identifiers present in the roster}
 \item{team_grading}{logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)}
 
 \item{github_issues}{logical, whether the grader wants to be given the option to create an issue in students' repos or not (defaults to FALSE)}
+
+\item{write_grades_into_feedback}{logical, whether to write numeric grades into the feedback file, along with qualitative feedback (defaults to FALSE).}
 }
 \description{
 Core function that assists with grading, creates feedback and grade book files

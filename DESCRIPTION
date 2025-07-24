@@ -1,17 +1,17 @@
 Package: gradetools
 Type: Package
 Title: Tools to Assist with Providing Grades and Personalized Feedback to Students 
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
         person(given = "Federica Zoe", family = "Ricci", email = "federicazoericci@gmail.com", role = c("cre", "aut"), comment = c(ORCID = "0000-0002-2560-4543")),
-        person(given = "Catalina", family = "Medina",  role = c("aut"), comment = c(ORCID = "0000-0003-2847-8180")),
+        person(given = "Catalina Mari", family = "Medina",  role = c("aut"), comment = c(ORCID = "0000-0003-2847-8180")),
         person(given = "Mine", family = "Dogucu", role = c("aut"), comment = c(ORCID = "0000-0002-8007-934X"))
         )
 Description: Provides functions to assist with grading and providing feedback to students. 
     This package has functions to help create an assignment rubric, assist with grading students' assignments and writing feedback to a file, regrade specified students and assignments, and push feedback and or GitHub issues to GitHub.
 License: GPL (>= 3)
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 Imports:
     stringr,
     readr (>= 2.1.2),
@@ -21,7 +21,7 @@ Imports:
     fs,
     utils,
     svDialogs,
-    rmarkdown
+    quarto
 Suggests: 
     knitr,
     testthat (>= 3.0.0)
