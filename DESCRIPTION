@@ -21,8 +21,7 @@ Imports:
     fs,
     utils,
     svDialogs,
-    quarto,
-    rmarkdown
+    quarto
 Suggests: 
     knitr,
     testthat (>= 3.0.0)
