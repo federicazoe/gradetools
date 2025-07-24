@@ -8,7 +8,8 @@
 #'     This is that path for that file. Must be a .csv
 #' @param final_grade_sheet_path string; path to save final grade sheet to. Must be a .csv
 #' @param example_assignment_path string; file path(s) to the file(s) constituting one of the submissions to be graded. 
-#'     This file path structure will be used to determine where the other submissions to be graded are located. 
+#'     This file(s) must have a format that can be opened by rstudioapi::navigateToFile(). 
+#'     This file path(s) structure will be used to determine where the other submissions to be graded are located. 
 #'     The student identifier has to be present somewhere in each file path(s).
 #'     If specified as "no_submissions", grading will proceed without automatic interaction with assignments (i.e opening and closing assignments).
 #'     If example_assignment_path is a vector of multiple file paths, gradetools will look for each of these files when grading a submission, and open all files it successfully finds for the given student or team.
