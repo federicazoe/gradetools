@@ -11,7 +11,6 @@ Description: Provides functions to assist with grading and providing feedback to
     This package has functions to help create an assignment rubric, assist with grading students' assignments and writing feedback to a file, regrade specified students and assignments, and push feedback and or GitHub issues to GitHub.
 License: GPL (>= 3)
 Encoding: UTF-8
-RoxygenNote: 7.3.2
 Imports:
     stringr,
     readr (>= 2.1.2),
@@ -30,3 +29,4 @@ URL: https://federicazoe.github.io/gradetools/,
     https://github.com/federicazoe/gradetools/
 BugReports: https://github.com/federicazoe/gradetools/issues/
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.0.0
