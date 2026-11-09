@@ -114,10 +114,16 @@ core_assist_grading <- function(
     team_grading = team_grading
   )
   
-  # Specify which students to grade
-  if (students_to_grade == "all") {
+  identifier_valid <- students_to_grade %in% grading_progress_log$student_identifier
+  
+  # Check if the students_to_grade are valid
+  if (all(students_to_grade == "all")) {
     students_to_grade <- grading_progress_log$student_identifier
-  }
+  } else if (!all(identifier_valid) || length(students_to_grade) == 0) {
+    stop(
+      "\nSome or all students_to_grade are not in the 'student_identifier' column of the grading progress log."
+    )
+  }    
   
   grading_progress_log <- grading_progress_log %>% 
     mutate(grade_student = student_identifier %in% students_to_grade)
