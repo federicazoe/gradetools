@@ -7,7 +7,8 @@
 push_feedback_github(
   grading_progress_log_path,
   grading_progress_log,
-  class_github_name
+  class_github_name,
+  feedback_folder
 )
 }
 \arguments{
@@ -17,6 +18,8 @@ This is that path for that file. Must be a .csv}
 \item{grading_progress_log}{tibble created by assist_advanced_grading().}
 
 \item{class_github_name}{string, GitHub name of the class. This input is needed to push feedback and issues to the correct class on GitHub.}
+
+\item{feedback_folder}{string, folder path inside student repository where feedback file should be pushed. Defaults to NULL (repo root).}
 }
 \description{
 Push feedback to GitHub

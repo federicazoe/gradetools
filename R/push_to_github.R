@@ -8,7 +8,8 @@
 #' @param push_feedback logical, whether to push feedback files
 #' @param create_issues logical, whether to create issues
 #' @param team_grading logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)
-#' 
+#' @param feedback_folder string, folder path inside student repository where feedback file should be pushed. Defaults to NULL (repo root).
+#'  
 #' @export
 #' 
 #' @import readr
@@ -23,7 +24,8 @@ push_to_github <- function(
     example_identifier,
     push_feedback = FALSE,
     create_issues = FALSE,
-    team_grading = FALSE
+    team_grading = FALSE,
+    feedback_folder = NULL
   ) {
   
   if (push_feedback == FALSE & create_issues == FALSE) {
@@ -79,7 +81,8 @@ push_to_github <- function(
     push_feedback_github(
       grading_progress_log_path = grading_progress_log_path,
       grading_progress_log = grading_progress_log,
-      class_github_name = class_github_name
+      class_github_name = class_github_name,
+      feedback_folder = feedback_folder
     )
   }
   
@@ -102,6 +105,7 @@ push_to_github <- function(
 #'     This is that path for that file. Must be a .csv
 #' @param grading_progress_log tibble created by assist_advanced_grading().
 #' @param class_github_name string, GitHub name of the class. This input is needed to push feedback and issues to the correct class on GitHub.
+#' @param feedback_folder string, folder path inside student repository where feedback file should be pushed. Defaults to NULL (repo root).
 #'
 #' @import readr
 #' @import dplyr
@@ -114,7 +118,8 @@ push_to_github <- function(
 push_feedback_github <- function(
   grading_progress_log_path,
   grading_progress_log,
-  class_github_name
+  class_github_name,
+  feedback_folder
 ) {
   
   all_push_statuses <- grading_progress_log$feedback_pushed
@@ -194,7 +199,8 @@ push_feedback_github <- function(
           ),
           message = "Feedback",
           file = feedback_path,
-          overwrite = TRUE
+          overwrite = TRUE,
+          repo_folder = feedback_folder
         )
         
         grading_progress_log$feedback_pushed[i] <- "TRUE"

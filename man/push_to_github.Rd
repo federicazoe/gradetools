@@ -11,7 +11,8 @@ push_to_github(
   example_identifier,
   push_feedback = FALSE,
   create_issues = FALSE,
-  team_grading = FALSE
+  team_grading = FALSE,
+  feedback_folder = NULL
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ This is that path for that file. Must be a .csv}
 \item{create_issues}{logical, whether to create issues}
 
 \item{team_grading}{logical, indicates if any assignment submission is associated with multiple students (e.g. team projects)}
+
+\item{feedback_folder}{string, folder path inside student repository where feedback file should be pushed. Defaults to NULL (repo root).}
 }
 \description{
 Push feedback and issues to GitHub
